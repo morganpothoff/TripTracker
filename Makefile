@@ -4,5 +4,10 @@ all:
 	javac -cp '.:mysql-connector-java.jar' *.java
 
 
-run:
+test:
 	java -cp '.:mysql-connector-java.jar' Test
+
+
+
+run:
+	java -cp '.:mysql-connector-java.jar' GUIApplication
