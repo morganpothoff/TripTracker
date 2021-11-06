@@ -41,16 +41,16 @@ public class LoginController {
         return;
     }
 
-    public void register(DBManager db) throws IOException {
+    public boolean register(DBManager db) throws IOException {
         if(db.addNewEmployee(id, password)){
             System.out.println("Account created");
+            return true;
         }
         
         else{
              System.out.println("Account not created--ID already in use");
+             return false;
         }
-        
-        return;
     }
 
 

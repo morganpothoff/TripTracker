@@ -18,7 +18,13 @@ public class GUIController {
         });
         view.getRegisterButton().addActionListener(e -> register());
         view.getRegisterReturnButton().addActionListener((e -> back()));
-        view.getRegisterRegisterButton().addActionListener((e -> registerUser()));
+        view.getRegisterRegisterButton().addActionListener((e -> {
+            try {
+                registerUser();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }));
         view.getExitButton().addActionListener((e -> exit()));
         view.getSelectManagerViewButton().addActionListener((e -> showManagerScreen()));
         view.getSelectEmployeeViewButton().addActionListener((e -> showEmployeeScreen()));
@@ -46,12 +52,19 @@ public class GUIController {
 
 
 
-    private void registerUser() {
-        // todo get the info and make user
+    private void registerUser() throws IOException {
         String id = view.getRegisterIdTextField().getText();
         String pass = view.getRegisterPasswordTextField().getText();
         model.getLoginController().getNewUserInput(id, pass);
-        back();
+
+        if(model.getLoginController().register(model.getDbManager())){  // if successful registration
+            back();
+        }
+        else{
+            // tell user if ID already exists
+            view.getRegisterIdTextField().setText("Invalid ID - already exists");
+        }
+
     }
 
     private void finishTrip() {
@@ -97,7 +110,7 @@ public class GUIController {
         getLoginData();
         // todo if name matches manager name
         Authenticator authenticator = new Authenticator(model.getLoginController().getID(), model.getLoginController().getPassword());
-        if(authenticator.authenticate(new DBManager())){ // if login was valid
+        if(authenticator.authenticate(model.getDbManager())){ // if login was valid
             // todo check for manager vs employee
             // if employee
             loginEmployee();
@@ -112,7 +125,7 @@ public class GUIController {
 
     }
 
-    private void register(){
+    private void register() {
 
         view.getLoginFrame().setVisible(false);
         view.getRegisterFrame().setVisible(true);
@@ -120,6 +133,11 @@ public class GUIController {
     }
 
     private void back(){
+        // clear registration textfields
+        view.getRegisterIdTextField().setText("");
+        view.getRegisterPasswordTextField().setText("");
+        view.getRegisterEmailTextField().setText("");
+
         view.getLoginFrame().setVisible(true);
         view.getRegisterFrame().setVisible(false);
 
@@ -175,7 +193,9 @@ public class GUIController {
         view.getManagerSelectionFrame().setVisible(false);
         view.getEmployeeScreenFrame().setVisible(false);
 
-        // return to login screen
+        // return to login screen and clear login textfields
+        view.getIdTextField().setText("");
+        view.getPasswordTextField().setText("");
         view.getLoginFrame().setVisible(true);
     }
 
