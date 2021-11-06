@@ -6,7 +6,7 @@ public class Authenticator {
 
     String id, password;
     
-    public Authenticator(String inputID, String inputPassword){
+    public Authenticator(String inputID, String inputPassword) {
         id = inputID;
         password = inputPassword;
     }

@@ -97,7 +97,10 @@ Create Table Messages(
 
 
 INSERT INTO `Users` (`First_Name`, `Last_Name`, `Password`, `Email`) VALUES
-('Morgan', 'Pothoff', 'Guest', 'Morgan.Pothoff@aol.com');
+('Morgan', 'Pothoff', 'Guest', 'Morgan.Pothoff@aol.com');z
+
+INSERT INTO `Users` (`First_Name`, `Last_Name`, `Password`, `Email`) VALUES
+('John', 'Do', '23456', 'John');
 
 
 INSERT INTO `Manager` (`User_ID`) VALUES

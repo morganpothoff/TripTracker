@@ -27,7 +27,7 @@ public class DBManager {
         try {
             file = new File(employeeDataPath);
         }
-        catch (Exception e){
+        catch (Exception e) {
             System.out.println("File issue");
         }
         br = new BufferedReader(new FileReader(file));
@@ -41,7 +41,7 @@ public class DBManager {
             //For each employee, add data to employeeInfoMap
             id = line.trim().toString();
             HashMap<String, String> employeeData = new HashMap<String, String>();
-             while ((line = br.readLine()) != null){
+             while ((line = br.readLine()) != null) {
                  if (line.trim().toString().equals(""))
                  break;
                  //Split the data lines by : 
@@ -59,7 +59,7 @@ public class DBManager {
 
     public Boolean addNewEmployee(String id, String password) throws IOException {
         HashMap<String, HashMap<String, String>> employeeInfoMap = getEmployeeInfoMap();
-        if (employeeInfoMap.get(id) == null){
+        if (employeeInfoMap.get(id) == null) {
             HashMap<String, String> dataMap = new HashMap<>();
             dataMap.put("password", password);
             employeeInfoMap.put(id, dataMap);
@@ -82,7 +82,7 @@ public class DBManager {
                 bf.write(entry.getKey());
                 bf.newLine();
                 HashMap<String, String> newData = entry.getValue();
-                for (Map.Entry<String, String> dataEntry : newData.entrySet()){
+                for (Map.Entry<String, String> dataEntry : newData.entrySet()) {
                     bf.write(dataEntry.getKey() + ":" + dataEntry.getValue());
                     bf.newLine();
                 }
@@ -91,7 +91,7 @@ public class DBManager {
             bf.write("end");
             bf.close();
         }
-        catch (Exception e){
+        catch (Exception e) {
             System.out.println("File issue");
         }
 

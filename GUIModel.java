@@ -3,7 +3,7 @@ import java.sql.*;
 public class GUIModel {
     private LoginController loginController;
 
-    public GUIModel(){
+    public GUIModel() {
         loginController = new LoginController();
     }
     public LoginController getLoginController() {
