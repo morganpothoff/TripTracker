@@ -5,7 +5,7 @@ public class GUIModel {
     private DBManager dbManager;
 
 
-    public GUIModel(){
+    public GUIModel() {
         loginController = new LoginController();
         dbManager = new DBManager();
     }

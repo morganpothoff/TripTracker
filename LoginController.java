@@ -5,14 +5,14 @@ import java.util.*;
 public class LoginController {
     String id, password, description, trips;
 
-    LoginController(){
+    LoginController() {
         id ="";
         password="";
         description="";
         trips="";
     }
 
-    public void getUserInput(String i, String p){
+    public void getUserInput(String i, String p) {
             //id = entered id password = entered password, get from GUI later
             id = i;
             password = p;
@@ -24,7 +24,7 @@ public class LoginController {
         password = p;
     }
 
-     public void getProfileInput(){
+     public void getProfileInput() {
             //get from profile UI
             description = "New and improved description";
             trips = "lots of trips oh wow";
@@ -41,8 +41,8 @@ public class LoginController {
         return;
     }
 
-    public boolean register(DBManager db) throws IOException {
-        if(db.addNewEmployee(id, password)){
+    public void register(DBManager db) throws IOException {
+        if(db.addNewEmployee(id, password)) {
             System.out.println("Account created");
             return true;
         }
@@ -70,17 +70,17 @@ public class LoginController {
         description = dataMap.get("description");
         trips = dataMap.get("trips");
     }
-    public String getID(){
+    public String getID() {
         return id;
     }
 
     public String getPassword() {return password; }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 
-    public String getTrips(){
+    public String getTrips() {
         return trips;
     }
 }

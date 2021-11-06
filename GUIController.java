@@ -44,7 +44,7 @@ public class GUIController {
     }
 
 
-    private void getLoginData(){
+    private void getLoginData() {
         String id = view.getIdTextField().getText();
         String pass = view.getPasswordTextField().getText();
         model.getLoginController().getUserInput(id, pass);
@@ -73,10 +73,30 @@ public class GUIController {
     }
 
     private void addItem() {
-        // todo add the item to data
-        view.getTripExpenseModel().addElement(view.getTripItemTextField().getText() + ' ' + view.getTripCostTextField().getText());
-        view.getTripItemTextField().setText("");
-        view.getTripCostTextField().setText("");
+        try {
+            // Get data
+            String company = "";  //TODO: get user input
+            double cost = Double.parseDouble(view.getTripCostTextField().getText());
+            String location = "";  //TODO: get user input
+            String name = view.getTripItemTextField().getText();
+            int Trip_ID = 1;  //TODO: once trip select is implemented, get trip
+            String User_ID = model.getLoginController().getID();
+
+            // Set data
+            if(Expense.add(company, cost, location, name, Trip_ID, new Users(User_ID).getUserID())) {
+                System.out.println("Successfully added Expense");
+
+                view.getTripExpenseModel().addElement(view.getTripItemTextField().getText() + ' ' + view.getTripCostTextField().getText());
+                view.getTripItemTextField().setText("");
+                view.getTripCostTextField().setText("");
+            }
+            else {
+                System.out.println("Try again");
+            }
+        }
+        catch(Exception error) {
+            System.out.println(error.toString());
+        }
     }
 
     private void tripToEmployeeScreen() {
@@ -143,13 +163,13 @@ public class GUIController {
 
     }
 
-    private void loginEmployee(){
+    private void loginEmployee() {
         view.getEmployeeScreenFrame().setVisible(true);
         view.getLoginFrame().setVisible(false);
 
     }
 
-    private void loginManager(){
+    private void loginManager() {
         view.getManagerSelectionFrame().setVisible(true);
         view.getLoginFrame().setVisible(false);
     }
@@ -158,7 +178,7 @@ public class GUIController {
         view.getManagerSelectionFrame().setVisible(false);
         view.getEmployeeScreenFrame().setVisible(true);
     }
-    private void showManagerScreen(){
+    private void showManagerScreen() {
         view.getManagerSelectionFrame().setVisible(false);
         view.getManagerScreenFrame().setVisible(true);
         //TODO fill lists with appropriate names / info
@@ -166,12 +186,12 @@ public class GUIController {
 
     }
 
-    private void managerToSelection(){
+    private void managerToSelection() {
         view.getManagerSelectionFrame().setVisible(true);
         view.getManagerScreenFrame().setVisible(false);
     }
 
-    private void addEmployee(){
+    private void addEmployee() {
         // TODO if employee does not exist within company && is not tied to a manager
         if(view.getNewNameTextField().getText().equals(""))
             view.getNewNameTextField().setText("Invalid name");
@@ -189,7 +209,7 @@ public class GUIController {
 
         // else logout
     }
-    private void logout(){
+    private void logout() {
         view.getManagerSelectionFrame().setVisible(false);
         view.getEmployeeScreenFrame().setVisible(false);
 
@@ -199,7 +219,7 @@ public class GUIController {
         view.getLoginFrame().setVisible(true);
     }
 
-    private void exit(){
+    private void exit() {
         System.exit(0);
     }
 

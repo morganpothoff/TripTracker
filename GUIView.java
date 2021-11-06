@@ -90,7 +90,7 @@ public class GUIView {
 
 
 
-    public GUIView(String title){
+    public GUIView(String title) {
         // login
         // frame setups
         loginFrame = new JFrame(title);
