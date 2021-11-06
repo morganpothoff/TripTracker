@@ -45,6 +45,9 @@ public class Expense {
 	}
 
 
+
+	// ————————————————————————————————————————————————————— DB ————————————————————————————————————————————————————— //
+
 	public static Boolean add(String company, double cost, String location, String name, int Trip_ID, int User_ID) {
 		
 		try {
@@ -77,7 +80,7 @@ public class Expense {
 			expense_list.add(new Expense(expenses.getInt("Expense_ID")));
 		}
 
-		return expense_list;
+	return expense_list;
 	}
 
 
@@ -138,6 +141,71 @@ public class Expense {
 		}
 	}
 
+
+	// —————————————————————————————————————————————————— GETTERS ——————————————————————————————————————————————————— //
+
+	public int getExpense_ID() {
+		return this.Expense_ID;
+	}
+
+
+	public String getCompany() {
+		return this.Company;
+	}
+
+
+	public float getCost() {
+		return this.Cost;
+	}
+
+
+	public String getLocation() {
+		return this.Location;
+	}
+
+
+	public String getExpenseName() {
+		return this.ExpenseName;
+	}
+
+
+	public int getTrip_ID() {
+		return this.Trip_ID;
+	}
+
+
+	public int getUser_ID() {
+		return this.User_ID;
+	}
+
+
+	// —————————————————————————————————————————————————— SETTERS ——————————————————————————————————————————————————— //
+
+	public Boolean setCompany(String Company) {
+		this.Company = Company;
+		return this.edit(Company, Cost, Location, ExpenseName);
+	}
+
+
+	public Boolean setCost(float Cost) {
+		this.Cost = Cost;
+		return this.edit(Company, Cost, Location, ExpenseName);
+	}
+
+
+	public Boolean setLocation(String Location) {
+		this.Location = Location;
+		return this.edit(Company, Cost, Location, ExpenseName);
+	}
+
+
+	public Boolean setExpenseName(String ExpenseName) {
+		this.ExpenseName = ExpenseName;
+		return this.edit(Company, Cost, Location, ExpenseName);
+	}
+
+
+	// —————————————————————————————————————————————————— UTILITY ——————————————————————————————————————————————————— //
 
 	public String toString() {
 		String form = "Expense_ID: %d, Company: %s, Cost: %f, Location: %s, ExpenseName: %s, Trip_ID: %d, User_ID: %d";
