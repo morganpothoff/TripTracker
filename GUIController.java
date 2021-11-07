@@ -32,7 +32,13 @@ public class GUIController {
         view.getManagerBackButton().addActionListener((e -> managerToSelection()));
         view.getManagerAddButton().addActionListener((e -> addEmployee()));
         view.getEmployeeProposalButton().addActionListener((e -> gotoProposalScreen()));
-        view.getEmployeeTripButton().addActionListener((e -> gotoTripScreen()));
+        view.getEmployeeTripButton().addActionListener((e -> {
+            try {
+                gotoTripScreen();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }));
         view.getEmployeeLogoutButton().addActionListener((e -> employeeLogout()));
         view.getProposalBackButton().addActionListener((e -> proposalToEmployeeScreen()));
         view.getProposalSubmitButton().addActionListener((e -> submitProposal()));
@@ -75,12 +81,17 @@ public class GUIController {
     private void addItem() {
         try {
             // Get data
-            String company = "";  //TODO: get user input
+            String tempInput = view.getTripItemTextField().getText();       // get text and parse ex: "Item,StarBucks,Austin"
+            String name = tempInput.substring(0, tempInput.indexOf(','));
+            tempInput = tempInput.substring(tempInput.indexOf(',')+1);
+            String company = tempInput.substring(0, tempInput.indexOf(','));
+            tempInput = tempInput.substring(tempInput.indexOf(',')+1);
             double cost = Double.parseDouble(view.getTripCostTextField().getText());
-            String location = "";  //TODO: get user input
-            String name = view.getTripItemTextField().getText();
+            String location = tempInput;
             int Trip_ID = 1;  //TODO: once trip select is implemented, get trip
             String User_ID = model.getLoginController().getID();
+
+            view.getTripExpenseModel().addElement(name + " " + company + " " + location + " " + cost);  //todo delete once add is working
 
             // Set data
             if(Expense.add(company, cost, location, name, Trip_ID, new Users(User_ID).getUserID())) {
@@ -89,6 +100,7 @@ public class GUIController {
                 view.getTripExpenseModel().addElement(view.getTripItemTextField().getText() + ' ' + view.getTripCostTextField().getText());
                 view.getTripItemTextField().setText("");
                 view.getTripCostTextField().setText("");
+                view.getTripExpenseModel().addElement(name + " " + company + " " + location + " " + cost);
             }
             else {
                 System.out.println("Try again");
@@ -114,7 +126,10 @@ public class GUIController {
         view.getEmployeeScreenFrame().setVisible(true);
     }
 
-    private void gotoTripScreen() {
+    private void gotoTripScreen() throws IOException {
+        //todo if no trip in progress, don't switch
+        String name = view.getIdTextField().getText();
+        //model.getEmployeeInfoMap().get(name);                   // todo get trip data and add all expenses to the trip list
         view.getEmployeeScreenFrame().setVisible(false);
         view.getTripFrame().setVisible(true);
     }
