@@ -377,7 +377,7 @@ public class GUIView {
         tripExpensesLabel = new JLabel("Expenses");
         tripItemLabel = new JLabel("Item");
         tripCostLabel = new JLabel("Cost");
-        tripItemTextField = new JTextField("Ex: \"Large coffee from SBucks\"");
+        tripItemTextField = new JTextField("Ex: \"Coffee,Starbucks,Austin\"");
         tripCostTextField = new JTextField("Ex: \"5.89\"");
         tripAddButton = new JButton("Add");
         tripBackButton = new JButton("Back");
