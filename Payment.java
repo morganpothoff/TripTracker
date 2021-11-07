@@ -4,9 +4,8 @@
 *   created by: Morgan Pothoff                                                                                         *
 *   on 2021.11.02                                                                                                      *
 *                                                                                                                      *
-*   DESCRIPTION: TEMPLATE                                                                                              *
-*   BUGS:                                                                                                              *
-*   FUTURE:                                                                                                            *
+*   DESCRIPTION: This file allows a user to add, edit, and delete a payment. It is not implemented, so functionality   *
+*    beyond its current state is limited.                                                                              *
 *                                                                                                                      *
 ***********************************************************************************************************************/
 
