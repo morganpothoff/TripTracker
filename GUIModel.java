@@ -6,12 +6,16 @@ public class GUIModel {
     private LoginController loginController;
     private DBManager dbManager;
     private HashMap<String, HashMap<String, String>> employeeInfoMap;
-
+    private Users currUser;
 
     public GUIModel() throws IOException {
         loginController = new LoginController();
         dbManager = new DBManager();
         HashMap<String, HashMap<String, String>> employeeInfoMap = dbManager.getEmployeeInfoMap();
+    }
+
+    public void setUser(Users u){
+        currUser = u;
     }
     public LoginController getLoginController() {
         return loginController;
