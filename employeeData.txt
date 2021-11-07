@@ -14,4 +14,7 @@ password:12345
 trips:1
 description:A nice Guy
 
+Newguy
+password:newPa$$
+
 end
