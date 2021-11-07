@@ -4,9 +4,8 @@
 *   created by: Morgan Pothoff                                                                                         *
 *   on 2021.11.02                                                                                                      *
 *                                                                                                                      *
-*   DESCRIPTION: TEMPLATE                                                                                              *
-*   BUGS:                                                                                                              *
-*   FUTURE:                                                                                                            *
+*   DESCRIPTION: This file contains many getters and setters, and has the functionality to add, edit, and delete an    *
+*    expense from the arraylist.                                                                                       *
 *                                                                                                                      *
 ***********************************************************************************************************************/
 

@@ -4,9 +4,14 @@
 *   created by: Morgan Pothoff                                                                                         *
 *   on 2021.11.02                                                                                                      *
 *                                                                                                                      *
-*   DESCRIPTION: TEMPLATE                                                                                              *
-*   BUGS:                                                                                                              *
-*   FUTURE:                                                                                                            *
+*   DESCRIPTION: This file provides simplified interfacing with the SQL module. It mainly does so by creating a        *
+*    connected connection object with uniform class methods that take the query string for the following three query   *
+*    types:                                                                                                            *
+*     1. SELECT                                                                                                        *
+*     2. INSERT                                                                                                        *
+*     3. UPDATE                                                                                                        *
+*    Notably, the connection does not automatically close itself. This should be done by the user (but hasn't been in  *
+*    in this case :) )                                                                                                 *
 *                                                                                                                      *
 ***********************************************************************************************************************/
 
