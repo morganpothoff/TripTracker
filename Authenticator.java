@@ -2,6 +2,7 @@ import java.lang.String;
 import java.io.*;
 import java.util.*;
 
+//Authenticator for Login--Zachary Sedlacek
 public class Authenticator {
 
     String id, password;

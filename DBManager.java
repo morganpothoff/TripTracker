@@ -2,7 +2,7 @@ import java.lang.String;
 import java.io.*;
 import java.util.*;
 
-
+//Database manager for getting/editing employee and trip information--Zachary Sedlacek
 public class DBManager {
 
     String employeeDataPath = "employeeData.txt";

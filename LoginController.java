@@ -2,6 +2,7 @@ import java.lang.String;
 import java.io.*;
 import java.util.*;
 
+//Controller for user login and registration--Zachary Sedlacek
 public class LoginController {
     String id, password, description, trips;
 
