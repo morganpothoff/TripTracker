@@ -1,3 +1,4 @@
+// Chris Hutcherson
 import java.io.IOException;
 
 public class GUIApplication {
