@@ -146,8 +146,10 @@ public class GUIController {
         // todo if name matches manager name
         Authenticator authenticator = new Authenticator(model.getLoginController().getID(), model.getLoginController().getPassword());
         if(authenticator.authenticate(model.getDbManager())){ // if login was valid
+            // create user based from login ID
             // todo check for manager vs employee
             // if employee
+            // todo fix once user info is found... model.setUser();
             loginEmployee();
             /* else
             loginManager();
