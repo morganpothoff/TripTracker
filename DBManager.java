@@ -20,6 +20,7 @@ public class DBManager {
             return false;
     } 
 
+    //Parse database file for employee information. Return hash map of employee information.
     public HashMap<String, HashMap<String, String>> getEmployeeInfoMap() throws IOException {
         HashMap<String, HashMap<String, String>> employeeInfoMap = new HashMap<String, HashMap<String, String>>();
         BufferedReader br = null;
@@ -57,6 +58,7 @@ public class DBManager {
         return employeeInfoMap;
     }
 
+    //Add new employee information to database if new ID does not yet exist
     public Boolean addNewEmployee(String id, String password) throws IOException {
         HashMap<String, HashMap<String, String>> employeeInfoMap = getEmployeeInfoMap();
         if (employeeInfoMap.get(id) == null) {
@@ -71,6 +73,7 @@ public class DBManager {
             return false;
     }
 
+    //Write new employee information to database file
     public void updateEmployeeData(HashMap<String, HashMap<String, String>> newMap) throws IOException{
         
         File file = null;

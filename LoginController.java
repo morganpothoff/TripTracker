@@ -12,25 +12,27 @@ public class LoginController {
         description="";
         trips="";
     }
-
+	
+    //Get user ID and password from GUI
     public void getUserInput(String i, String p) {
-            //id = entered id password = entered password, get from GUI later
             id = i;
             password = p;
     }
-
+    
     public void getNewUserInput(String i, String p) {
         //id = entered id password = entered password, from REGISTER FRAME
         id = i;
         password = p;
     }
-
+     
+     //Get new profile information from Edit GUI
      public void getProfileInput() {
-            //get from profile UI
+           
             description = "New and improved description";
             trips = "lots of trips oh wow";
     }
-
+    
+    //Authenticate login with entered ID and Password. Display account information with successful login, display error with no matching account
     public void login(DBManager db) throws IOException {
         Authenticator auth = new Authenticator(id, password);
         auth.authenticate(db);
@@ -42,6 +44,7 @@ public class LoginController {
         return;
     }
 
+    //Create new account with user entered ID and password if ID is not taken
     public boolean register(DBManager db) throws IOException {
         if(db.addNewEmployee(id, password)) {
             System.out.println("Account created");
@@ -55,7 +58,7 @@ public class LoginController {
     }
 
 
-
+    //Change profile information to new user-entered information
     public void editProfile(DBManager db, Profile profile) throws IOException {
         getProfileInput();
         profile.edit(description, trips);
