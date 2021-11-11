@@ -21,11 +21,13 @@ public class Payment {
 	private int User_ID;
 
 
+	// TODO: Constructor
 	Payment() {
 
 	}
 
 
+	// Adds Payment
 	public static Boolean add(int account_number, String payment_method, int Expense_ID, int User_ID) {
 		
 		try {
@@ -45,6 +47,7 @@ public class Payment {
 	}
 
 
+	// Edits Payment and sets data to current data
 	public Boolean edit(int account_number, String payment_method) {
 		this.account_number = account_number;
 		this.payment_method = payment_method;
@@ -66,6 +69,7 @@ public class Payment {
 	}
 
 
+	// Edits Payment
 	public static Boolean edit(int id, int account_number, String payment_method) {
 		try {
 			String form =	"UPDATE `Expenses` "
@@ -84,6 +88,7 @@ public class Payment {
 	}
 
 
+	// Deletes Payment
 	public static Boolean delete(int id) {
 		try {
 			String form = "DELETE FROM `Expenses` WHERE `Payment_ID` = %d;";
