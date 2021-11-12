@@ -8,15 +8,15 @@ public class Users {
     protected String password;
     protected String email;
 
-
+    // Constructors added by Morgan Pothoff
+    // Constructor throws an exception if there are no results found for expense ID.
     Users(int id) throws Exception {
         String get_user_query = String.format("SELECT * FROM `Users` WHERE `User_ID` = %d;", id);
         ConnectedDBConnection connection = new ConnectedDBConnection();
         ResultSet user_results = connection.select(get_user_query);
 
         // Check that atleast 1 row is returned
-        if(!user_results.next())
-        {
+        if(!user_results.next()) {
             throw new Exception("No user results found for user ID");
         }
 
@@ -29,15 +29,14 @@ public class Users {
         myTrip = new Trip(id)
     }
 
-
+    // Constructor throws an exception if there are no results found for expense ID.
     Users(String email) throws Exception {
         String get_user_query = String.format("SELECT * FROM `Users` WHERE `Email` = '%s';", email);
         ConnectedDBConnection connection = new ConnectedDBConnection();
         ResultSet user_results = connection.select(get_user_query);
 
         // Check that atleast 1 row is returned
-        if(!user_results.next())
-        {
+        if(!user_results.next()) {
             throw new Exception("No user results found for user ID");
         }
 
@@ -49,7 +48,7 @@ public class Users {
 
 
     //Methods
-    public String getName()    {
+    public String getName() {
         return name;
     }//End of getName
 
@@ -65,8 +64,7 @@ public class Users {
         return email;
     }//End of getEmail
 
-    public void setPassword(String newPassword)
-    {
+    public void setPassword(String newPassword) {
          password = newPassword;  
     }//End of setPassword
     
@@ -87,8 +85,6 @@ public class Users {
         }
         return retVal;
     }//End of setEmail
-
-    // Edited by: MorganPotttt-hofff
 
 }//End of Users
 
