@@ -24,7 +24,7 @@ public class Expense {
 	private int User_ID;
 
 
-	// Constructor
+	// Constructor throws an exception if there are no results found for user ID.
 	Expense(int id) throws Exception {
         String get_expense_query = String.format("SELECT * FROM `Expenses` WHERE `Expense_ID` = %d;", id);
         ConnectedDBConnection connection = new ConnectedDBConnection();
@@ -35,7 +35,7 @@ public class Expense {
             throw new Exception("No user results found for user ID");
         }
 
-        Expense_ID = id;
+		Expense_ID = id;
 		Company = expense_results.getString("Company");
 		Cost = expense_results.getFloat("Cost");
 		Location = expense_results.getString("Location");
@@ -48,7 +48,8 @@ public class Expense {
 
 	// ————————————————————————————————————————————————————— DB ————————————————————————————————————————————————————— //
 
-	// Adds an expense 
+	// Adds an expense to the database using the connection insert method.
+	// Returns T/F depending upon its success.
 	public static Boolean add(String company, double cost, String location, String name, int Trip_ID, int User_ID) {
 		
 		try {
@@ -68,7 +69,8 @@ public class Expense {
 	}
 
 
-	// Created an ArrayList of all the expenses
+	// Creates an ArrayList of all the expenses for the trip using the trip ID.
+	// Returns the expense list unless an exception was thrown due to an error.
 	public static ArrayList<Expense> all_expenses_for_trip(int Trip_ID) throws Exception {
 		ArrayList<Expense> expense_list = new ArrayList<Expense>();
 
@@ -86,7 +88,8 @@ public class Expense {
 	}
 
 
-	// Allows the user to edit an expense. Sets data to current data
+	// Allows the user to edit an expense using the objects.
+	// Returns T/F depending upon its success.
 	public Boolean edit(String company, float cost, String location, String name) {
 		this.Company = company;
 		this.Cost = cost;
@@ -110,7 +113,8 @@ public class Expense {
 	}
 
 
-	// Allows the user to edit an expense
+	// Allows the user to edit an expense using specified expense.
+	// Returns T/F depending upon its success.
 	public static Boolean edit(int id, String company, float cost, String location, String name) {
 		try {
 			String form =	"UPDATE `Expenses` "
@@ -129,7 +133,8 @@ public class Expense {
 	}
 
 
-	// Deletes Expense ID to delete the expense
+	// Deletes the expense using the primary key ID by calling the connection method update. 
+	// Returns T/F depending on its success.
 	public static Boolean delete(int id) {
 		try {
 			String form = "DELETE FROM `Expenses` WHERE `Expense_ID` = %d;";
