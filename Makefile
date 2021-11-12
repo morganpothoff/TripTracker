@@ -21,7 +21,3 @@ all:
 run:
 	java -cp '.:mysql-connector-java.jar' GUIApplication
 
-
-# Runs mysql-connector-java.jar test.
-test:
-	java -cp '.:mysql-connector-java.jar' Test
