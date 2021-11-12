@@ -28,6 +28,7 @@ public class ConnectedDBConnection {
 	private String _password = "";
 
 
+	// Constructor that throws an exception if there is an error during connection process.
 	ConnectedDBConnection() throws Exception {
 		String connection_url =	String.format("jdbc:mysql://%s:%d/%s", _domain, _port, _database);
 		// Solution for:
@@ -39,11 +40,14 @@ public class ConnectedDBConnection {
 	}
 
 
+	// Gets the connection.
 	public Connection connection() {
 		return _connection;
 	}
 
 
+	// Inserts the query into the database. Throws an exception if there is an error during this process.
+	// Returns a result set of all keys generated from the insertion query.
 	ResultSet insert(String query) throws Exception {
 		Statement statement = _connection.createStatement();
 		statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
@@ -51,12 +55,16 @@ public class ConnectedDBConnection {
 	}
 
 
+	// Selects data from the database using a query. Throws an exception if there is an error during this process.
+	// Returns a result set of selected data.
 	ResultSet select(String query) throws Exception {
 		Statement statement = _connection.createStatement();
 		return statement.executeQuery(query);
 	}
 
 
+	// Updates the data in the database. Throws an exception if there is an error during this process.
+	// Returns an integer of the number of rows affected by the update.
 	int update(String query) throws Exception {
 		Statement statement = _connection.createStatement();
 		return statement.executeUpdate(query);
