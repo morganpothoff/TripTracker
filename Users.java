@@ -65,14 +65,19 @@ public class Users {
         return email;
     }//End of getEmail
 
-    public boolean setPassword(String newPassword, String currentPassword) {
+    public void setPassword(String newPassword)
+    {
+         password = newPassword;  
+    }//End of setPassword
+    
+    public boolean updatePassword(String newPassword, String currentPassword) {
         boolean retVal = false;
         if(currentPassword.equals(password)) {
             password = newPassword;
             retVal = true;
         }
         return retVal;
-    }//End of setPassword
+    }//End of updatePassword
 
     public boolean setEmail(String newEmail, String currentEmail) {
         boolean retVal = false;
