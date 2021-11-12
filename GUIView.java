@@ -11,7 +11,7 @@ public class GUIView {
     private JTextField passwordTextField;
     private JButton registerButton;
     private JButton loginButton;
-    private JButton exitButton; //getters and setters for below
+    private JButton exitButton;
 
     // register
     private JFrame registerFrame;
