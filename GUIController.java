@@ -9,6 +9,10 @@ public class GUIController {
         view = v;
     }
 
+    /**
+     * is executed during application startup
+     * assigns action listener too all GUI buttons
+     */
     public void initController() {
         view.getLoginButton().addActionListener(e -> {
             try {
@@ -51,6 +55,9 @@ public class GUIController {
     }
 
 
+    /**
+     * gets user input from text fields and passes to the login controller
+     */
     private void getLoginData() {
         String id = view.getIdTextField().getText();
         String pass = view.getPasswordTextField().getText();
@@ -58,7 +65,12 @@ public class GUIController {
     }
 
 
-
+    /**
+     * when registration button is pressed
+     * checks if username already exists, if not
+     * register new user and password in database
+     * @throws IOException
+     */
     private void registerUser() throws IOException {
         String id = view.getRegisterIdTextField().getText();
         String pass = view.getRegisterPasswordTextField().getText();
@@ -79,11 +91,14 @@ public class GUIController {
         tripToEmployeeScreen();
     }
 
+    /**
+     * add a new item to the expense list based on user inputs
+     */
     private void addItem() {
         try {
             // Get data
             String tempInput = view.getTripItemTextField().getText();       // get text and parse ex: "Item,StarBucks,Austin"
-            String name = tempInput.substring(0, tempInput.indexOf(','));
+            String name = tempInput.substring(0, tempInput.indexOf(','));   // following lines parse the input string
             tempInput = tempInput.substring(tempInput.indexOf(',')+1);
             String company = tempInput.substring(0, tempInput.indexOf(','));
             tempInput = tempInput.substring(tempInput.indexOf(',')+1);
@@ -112,15 +127,22 @@ public class GUIController {
         }
     }
 
+    /**
+     * switch frames from trip manager to employee main menu
+     */
     private void tripToEmployeeScreen() {
         view.getTripFrame().setVisible(false);
         view.getEmployeeScreenFrame().setVisible(true);
     }
 
+    /**
+     * submit proposal details and switch screen back to menu
+     */
     private void submitProposal() {
         // todo actually submit the proposal
         proposalToEmployeeScreen();
     }
+
 
     private void proposalToEmployeeScreen() {
         view.getProposalFrame().setVisible(false);
@@ -142,6 +164,11 @@ public class GUIController {
 
     }
 
+    /**
+     * validates user input username and password against database
+     * create a user class for reference based on login details (if valid) and switches screen
+     * @throws IOException
+     */
     private void login() throws IOException {
         getLoginData();
         // todo if name matches manager name
@@ -163,6 +190,9 @@ public class GUIController {
 
     }
 
+    /**
+     * switch from login frame to register frame
+     */
     private void register() {
 
         view.getLoginFrame().setVisible(false);
@@ -170,6 +200,9 @@ public class GUIController {
 
     }
 
+    /**
+     * switch from register frame to login frame
+     */
     private void back(){
         // clear registration textfields
         view.getRegisterIdTextField().setText("");
@@ -181,21 +214,34 @@ public class GUIController {
 
     }
 
+    /**
+     * switch from login frame to employee menu
+     */
     private void loginEmployee() {
         view.getEmployeeScreenFrame().setVisible(true);
         view.getLoginFrame().setVisible(false);
 
     }
 
+    /**
+     * switch from login frame to manager menu
+     */
     private void loginManager() {
         view.getManagerSelectionFrame().setVisible(true);
         view.getLoginFrame().setVisible(false);
     }
 
+    /**
+     * switch from manger menu to employee view
+     */
     private void showEmployeeScreen() {
         view.getManagerSelectionFrame().setVisible(false);
         view.getEmployeeScreenFrame().setVisible(true);
     }
+
+    /**
+     * switch from manager menu to manager view
+     */
     private void showManagerScreen() {
         view.getManagerSelectionFrame().setVisible(false);
         view.getManagerScreenFrame().setVisible(true);
@@ -204,11 +250,18 @@ public class GUIController {
 
     }
 
+    /**
+     * switch from manager view to manager menu
+     */
     private void managerToSelection() {
         view.getManagerSelectionFrame().setVisible(true);
         view.getManagerScreenFrame().setVisible(false);
     }
 
+    /**
+     * search for existing employee in database, if they are
+     * not tied to a manager, make the link to currently signed in manager
+     */
     private void addEmployee() {
         // TODO if employee does not exist within company && is not tied to a manager
         if(view.getNewNameTextField().getText().equals(""))
@@ -219,6 +272,10 @@ public class GUIController {
         }
     }
 
+    /**
+     * switch from employee screen to login, and delete currently signed in user
+     * if manager, only go back to manager menu
+     */
     private void employeeLogout() {
         // todo if is a manager
         // return to selection screen
@@ -227,16 +284,23 @@ public class GUIController {
 
         // else logout
     }
+
+    /**
+     * clear login screen and only show login screen
+     */
     private void logout() {
         view.getManagerSelectionFrame().setVisible(false);
         view.getEmployeeScreenFrame().setVisible(false);
 
-        // return to login screen and clear login textfields
+        // return to login screen and clear login text fields
         view.getIdTextField().setText("");
         view.getPasswordTextField().setText("");
         view.getLoginFrame().setVisible(true);
     }
 
+    /**
+     * exit program
+     */
     private void exit() {
         System.exit(0);
     }
