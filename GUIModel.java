@@ -9,15 +9,18 @@ public class GUIModel {
     private HashMap<String, HashMap<String, String>> employeeInfoMap;
     private Users currUser;
 
+    // constructor
     public GUIModel() throws IOException {
         loginController = new LoginController();
         dbManager = new DBManager();
         HashMap<String, HashMap<String, String>> employeeInfoMap = dbManager.getEmployeeInfoMap();
     }
 
+    // create user that is logged in for quick reference
     public void setUser(Users u){
         currUser = u;
     }
+
     public LoginController getLoginController() {
         return loginController;
     }
