@@ -8,6 +8,7 @@ public class GUIModel {
     private DBManager dbManager;
     private HashMap<String, HashMap<String, String>> employeeInfoMap;
     private Users currUser;
+    private boolean isManager;
 
     // constructor
     public GUIModel() throws IOException {
@@ -43,5 +44,13 @@ public class GUIModel {
 
     public Users getCurrUser() {
         return currUser;
+    }
+
+    public boolean isManager() {
+        return isManager;
+    }
+
+    public void setManager(boolean manager) {
+        isManager = manager;
     }
 }
