@@ -10,7 +10,7 @@ public class DBManager {
     int id;
 
     //Check database for matching ID and password
-    public Boolean checkLogin(String username, String password) throws IOException {
+    public Boolean checkLogin(String username, String password) throws Exception {
         /*HashMap<String, HashMap<String, String>> employeeInfoMap = getEmployeeInfoMap();
         //System.out.println(employeeInfoMap.get(id));
 
