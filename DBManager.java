@@ -1,6 +1,7 @@
 import java.lang.String;
 import java.io.*;
 import java.util.*;
+import java.sql.*;
 
 //Database manager for getting/editing employee and trip information--Zachary Sedlacek
 public class DBManager {
@@ -9,7 +10,7 @@ public class DBManager {
 
     //Check database for matching ID and password
     public Boolean checkLogin(String id, String password) throws IOException {
-        HashMap<String, HashMap<String, String>> employeeInfoMap = getEmployeeInfoMap();
+        /*HashMap<String, HashMap<String, String>> employeeInfoMap = getEmployeeInfoMap();
         //System.out.println(employeeInfoMap.get(id));
 
         if (employeeInfoMap.get(id) == null)
@@ -18,6 +19,12 @@ public class DBManager {
             return true;
         else 
             return false;
+            */
+       
+        String get_user_query = String.format("SELECT User_ID FROM Users WHERE UserName = '%s';", username);
+        ConnectedDBConnection connection = new ConnectedDBConnection();
+        ResultSet user_results = connection.select(get_user_query);
+	   userID = user_results.getInt("User_ID");
     } 
 
     //Parse database file for employee information. Return hash map of employee information.
