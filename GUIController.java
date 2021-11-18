@@ -1,6 +1,7 @@
 // Chris Hutcherson
 import javax.swing.*;
 import java.io.IOException;
+import java.sql.*;
 
 public class GUIController {
     private GUIModel model;
@@ -20,6 +21,8 @@ public class GUIController {
                 login();
             } catch (IOException ioException) {
                 ioException.printStackTrace();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         });
         view.getRegisterButton().addActionListener(e -> register());
@@ -179,19 +182,31 @@ public class GUIController {
      * create a user class for reference based on login details (if valid) and switches screen
      * @throws IOException
      */
-    private void login() throws IOException {
+    private void login() throws Exception {
         getLoginData();
         // todo if name matches manager name
         Authenticator authenticator = new Authenticator(model.getLoginController().getID(), model.getLoginController().getPassword());
         if(authenticator.authenticate(model.getDbManager())){ // if login was valid
+            // check if manager
             // create user based from login ID
+            model.setUser(new Users(view.getIdTextField().getText()));
+            String get_user_query = String.format("SELECT isManager FROM Users WHERE User_ID = %d;", model.getCurrUser().getUserID());
+            ConnectedDBConnection connection = new ConnectedDBConnection();
+            ResultSet user_results = connection.select(get_user_query);
+            boolean isManager = user_results.getBoolean("isManager");
+
+            if(isManager){
+                loginManager();
+            }
+            else{
+                loginEmployee();
+            }
 
             // todo check for manager vs employee
             // if employee
-            // todo fix once user info is found... model.setUser();
-            loginEmployee();
+
             /* else
-            loginManager();
+
              */
         }
         else{
