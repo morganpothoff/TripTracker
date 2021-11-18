@@ -1,4 +1,5 @@
 // Chris Hutcherson
+import javax.swing.*;
 import java.io.IOException;
 
 public class GUIController {
@@ -75,6 +76,9 @@ public class GUIController {
         String id = view.getRegisterIdTextField().getText();
         String pass = view.getRegisterPasswordTextField().getText();
         model.getLoginController().getNewUserInput(id, pass);
+        if(view.getIsManagerCheckBox().isSelected()){ // if manager check box is selected
+            // todo make sure they are a manager in database
+        }
 
         if(model.getLoginController().register(model.getDbManager())){  // if successful registration
             back();
@@ -140,6 +144,7 @@ public class GUIController {
      */
     private void submitProposal() {
         // todo actually submit the proposal
+
         proposalToEmployeeScreen();
     }
 
@@ -162,6 +167,11 @@ public class GUIController {
         view.getEmployeeScreenFrame().setVisible(false);
         view.getProposalFrame().setVisible(true);
 
+        // fill in the manager list
+
+        view.getProposalManagerList().addItem("hello");
+        view.getProposalManagerList().setSelectedIndex(0);
+
     }
 
     /**
@@ -175,6 +185,7 @@ public class GUIController {
         Authenticator authenticator = new Authenticator(model.getLoginController().getID(), model.getLoginController().getPassword());
         if(authenticator.authenticate(model.getDbManager())){ // if login was valid
             // create user based from login ID
+
             // todo check for manager vs employee
             // if employee
             // todo fix once user info is found... model.setUser();
