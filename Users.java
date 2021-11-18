@@ -40,7 +40,7 @@ public class Users {
             throw new Exception("No user results found for user ID");
         }
 
-        email = email;
+        email = user_results.getString("eMail");
         name = user_results.getString("First_Name") + " " + user_results.getString("Last_Name");
         password = user_results.getString("Password");
         userID = user_results.getInt("User_ID");
