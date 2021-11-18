@@ -6,10 +6,11 @@ import java.sql.*;
 //Database manager for getting/editing employee and trip information--Zachary Sedlacek
 public class DBManager {
 
-    String employeeDataPath = "employeeData.txt", id, firstName, lastName;
+    String employeeDataPath = "employeeData.txt", firstName, lastName;
+    int id;
 
     //Check database for matching ID and password
-    public Boolean checkLogin(String id, String password) throws IOException {
+    public Boolean checkLogin(String username, String password) throws IOException {
         /*HashMap<String, HashMap<String, String>> employeeInfoMap = getEmployeeInfoMap();
         //System.out.println(employeeInfoMap.get(id));
 
@@ -21,13 +22,13 @@ public class DBManager {
             return false;
             */
        
-        String get_user_query = String.format("SELECT User_ID FROM Users WHERE UserName = '%s';", username);
+        String get_user_query = String.format("SELECT User_ID, First_Name, Last_Name FROM Users WHERE UserName = '%s';", username);
         ConnectedDBConnection connection = new ConnectedDBConnection();
         ResultSet user_results = connection.select(get_user_query);
-	   id = user_results.getInt("User_ID");
+	   id = user_results.getInt("User_ID");	   	
 	   firstName = user_result.getString("First_Name");
 	   lastName = user_result.getString("Last_Name");
-
+	   
 	   if(!user_results.next()) {
             return false;
         }
