@@ -63,6 +63,7 @@ public class GUIController {
      * gets user input from text fields and passes to the login controller
      */
     private void getLoginData() {
+
         String id = view.getIdTextField().getText();
         String pass = view.getPasswordTextField().getText();
         model.getLoginController().getUserInput(id, pass);
@@ -193,9 +194,9 @@ public class GUIController {
             String get_user_query = String.format("SELECT isManager FROM Users WHERE User_ID = %d;", model.getCurrUser().getUserID());
             ConnectedDBConnection connection = new ConnectedDBConnection();
             ResultSet user_results = connection.select(get_user_query);
-            boolean isManager = user_results.getBoolean("isManager");
+            model.setManager(user_results.getBoolean("isManager"));
 
-            if(isManager){
+            if(model.isManager()){
                 loginManager();
             }
             else{
@@ -303,12 +304,16 @@ public class GUIController {
      * if manager, only go back to manager menu
      */
     private void employeeLogout() {
-        // todo if is a manager
+        // if is a manager
         // return to selection screen
-        view.getManagerSelectionFrame().setVisible(true);
-        view.getEmployeeScreenFrame().setVisible(false);
+        if(model.isManager()){
+            view.getManagerSelectionFrame().setVisible(true);
+            view.getEmployeeScreenFrame().setVisible(false);
+        }
+        else{
+            logout();
+        }
 
-        // else logout
     }
 
     /**
