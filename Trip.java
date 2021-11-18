@@ -10,20 +10,19 @@ public class Trip {
 	protected String location;
 	
 	//Constructor
-	Trip(int userID)
-	{
-		String get_trip_query = String.format(“Select*FROM ‘AllTrips’ WHERE ‘User_ID’ = %d;”n id);
-		ConnectedDBConnection connection = new ConnectedDBConnection();
-	    ResultSet trip_results = connection.select(get_trip_query);
+	Trip(int userID) throws Exception {
+		String get_user_query = String.format("SELECT * FROM `AllTrip` WHERE `User_ID` = %d;", userID);
+       	 	ConnectedDBConnection connection = new ConnectedDBConnection();
+		ResultSet trip_results = connection.select(get_user_query);
 	    
 	    // Check that atleast 1 row is returned
-    	if(!trip_results.next()) {
+    		if(!trip_results.next()) {
         	throw new Exception("No user results found for trip ID");
     	}
 
-    	tripID = trip_results.getString("Trip_ID") ;
-    	myDescription = trip_results.getString("First_Name") 
-		start_Date = trip_results.getString("Last_Name");
+    	tripID = trip_results.getInt("Trip_ID");
+    	myDescription = trip_results.getString("First_Name");
+	start_Date = trip_results.getString("Last_Name");
     	end_date = trip_results.getString("Password");
     	location = trip_results.getString("Email");
     	setBudget = trip_results.getFloat("Set_Budget");
