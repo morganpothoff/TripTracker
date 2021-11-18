@@ -23,6 +23,7 @@ public class GUIView {
     private JTextField registerEmailTextField;
     private JButton registerRegisterButton;
     private JButton registerReturnButton;
+    private JCheckBox isManagerCheckBox;
 
     //  manager selection
     private JFrame managerSelectionFrame;
@@ -75,6 +76,7 @@ public class GUIView {
     private JTextField proposalDescriptionTextField;
     private JButton proposalBackButton;
     private JButton proposalSubmitButton;
+    private JComboBox proposalManagerList;
 
     // trip screen
     private JFrame tripFrame;
@@ -150,6 +152,7 @@ public class GUIView {
         registerEmailTextField = new JTextField();
         registerRegisterButton = new JButton("Register");
         registerReturnButton = new JButton("Back");
+        isManagerCheckBox = new JCheckBox("Check if Manager");
 
         // Add UI element to frame
         GroupLayout registerLayout = new GroupLayout(registerFrame.getContentPane());
@@ -160,10 +163,11 @@ public class GUIView {
                 .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(registerIdLabel)
                         .addComponent(registerPasswordLabel).addComponent(registerEmailLabel).addComponent(registerReturnButton))
                 .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(registerIdTextField)
-                        .addComponent(registerPasswordTextField).addComponent(registerEmailTextField).addComponent(registerRegisterButton)));
+                        .addComponent(registerPasswordTextField).addComponent(registerEmailTextField).addComponent(registerRegisterButton))
+                .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(isManagerCheckBox)));
         registerLayout.setVerticalGroup(registerLayout.createSequentialGroup()
                 .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(registerIdLabel)
-                        .addComponent(registerIdTextField))
+                        .addComponent(registerIdTextField).addComponent(isManagerCheckBox))
                 .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(registerPasswordLabel)
                         .addComponent(registerPasswordTextField))
                 .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(registerEmailLabel)
@@ -337,6 +341,8 @@ public class GUIView {
         proposalDescriptionTextField = new JTextField("Ex: Conference with Mr. Doe about Project X");
         proposalBackButton = new JButton("Back");
         proposalSubmitButton = new JButton("Submit");
+        String[] managerStrings = { };
+        proposalManagerList = new JComboBox(managerStrings);
 
         // Add UI element to frame
         GroupLayout proposalLayout = new GroupLayout(proposalFrame.getContentPane());
@@ -347,9 +353,9 @@ public class GUIView {
                 .addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(proposalLocationLabel)
                         .addComponent(proposalLocationTextField).addComponent(proposalStartLabel).addComponent(proposalStartTextField)
                         .addComponent(proposalEstimateLabel).addComponent(proposalEstimateTextField).addComponent(proposalDescriptionLabel)
-                        .addComponent(proposalDescriptionTextField).addComponent(proposalBackButton))
+                        .addComponent(proposalDescriptionTextField).addComponent(proposalSubmitButton).addComponent(proposalBackButton))
                 .addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(proposalEndLabel)
-                        .addComponent(proposalEndTextField).addComponent(proposalSubmitButton)));
+                        .addComponent(proposalEndTextField).addComponent(proposalManagerList)));
         proposalLayout.setVerticalGroup(proposalLayout.createSequentialGroup()
                 .addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalLocationLabel))
                 .addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalLocationTextField))
@@ -359,7 +365,8 @@ public class GUIView {
                 .addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalEstimateTextField))
                 .addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalDescriptionLabel))
                 .addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalDescriptionTextField))
-                .addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalBackButton).addComponent(proposalSubmitButton)));
+                .addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalSubmitButton).addComponent(proposalManagerList))
+                .addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalBackButton)));
         proposalLayout.linkSize(SwingConstants.HORIZONTAL, employeeProposalButton, employeeCancelPropButton);
         proposalFrame.getContentPane().setLayout(proposalLayout);
 
@@ -989,5 +996,17 @@ public class GUIView {
 
     public void setTripExpenseList(JList tripExpenseList) {
         this.tripExpenseList = tripExpenseList;
+    }
+
+    public JCheckBox getIsManagerCheckBox() {
+        return isManagerCheckBox;
+    }
+
+    public JComboBox getProposalManagerList() {
+        return proposalManagerList;
+    }
+
+    public void setProposalManagerList(JComboBox proposalManagerList) {
+        this.proposalManagerList = proposalManagerList;
     }
 }
