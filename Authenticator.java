@@ -12,7 +12,7 @@ public class Authenticator {
         password = inputPassword;
     }
 
-    public boolean authenticate(DBManager db) throws IOException {
+    public boolean authenticate(DBManager db) throws Exception {
         return db.checkLogin(id, password);
     }
 }
