@@ -6,7 +6,7 @@ import java.sql.*;
 //Database manager for getting/editing employee and trip information--Zachary Sedlacek
 public class DBManager {
 
-    String employeeDataPath = "employeeData.txt", id;
+    String employeeDataPath = "employeeData.txt", id, firstName, lastName;
 
     //Check database for matching ID and password
     public Boolean checkLogin(String id, String password) throws IOException {
@@ -25,6 +25,9 @@ public class DBManager {
         ConnectedDBConnection connection = new ConnectedDBConnection();
         ResultSet user_results = connection.select(get_user_query);
 	   id = user_results.getInt("User_ID");
+	   firstName = user_result.getString("First_Name");
+	   lastName = user_result.getString("Last_Name");
+
 	   if(!user_results.next()) {
             return false;
         }

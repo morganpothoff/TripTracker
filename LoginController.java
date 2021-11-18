@@ -1,7 +1,6 @@
 import java.lang.String;
 import java.io.*;
 import java.util.*;
-import java.sql.*;
 
 //Controller for user login and registration--Zachary Sedlacek
 public class LoginController {
@@ -40,12 +39,8 @@ public class LoginController {
         Authenticator auth = new Authenticator(id, password);
         if (auth.authenticate(db)){
         	id = db.id;
-        	String get_user_query = String.format("SELECT First_Name, Last_Name FROM Users WHERE User_ID = '%d';", id);
-        	ConnectedDBConnection connection = new ConnectedDBConnection();
-		ResultSet user_results = connection.select(get_user_query);
-		
-        	firstName = user_result.getString("First_Name");
-		lastName = user_result.getString("Last_Name");
+        	firstName = db.firstName;
+        	lastName = db.lastName;
         }
 	  
        /* HashMap<String, HashMap<String, String>> employeeMap = db.getEmployeeInfoMap();
