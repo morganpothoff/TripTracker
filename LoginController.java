@@ -4,9 +4,10 @@ import java.util.*;
 
 //Controller for user login and registration--Zachary Sedlacek
 public class LoginController {
-    String id, password, description, trips, firstName, lastName;
+    String id, password, description, trips, firstName, lastName, username;
 
     LoginController() {
+    	   username="";
         id ="";
         firstName="";
         lastName="";
@@ -16,14 +17,14 @@ public class LoginController {
     }
 	
     //Get user ID and password from GUI
-    public void getUserInput(String i, String p) {
-            id = i;
+    public void getUserInput(String u, String p) {
+            username = u;
             password = p;
     }
     
     public void getNewUserInput(String i, String p) {
         //id = entered id password = entered password, from REGISTER FRAME
-        id = i;
+        username = u;
         password = p;
     }
      
@@ -36,7 +37,7 @@ public class LoginController {
     
     //Authenticate login with entered ID and Password. Display account information with successful login, display error with no matching account
     public void login(DBManager db) throws IOException {
-        Authenticator auth = new Authenticator(id, password);
+        Authenticator auth = new Authenticator(username, password);
         if (auth.authenticate(db)){
         	id = Integer.toString(db.id);
         	firstName = db.firstName;
