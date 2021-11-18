@@ -30,8 +30,8 @@ public class Users {
     }
 
     // Constructor throws an exception if there are no results found for expense ID.
-    Users(String email) throws Exception {
-        String get_user_query = String.format("SELECT * FROM `Users` WHERE `Email` = '%s';", email);
+    Users(String username) throws Exception {
+        String get_user_query = String.format("SELECT * FROM `Users` WHERE `UserName` = '%s';", username);
         ConnectedDBConnection connection = new ConnectedDBConnection();
         ResultSet user_results = connection.select(get_user_query);
 
