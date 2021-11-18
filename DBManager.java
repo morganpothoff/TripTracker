@@ -30,7 +30,7 @@ public class DBManager {
 	   lastName = user_results.getString("Last_Name");
 	   
 	   //If passwords do not match
-	   if (password != user_result.getString("Password"))
+	   if (password != user_results.getString("Password"))
 	   	 return false;
 	   	 
 	   //If user not found
