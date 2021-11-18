@@ -40,4 +40,8 @@ public class GUIModel {
     public HashMap<String, HashMap<String, String>> getEmployeeInfoMap() {
         return employeeInfoMap;
     }
+
+    public Users getCurrUser() {
+        return currUser;
+    }
 }
