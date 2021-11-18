@@ -1,13 +1,16 @@
 import java.lang.String;
 import java.io.*;
 import java.util.*;
+import java.sql.*;
 
 //Controller for user login and registration--Zachary Sedlacek
 public class LoginController {
-    String id, password, description, trips;
+    String id, password, description, trips, firstName, lastName;
 
     LoginController() {
         id ="";
+        firstName="";
+        lastName="";
         password="";
         description="";
         trips="";
@@ -35,13 +38,22 @@ public class LoginController {
     //Authenticate login with entered ID and Password. Display account information with successful login, display error with no matching account
     public void login(DBManager db) throws IOException {
         Authenticator auth = new Authenticator(id, password);
-        auth.authenticate(db);
-
-        HashMap<String, HashMap<String, String>> employeeMap = db.getEmployeeInfoMap();
+        if (auth.authenticate(db)){
+        	id = db.id;
+        	String get_user_query = String.format("SELECT First_Name, Last_Name FROM Users WHERE User_ID = '%d';", id);
+        	ConnectedDBConnection connection = new ConnectedDBConnection();
+		ResultSet user_results = connection.select(get_user_query);
+		
+        	firstName = user_result.getString("First_Name");
+		lastName = user_result.getString("Last_Name");
+        }
+	  
+       /* HashMap<String, HashMap<String, String>> employeeMap = db.getEmployeeInfoMap();
         HashMap<String, String> dataMap = employeeMap.get(id);
         description = dataMap.get("description");
         trips = dataMap.get("trips");
         return;
+        */
     }
 
     //Create new account with user entered ID and password if ID is not taken
