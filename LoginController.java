@@ -38,7 +38,7 @@ public class LoginController {
     public void login(DBManager db) throws IOException {
         Authenticator auth = new Authenticator(id, password);
         if (auth.authenticate(db)){
-        	id = db.id;
+        	id = Integer.toString(db.id);
         	firstName = db.firstName;
         	lastName = db.lastName;
         }
