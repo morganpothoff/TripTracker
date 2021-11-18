@@ -25,8 +25,13 @@ public class DBManager {
         ConnectedDBConnection connection = new ConnectedDBConnection();
         ResultSet user_results = connection.select(get_user_query);
 	   userID = user_results.getInt("User_ID");
+	   if(!user_results.next()) {
+            return false;
+        }
+        else 
+        	return true;
     } 
-
+    
     //Parse database file for employee information. Return hash map of employee information.
     public HashMap<String, HashMap<String, String>> getEmployeeInfoMap() throws IOException {
         HashMap<String, HashMap<String, String>> employeeInfoMap = new HashMap<String, HashMap<String, String>>();
