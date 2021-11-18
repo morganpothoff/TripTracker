@@ -22,7 +22,7 @@ public class LoginController {
             password = p;
     }
     
-    public void getNewUserInput(String i, String p) {
+    public void getNewUserInput(String u, String p) {
         //id = entered id password = entered password, from REGISTER FRAME
         username = u;
         password = p;
