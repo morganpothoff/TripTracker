@@ -26,8 +26,8 @@ public class DBManager {
         ConnectedDBConnection connection = new ConnectedDBConnection();
         ResultSet user_results = connection.select(get_user_query);
 	   id = user_results.getInt("User_ID");	   	
-	   firstName = user_result.getString("First_Name");
-	   lastName = user_result.getString("Last_Name");
+	   firstName = user_results.getString("First_Name");
+	   lastName = user_results.getString("Last_Name");
 	   
 	   //If passwords do not match
 	   if (password != user_result.getString("Password"))
