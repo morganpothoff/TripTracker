@@ -36,7 +36,7 @@ public class LoginController {
     }
     
     //Authenticate login with entered ID and Password. Display account information with successful login, display error with no matching account
-    public void login(DBManager db) throws IOException {
+    public void login(DBManager db) throws Exception {
         Authenticator auth = new Authenticator(username, password);
         if (auth.authenticate(db)){
         	id = Integer.toString(db.id);
