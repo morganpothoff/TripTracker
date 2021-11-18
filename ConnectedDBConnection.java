@@ -21,11 +21,11 @@ import java.sql.*;
 
 public class ConnectedDBConnection {
 	private Connection _connection;
-	private String _domain = "localhost";
+	private String _domain = "47.185.213.139";
 	private int _port = 3306;
-	private String _database = "";
-	private String _user = "";
-	private String _password = "";
+	private String _database = "UTD_DB";
+	private String _user = "UTDG10";
+	private String _password = "ekUG5HFkfss%qE";
 
 
 	// Constructor that throws an exception if there is an error during connection process.
