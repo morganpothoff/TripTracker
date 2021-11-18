@@ -94,4 +94,14 @@ public class LoginController {
     public String getTrips() {
         return trips;
     }
+    
+    public String getFirstName() {
+        return firstName;
+    }
+    
+    public String getLastName() {
+        return lastName;
+    }
+
+
 }
