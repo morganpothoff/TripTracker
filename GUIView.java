@@ -4,14 +4,7 @@ import javax.swing.*;
 
 public class GUIView {
     // login
-    private JFrame loginFrame;
-    private JLabel idLabel;
-    private JTextField idTextField;
-    private JLabel passwordLabel;
-    private JTextField passwordTextField;
-    private JButton registerButton;
-    private JButton loginButton;
-    private JButton exitButton;
+    private LoginFrame loginFrame;
 
     // register
     private JFrame registerFrame;
@@ -94,45 +87,7 @@ public class GUIView {
 
 
     public GUIView(String title) {
-        // login
-        // frame setups
-        loginFrame = new JFrame(title);
-        loginFrame.getContentPane().setLayout(new BorderLayout());
-        loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        loginFrame.setSize(500, 350);
-        loginFrame.setLocationRelativeTo(null);
-        loginFrame.setVisible(true);
-
-        // Create UI elements
-        idLabel = new JLabel("User ID");
-        passwordLabel = new JLabel("Password");
-        idTextField = new JTextField();
-        passwordTextField = new JTextField();
-        registerButton = new JButton("Register");
-        loginButton = new JButton("Login");
-        exitButton = new JButton("Exit");
-
-        // Add UI element to frame
-        GroupLayout loginLayout = new GroupLayout(loginFrame.getContentPane());
-        loginLayout.setAutoCreateGaps(true);
-        loginLayout.setAutoCreateContainerGaps(true);
-
-        loginLayout.setHorizontalGroup(loginLayout.createSequentialGroup()
-                .addGroup(loginLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(idLabel)
-                        .addComponent(passwordLabel))
-                .addGroup(loginLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(idTextField)
-                        .addComponent(passwordTextField))
-                .addGroup(loginLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(registerButton)
-                        .addComponent(loginButton).addComponent(exitButton)));
-        loginLayout.setVerticalGroup(loginLayout.createSequentialGroup()
-                .addGroup(loginLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(idLabel)
-                        .addComponent(idTextField).addComponent(registerButton))
-                .addGroup(loginLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(passwordLabel)
-                        .addComponent(passwordTextField).addComponent(loginButton))
-                .addGroup(loginLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(exitButton)));
-        loginLayout.linkSize(SwingConstants.HORIZONTAL, registerButton, loginButton);
-        loginFrame.getContentPane().setLayout(loginLayout);
-
+        loginFrame = new LoginFrame(title);
 
         // register
         // frame setups
@@ -419,71 +374,10 @@ public class GUIView {
     }
 
 
-
-
-    public JFrame getLoginFrame() {
+    public LoginFrame getLoginFrame() {
         return loginFrame;
     }
 
-    public void setLoginFrame(JFrame loginFrame) {
-        this.loginFrame = loginFrame;
-    }
-
-    public JLabel getIdLabel() {
-        return idLabel;
-    }
-
-    public void setIdLabel(JLabel idLabel) {
-        this.idLabel = idLabel;
-    }
-
-    public JTextField getIdTextField() {
-        return idTextField;
-    }
-
-    public void setIdTextField(JTextField idTextField) {
-        this.idTextField = idTextField;
-    }
-
-    public JLabel getPasswordLabel() {
-        return passwordLabel;
-    }
-
-    public void setPasswordLabel(JLabel passwordLabel) {
-        this.passwordLabel = passwordLabel;
-    }
-
-    public JTextField getPasswordTextField() {
-        return passwordTextField;
-    }
-
-    public void setPasswordTextField(JTextField passwordTextField) {
-        this.passwordTextField = passwordTextField;
-    }
-
-    public JButton getRegisterButton() {
-        return registerButton;
-    }
-
-    public void setRegisterButton(JButton registerButton) {
-        this.registerButton = registerButton;
-    }
-
-    public JButton getLoginButton() {
-        return loginButton;
-    }
-
-    public void setLoginButton(JButton loginButton) {
-        this.loginButton = loginButton;
-    }
-
-    public JButton getExitButton() {
-        return exitButton;
-    }
-
-    public void setExitButton(JButton exitButton) {
-        this.exitButton = exitButton;
-    }
 
     public JFrame getRegisterFrame() {
         return registerFrame;

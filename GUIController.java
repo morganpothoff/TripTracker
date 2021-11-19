@@ -16,7 +16,7 @@ public class GUIController {
      * assigns action listener too all GUI buttons
      */
     public void initController() {
-        view.getLoginButton().addActionListener(e -> {
+        view.getLoginFrame().getLoginButton().addActionListener(e -> {
             try {
                 login();
             } catch (IOException ioException) {
@@ -25,7 +25,7 @@ public class GUIController {
                 exception.printStackTrace();
             }
         });
-        view.getRegisterButton().addActionListener(e -> register());
+        view.getLoginFrame().getRegisterButton().addActionListener(e -> register());
         view.getRegisterReturnButton().addActionListener((e -> back()));
         view.getRegisterRegisterButton().addActionListener((e -> {
             try {
@@ -34,7 +34,7 @@ public class GUIController {
                 ioException.printStackTrace();
             }
         }));
-        view.getExitButton().addActionListener((e -> exit()));
+        view.getLoginFrame().getExitButton().addActionListener((e -> exit()));
         view.getSelectManagerViewButton().addActionListener((e -> showManagerScreen()));
         view.getSelectEmployeeViewButton().addActionListener((e -> showEmployeeScreen()));
         view.getSelectLogoutButton().addActionListener((e -> logout()));
@@ -64,8 +64,8 @@ public class GUIController {
      */
     private void getLoginData() {
 
-        String id = view.getIdTextField().getText();
-        String pass = view.getPasswordTextField().getText();
+        String id = view.getLoginFrame().getIdTextField().getText();
+        String pass = view.getLoginFrame().getPasswordTextField().getText();
         model.getLoginController().getUserInput(id, pass);
     }
 
@@ -171,7 +171,7 @@ public class GUIController {
 
     private void gotoTripScreen() throws IOException {
         //todo if no trip in progress, don't switch
-        String name = view.getIdTextField().getText();
+        String name = view.getLoginFrame().getIdTextField().getText();
         //model.getEmployeeInfoMap().get(name);                   // todo get trip data and add all expenses to the trip list
         view.getEmployeeScreenFrame().setVisible(false);
         view.getTripFrame().setVisible(true);
@@ -195,8 +195,8 @@ public class GUIController {
      * @throws IOException
      */
     private void login() throws Exception {
-        String id = view.getIdTextField().getText();
-        String pass = view.getPasswordTextField().getText();
+        String id = view.getLoginFrame().getIdTextField().getText();
+        String pass = view.getLoginFrame().getPasswordTextField().getText();
 
         try {
             Users loginUser = new Users(id);
@@ -211,7 +211,7 @@ public class GUIController {
         }
         catch(Exception e) {
             System.out.println(e.toString());
-            view.getIdTextField().setText("invalid id or password");
+            view.getLoginFrame().getIdTextField().setText("invalid id or password");
         }
     }
 
@@ -322,8 +322,8 @@ public class GUIController {
         view.getEmployeeScreenFrame().setVisible(false);
 
         // return to login screen and clear login text fields
-        view.getIdTextField().setText("");
-        view.getPasswordTextField().setText("");
+        view.getLoginFrame().getIdTextField().setText("");
+        view.getLoginFrame().getPasswordTextField().setText("");
         view.getLoginFrame().setVisible(true);
     }
 
