@@ -16,6 +16,7 @@ public class GUIController {
      * assigns action listener too all GUI buttons
      */
     public void initController() {
+        System.out.println("Here1");
         view.getLoginFrame().getLoginButton().addActionListener(e -> {
             try {
                 login();
@@ -25,15 +26,17 @@ public class GUIController {
                 exception.printStackTrace();
             }
         });
+        System.out.println("Here2");
         view.getLoginFrame().getRegisterButton().addActionListener(e -> register());
-        view.getRegisterReturnButton().addActionListener((e -> back()));
-        view.getRegisterRegisterButton().addActionListener((e -> {
+        view.getRegisterFrame().getReturnButton().addActionListener((e -> back()));
+        view.getRegisterFrame().getRegisterButton().addActionListener((e -> {
             try {
                 registerUser();
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
         }));
+        System.out.println("Here3");
         view.getLoginFrame().getExitButton().addActionListener((e -> exit()));
         view.getSelectManagerViewButton().addActionListener((e -> showManagerScreen()));
         view.getSelectEmployeeViewButton().addActionListener((e -> showEmployeeScreen()));
@@ -48,12 +51,14 @@ public class GUIController {
                 ioException.printStackTrace();
             }
         }));
+        System.out.println("Here4");
         view.getEmployeeLogoutButton().addActionListener((e -> employeeLogout()));
         view.getProposalBackButton().addActionListener((e -> proposalToEmployeeScreen()));
         view.getProposalSubmitButton().addActionListener((e -> submitProposal()));
         view.getTripBackButton().addActionListener((e -> tripToEmployeeScreen()));
         view.getTripAddButton().addActionListener((e -> addItem()));
         view.getTripFinishButton().addActionListener((e -> finishTrip()));
+        System.out.println("Here5");
 
 
     }
@@ -78,12 +83,12 @@ public class GUIController {
      */
     private void registerUser() throws IOException {
         //NOTE: how can we check something in the DB trying to put it in the DB? 
-        if(view.getIsManagerCheckBox().isSelected()){ // if manager check box is selected
+        if(view.getRegisterFrame().getIsManagerCheckBox().isSelected()){ // if manager check box is selected
             // todo make sure they are a manager in database
         }
-        String UserName = view.getRegisterIdTextField().getText();
-        String pass = view.getRegisterPasswordTextField().getText();
-        String email = view.getRegisterEmailTextField().getText();
+        String UserName = view.getRegisterFrame().getIdTextField().getText();
+        String pass = view.getRegisterFrame().getPasswordTextField().getText();
+        String email = view.getRegisterFrame().getEmailTextField().getText();
         //TODO: add field for First and Last names
         String First_Name = "Test";
         String Last_Name = "User";
@@ -97,11 +102,11 @@ public class GUIController {
                 back();
             }
             else {
-                view.getRegisterIdTextField().setText("Failed to add User to DB");
+                view.getRegisterFrame().getIdTextField().setText("Failed to add User to DB");
             }
         }
         catch(Exception e) {
-            view.getRegisterIdTextField().setText(e.toString());
+            view.getRegisterFrame().getIdTextField().setText(e.toString());
         }
     }
 
@@ -230,9 +235,9 @@ public class GUIController {
      */
     private void back(){
         // clear registration textfields
-        view.getRegisterIdTextField().setText("");
-        view.getRegisterPasswordTextField().setText("");
-        view.getRegisterEmailTextField().setText("");
+        view.getRegisterFrame().getIdTextField().setText("");
+        view.getRegisterFrame().getPasswordTextField().setText("");
+        view.getRegisterFrame().getEmailTextField().setText("");
 
         view.getLoginFrame().setVisible(true);
         view.getRegisterFrame().setVisible(false);

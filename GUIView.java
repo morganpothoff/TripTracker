@@ -5,18 +5,7 @@ import javax.swing.*;
 public class GUIView {
     // login
     private LoginFrame loginFrame;
-
-    // register
-    private JFrame registerFrame;
-    private JLabel registerIdLabel;
-    private JTextField registerIdTextField;
-    private JLabel registerPasswordLabel;
-    private JTextField registerPasswordTextField;
-    private JLabel registerEmailLabel;
-    private JTextField registerEmailTextField;
-    private JButton registerRegisterButton;
-    private JButton registerReturnButton;
-    private JCheckBox isManagerCheckBox;
+    private RegisterFrame registerFrame;
 
     //  manager selection
     private JFrame managerSelectionFrame;
@@ -88,49 +77,7 @@ public class GUIView {
 
     public GUIView(String title) {
         loginFrame = new LoginFrame(title);
-
-        // register
-        // frame setups
-        registerFrame = new JFrame("Register");
-        registerFrame.getContentPane().setLayout(new BorderLayout());
-        registerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        registerFrame.setSize(500, 350);
-        registerFrame.setLocationRelativeTo(null);
-        registerFrame.setVisible(false);
-
-        // Create UI elements
-        registerIdLabel = new JLabel("User ID");
-        registerPasswordLabel = new JLabel("Password");
-        registerIdTextField = new JTextField();
-        registerPasswordTextField = new JTextField();
-        registerEmailLabel = new JLabel("Email");
-        registerEmailTextField = new JTextField();
-        registerRegisterButton = new JButton("Register");
-        registerReturnButton = new JButton("Back");
-        isManagerCheckBox = new JCheckBox("Check if Manager");
-
-        // Add UI element to frame
-        GroupLayout registerLayout = new GroupLayout(registerFrame.getContentPane());
-        registerLayout.setAutoCreateGaps(true);
-        registerLayout.setAutoCreateContainerGaps(true);
-
-        registerLayout.setHorizontalGroup(registerLayout.createSequentialGroup()
-                .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(registerIdLabel)
-                        .addComponent(registerPasswordLabel).addComponent(registerEmailLabel).addComponent(registerReturnButton))
-                .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(registerIdTextField)
-                        .addComponent(registerPasswordTextField).addComponent(registerEmailTextField).addComponent(registerRegisterButton))
-                .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(isManagerCheckBox)));
-        registerLayout.setVerticalGroup(registerLayout.createSequentialGroup()
-                .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(registerIdLabel)
-                        .addComponent(registerIdTextField).addComponent(isManagerCheckBox))
-                .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(registerPasswordLabel)
-                        .addComponent(registerPasswordTextField))
-                .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(registerEmailLabel)
-                        .addComponent(registerEmailTextField))
-                .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(registerReturnButton)
-                        .addComponent(registerRegisterButton)));
-        registerLayout.linkSize(SwingConstants.HORIZONTAL, registerRegisterButton, registerReturnButton);
-        registerFrame.getContentPane().setLayout(registerLayout);
+        registerFrame = new RegisterFrame(title);
 
 
         // manager selection
@@ -379,77 +326,10 @@ public class GUIView {
     }
 
 
-    public JFrame getRegisterFrame() {
+    public RegisterFrame getRegisterFrame() {
         return registerFrame;
     }
 
-    public void setRegisterFrame(JFrame registerFrame) {
-        this.registerFrame = registerFrame;
-    }
-
-    public JLabel getRegisterIdLabel() {
-        return registerIdLabel;
-    }
-
-    public void setRegisterIdLabel(JLabel registerIdLabel) {
-        this.registerIdLabel = registerIdLabel;
-    }
-
-    public JTextField getRegisterIdTextField() {
-        return registerIdTextField;
-    }
-
-    public void setRegisterIdTextField(JTextField registerIdTextField) {
-        this.registerIdTextField = registerIdTextField;
-    }
-
-    public JLabel getRegisterPasswordLabel() {
-        return registerPasswordLabel;
-    }
-
-    public void setRegisterPasswordLabel(JLabel registerPasswordLabel) {
-        this.registerPasswordLabel = registerPasswordLabel;
-    }
-
-    public JTextField getRegisterPasswordTextField() {
-        return registerPasswordTextField;
-    }
-
-    public void setRegisterPasswordTextField(JTextField registerPasswordTextField) {
-        this.registerPasswordTextField = registerPasswordTextField;
-    }
-
-    public JLabel getRegisterEmailLabel() {
-        return registerEmailLabel;
-    }
-
-    public void setRegisterEmailLabel(JLabel registerEmailLabel) {
-        this.registerEmailLabel = registerEmailLabel;
-    }
-
-    public JTextField getRegisterEmailTextField() {
-        return registerEmailTextField;
-    }
-
-    public void setRegisterEmailTextField(JTextField registerEmailTextField) {
-        this.registerEmailTextField = registerEmailTextField;
-    }
-
-    public JButton getRegisterRegisterButton() {
-        return registerRegisterButton;
-    }
-
-    public void setRegisterRegisterButton(JButton registerRegisterButton) {
-        this.registerRegisterButton = registerRegisterButton;
-    }
-
-    public JButton getRegisterReturnButton() {
-        return registerReturnButton;
-    }
-
-    public void setRegisterReturnButton(JButton registerReturnButton) {
-        this.registerReturnButton = registerReturnButton;
-    }
 
     public JFrame getManagerSelectionFrame() {
         return managerSelectionFrame;
@@ -890,10 +770,6 @@ public class GUIView {
 
     public void setTripExpenseList(JList tripExpenseList) {
         this.tripExpenseList = tripExpenseList;
-    }
-
-    public JCheckBox getIsManagerCheckBox() {
-        return isManagerCheckBox;
     }
 
     public JComboBox getProposalManagerList() {
