@@ -47,6 +47,37 @@ public class Users {
     }
 
 
+    // Adds a user to the database using the connection insert method.
+    // Returns T/F depending upon its success.
+    public static Boolean add(String First_Name, String Last_Name, String UserName, String Password, String Email) {
+        
+        try {
+            String form =   "INSERT INTO `Users` (`First_Name`, `Last_Name`, `UserName`, `Password`, `Email`) "
+                            + "VALUES ('%s', '%s', '%s', '%s', '%s');";
+            String add_user_query =  String.format(form, First_Name, Last_Name, UserName, Password, Email);
+
+            ConnectedDBConnection connection = new ConnectedDBConnection();
+            connection.insert(add_user_query);
+
+            return true;
+        }
+        catch(Exception error) {
+            System.out.println(error.toString());
+            return false;
+        }
+    }
+
+
+    public static Boolean username_exists(String username) throws Exception {
+        String get_user_query = String.format("SELECT * FROM `Users` WHERE `UserName` = '%s';", username);
+        ConnectedDBConnection connection = new ConnectedDBConnection();
+        ResultSet user_results = connection.select(get_user_query);
+
+        // Check that atleast 1 row is returned
+        return user_results.next();
+    }
+
+
     //Methods
     public String getName() {
         return name;

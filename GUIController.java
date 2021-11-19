@@ -76,21 +76,32 @@ public class GUIController {
      * @throws IOException
      */
     private void registerUser() throws IOException {
-        String id = view.getRegisterIdTextField().getText();
-        String pass = view.getRegisterPasswordTextField().getText();
-        model.getLoginController().getNewUserInput(id, pass);
+        //NOTE: how can we check something in the DB trying to put it in the DB? 
         if(view.getIsManagerCheckBox().isSelected()){ // if manager check box is selected
             // todo make sure they are a manager in database
         }
+        String UserName = view.getRegisterIdTextField().getText();
+        String pass = view.getRegisterPasswordTextField().getText();
+        String email = view.getRegisterEmailTextField().getText();
+        //TODO: add field for First and Last names
+        String First_Name = "Test";
+        String Last_Name = "User";
 
-        if(model.getLoginController().register(model.getDbManager())){  // if successful registration
-            back();
-        }
-        else{
-            // tell user if ID already exists
-            view.getRegisterIdTextField().setText("Invalid ID - already exists");
-        }
+        try {
+            if(Users.username_exists(UserName)) {
+                throw new Exception("Invalid ID - already exists");
+            }
 
+            if(Users.add(First_Name, Last_Name, UserName, pass, email)) {
+                back();
+            }
+            else {
+                view.getRegisterIdTextField().setText("Failed to add User to DB");
+            }
+        }
+        catch(Exception e) {
+            view.getRegisterIdTextField().setText(e.toString());
+        }
     }
 
     private void finishTrip() {
@@ -183,37 +194,24 @@ public class GUIController {
      * @throws IOException
      */
     private void login() throws Exception {
-        getLoginData();
-        // todo if name matches manager name
-        Authenticator authenticator = new Authenticator(model.getLoginController().getID(), model.getLoginController().getPassword());
-        if(authenticator.authenticate(model.getDbManager())){ // if login was valid
-            // check if manager
-            // create user based from login ID
-            model.setUser(new Users(view.getIdTextField().getText()));
-            String get_user_query = String.format("SELECT isManager FROM Users WHERE User_ID = %d;", model.getCurrUser().getUserID());
-            ConnectedDBConnection connection = new ConnectedDBConnection();
-            ResultSet user_results = connection.select(get_user_query);
-            boolean isManager = user_results.getBoolean("isManager");
+        String id = view.getIdTextField().getText();
+        String pass = view.getPasswordTextField().getText();
 
-            if(isManager){
-                loginManager();
+        try {
+            Users loginUser = new Users(id);
+            if(!loginUser.getPassword().equals(pass)) {
+                throw new Exception("Invalid Password");
             }
-            else{
-                loginEmployee();
-            }
+    
+            model.setUser(loginUser);
+            System.out.println(String.format("User %s logged in", id));
 
-            // todo check for manager vs employee
-            // if employee
-
-            /* else
-
-             */
+            //TODO: go to next page
         }
-        else{
-            // tell user invalid
+        catch(Exception e) {
+            System.out.println(e.toString());
             view.getIdTextField().setText("invalid id or password");
         }
-
     }
 
     /**

@@ -21,3 +21,8 @@
 #The strings will be formatted and added to the item list for the user, then added to the database.<br>
 #The item is added to the Expense class along with the user that added the expense.<br>
 #####
+
+
+## TODO
+- [ ] Add field for Username in the GUI register user page
+- [ ] Add method for the user to be saved in the DB
