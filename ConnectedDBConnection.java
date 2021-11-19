@@ -21,7 +21,10 @@ import java.sql.*;
 
 public class ConnectedDBConnection {
 	private Connection _connection;
+<<<<<<< HEAD
 	// private String _domain = "localhost";
+=======
+>>>>>>> 75fb2d3868f1b082148c913adb253fa9416d15ef
 	private String _domain = "47.185.213.139";
 	private int _port = 3306;
 	private String _database = "UTD_DB";

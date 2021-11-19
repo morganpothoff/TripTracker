@@ -4,24 +4,27 @@ import java.util.*;
 
 //Controller for user login and registration--Zachary Sedlacek
 public class LoginController {
-    String id, password, description, trips;
+    String id, password, description, trips, firstName, lastName, username;
 
     LoginController() {
+    	   username="";
         id ="";
+        firstName="";
+        lastName="";
         password="";
         description="";
         trips="";
     }
 	
     //Get user ID and password from GUI
-    public void getUserInput(String i, String p) {
-            id = i;
+    public void getUserInput(String u, String p) {
+            username = u;
             password = p;
     }
     
-    public void getNewUserInput(String i, String p) {
+    public void getNewUserInput(String u, String p) {
         //id = entered id password = entered password, from REGISTER FRAME
-        id = i;
+        username = u;
         password = p;
     }
      
@@ -33,15 +36,20 @@ public class LoginController {
     }
     
     //Authenticate login with entered ID and Password. Display account information with successful login, display error with no matching account
-    public void login(DBManager db) throws IOException {
-        Authenticator auth = new Authenticator(id, password);
-        auth.authenticate(db);
-
-        HashMap<String, HashMap<String, String>> employeeMap = db.getEmployeeInfoMap();
+    public void login(DBManager db) throws Exception {
+        Authenticator auth = new Authenticator(username, password);
+        if (auth.authenticate(db)){
+        	id = Integer.toString(db.id);
+        	firstName = db.firstName;
+        	lastName = db.lastName;
+        }
+	  
+       /* HashMap<String, HashMap<String, String>> employeeMap = db.getEmployeeInfoMap();
         HashMap<String, String> dataMap = employeeMap.get(id);
         description = dataMap.get("description");
         trips = dataMap.get("trips");
         return;
+        */
     }
 
     //Create new account with user entered ID and password if ID is not taken
@@ -87,4 +95,14 @@ public class LoginController {
     public String getTrips() {
         return trips;
     }
+    
+    public String getFirstName() {
+        return firstName;
+    }
+    
+    public String getLastName() {
+        return lastName;
+    }
+
+
 }

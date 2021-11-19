@@ -63,6 +63,7 @@ public class GUIController {
      * gets user input from text fields and passes to the login controller
      */
     private void getLoginData() {
+
         String id = view.getIdTextField().getText();
         String pass = view.getPasswordTextField().getText();
         model.getLoginController().getUserInput(id, pass);
@@ -301,12 +302,16 @@ public class GUIController {
      * if manager, only go back to manager menu
      */
     private void employeeLogout() {
-        // todo if is a manager
+        // if is a manager
         // return to selection screen
-        view.getManagerSelectionFrame().setVisible(true);
-        view.getEmployeeScreenFrame().setVisible(false);
+        if(model.isManager()){
+            view.getManagerSelectionFrame().setVisible(true);
+            view.getEmployeeScreenFrame().setVisible(false);
+        }
+        else{
+            logout();
+        }
 
-        // else logout
     }
 
     /**

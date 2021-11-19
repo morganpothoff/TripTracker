@@ -1,15 +1,17 @@
 import java.lang.String;
 import java.io.*;
 import java.util.*;
+import java.sql.*;
 
 //Database manager for getting/editing employee and trip information--Zachary Sedlacek
 public class DBManager {
 
-    String employeeDataPath = "employeeData.txt";
+    String employeeDataPath = "employeeData.txt", firstName, lastName, password;
+    int id;
 
     //Check database for matching ID and password
-    public Boolean checkLogin(String id, String password) throws IOException {
-        HashMap<String, HashMap<String, String>> employeeInfoMap = getEmployeeInfoMap();
+    public Boolean checkLogin(String username, String password) throws Exception {
+        /*HashMap<String, HashMap<String, String>> employeeInfoMap = getEmployeeInfoMap();
         //System.out.println(employeeInfoMap.get(id));
 
         if (employeeInfoMap.get(id) == null)
@@ -18,8 +20,28 @@ public class DBManager {
             return true;
         else 
             return false;
+            */
+       
+        String get_user_query = String.format("SELECT User_ID, Password, First_Name, Last_Name FROM Users WHERE UserName = '%s';", username);
+        ConnectedDBConnection connection = new ConnectedDBConnection();
+        ResultSet user_results = connection.select(get_user_query);
+	   id = user_results.getInt("User_ID");	   	
+	   firstName = user_results.getString("First_Name");
+	   lastName = user_results.getString("Last_Name");
+	   
+	   //If passwords do not match
+	   if (password != user_results.getString("Password"))
+	   	 return false;
+	   	 
+	   //If user not found
+	   if(!user_results.next()) {
+            return false;
+        }
+        
+        else 
+        	return true;
     } 
-
+    
     //Parse database file for employee information. Return hash map of employee information.
     public HashMap<String, HashMap<String, String>> getEmployeeInfoMap() throws IOException {
         HashMap<String, HashMap<String, String>> employeeInfoMap = new HashMap<String, HashMap<String, String>>();
