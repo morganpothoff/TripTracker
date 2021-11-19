@@ -22,7 +22,7 @@ class RegisterFrame extends MFrame
 
 	public RegisterFrame(String title)
 	{
-		super(title);
+		super(title, false);
 
 		this.initialize_attributes();
 		this.setup_frame_elements();

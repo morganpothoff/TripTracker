@@ -20,7 +20,7 @@ class LoginFrame extends MFrame
 
 	public LoginFrame(String title)
 	{
-		super(title);
+		super(title, true);
 	   
 		initialize_attributes();
 		setup_frame_elements();

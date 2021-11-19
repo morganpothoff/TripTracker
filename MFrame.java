@@ -12,7 +12,7 @@ class MFrame extends JFrame
 	protected GroupLayout layout; 
 
 
-	public MFrame(String title)
+	public MFrame(String title, Boolean visible)
 	{
 		super(title);
 
@@ -20,7 +20,7 @@ class MFrame extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(500, 350);
 		this.setLocationRelativeTo(null);
-		this.setVisible(false);
+		this.setVisible(visible);
 
 		this.layout = new GroupLayout(this.getContentPane());
 		this.layout.setAutoCreateGaps(true);

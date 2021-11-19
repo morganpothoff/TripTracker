@@ -6,7 +6,5 @@ public class GUIApplication {
         // Assemble all the pieces of the MVC
         // run program
         new GUIController(new GUIModel(), new GUIView("LoginPage")).initController();
-        System.out.println("Here::MAIN");
-
     }
 }
