@@ -3,23 +3,15 @@ import java.awt.BorderLayout;
 import javax.swing.*;
 
 public class GUIView {
-	// login
 	private LoginFrame loginFrame;
 	private RegisterFrame registerFrame;
+	private EmployeeFrame employeeFrame;
 
 	//  manager selection
 	private JFrame managerSelectionFrame;
 	private JButton selectManagerViewButton;
 	private JButton selectEmployeeViewButton;
 	private JButton selectLogoutButton;
-
-	// employee screen
-	private JFrame employeeScreenFrame;
-	private JButton employeeProposalButton;
-	private JButton employeeTripButton;
-	private JButton employeeLogoutButton;
-	private JButton employeeCancelPropButton;
-	private JLabel employeeNoteLabel;
 
 	// manager screen
 	private JFrame managerScreenFrame;
@@ -78,7 +70,7 @@ public class GUIView {
 	public GUIView(String title) {
 		loginFrame = new LoginFrame(title);
 		registerFrame = new RegisterFrame(title);
-
+		employeeFrame = new EmployeeFrame(title);
 
 		// manager selection
 		// frame setups
@@ -110,42 +102,6 @@ public class GUIView {
 				.addGroup(selectionLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(selectLogoutButton)));
 		selectionLayout.linkSize(SwingConstants.HORIZONTAL, selectEmployeeViewButton, selectManagerViewButton, selectLogoutButton);
 		managerSelectionFrame.getContentPane().setLayout(selectionLayout);
-
-
-		// employee screen
-		// frame setups
-		employeeScreenFrame = new JFrame("Employee Menu");
-		employeeScreenFrame.getContentPane().setLayout(new BorderLayout());
-		employeeScreenFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		employeeScreenFrame.setSize(500, 350);
-		employeeScreenFrame.setLocationRelativeTo(null);
-		employeeScreenFrame.setVisible(false);
-
-		// Create UI elements
-		employeeProposalButton = new JButton("Make Proposal");
-		employeeTripButton = new JButton("Manage Trip");
-		employeeLogoutButton = new JButton(("Logout"));
-		employeeCancelPropButton = new JButton(("Cancel Proposal"));
-		employeeNoteLabel = new JLabel("NOTE: n/a");
-
-		// Add UI element to frame
-		GroupLayout employeeScreenLayout = new GroupLayout(employeeScreenFrame.getContentPane());
-		employeeScreenLayout.setAutoCreateGaps(true);
-		employeeScreenLayout.setAutoCreateContainerGaps(true);
-
-		employeeScreenLayout.setHorizontalGroup(employeeScreenLayout.createSequentialGroup()
-				.addGroup(employeeScreenLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(employeeProposalButton)
-						.addComponent(employeeCancelPropButton).addComponent(employeeNoteLabel))
-				.addGroup(employeeScreenLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(employeeTripButton)
-						.addComponent(employeeLogoutButton)));
-		employeeScreenLayout.setVerticalGroup(employeeScreenLayout.createSequentialGroup()
-				.addGroup(employeeScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(employeeProposalButton)
-						.addComponent(employeeTripButton))
-				.addGroup(employeeScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(employeeCancelPropButton)
-						.addComponent(employeeLogoutButton))
-				.addGroup(employeeScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(employeeNoteLabel)));
-		employeeScreenLayout.linkSize(SwingConstants.HORIZONTAL, employeeProposalButton, employeeCancelPropButton);
-		employeeScreenFrame.getContentPane().setLayout(employeeScreenLayout);
 
 		// manager screen
 		// frame setups
@@ -269,7 +225,7 @@ public class GUIView {
 				.addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalDescriptionTextField))
 				.addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalSubmitButton).addComponent(proposalManagerList))
 				.addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalBackButton)));
-		proposalLayout.linkSize(SwingConstants.HORIZONTAL, employeeProposalButton, employeeCancelPropButton);
+		proposalLayout.linkSize(SwingConstants.HORIZONTAL, employeeFrame.getProposalButton(), employeeFrame.getCancelPropButton());
 		proposalFrame.getContentPane().setLayout(proposalLayout);
 
 		// trip screen
@@ -331,6 +287,11 @@ public class GUIView {
 	}
 
 
+	public EmployeeFrame getEmployeeFrame() {
+		return employeeFrame;
+	}
+
+
 	public JFrame getManagerSelectionFrame() {
 		return managerSelectionFrame;
 	}
@@ -361,14 +322,6 @@ public class GUIView {
 
 	public void setSelectLogoutButton(JButton selectLogoutButton) {
 		this.selectLogoutButton = selectLogoutButton;
-	}
-
-	public JFrame getEmployeeScreenFrame() {
-		return employeeScreenFrame;
-	}
-
-	public void setEmployeeScreenFrame(JFrame employeeScreenFrame) {
-		this.employeeScreenFrame = employeeScreenFrame;
 	}
 
 	public JFrame getManagerScreenFrame() {
@@ -532,52 +485,12 @@ public class GUIView {
 		this.managerPendingList = managerPendingList;
 	}
 
-	public JButton getEmployeeProposalButton() {
-		return employeeProposalButton;
-	}
-
-	public void setEmployeeProposalButton(JButton employeeProposalButton) {
-		this.employeeProposalButton = employeeProposalButton;
-	}
-
-	public JButton getEmployeeTripButton() {
-		return employeeTripButton;
-	}
-
-	public void setEmployeeTripButton(JButton employeeTripButton) {
-		this.employeeTripButton = employeeTripButton;
-	}
-
-	public JLabel getEmployeeNoteLabel() {
-		return employeeNoteLabel;
-	}
-
-	public void setEmployeeNoteLabel(JLabel employeeNoteLabel) {
-		this.employeeNoteLabel = employeeNoteLabel;
-	}
-
 	public JButton getManagerSelectEmployeeButton() {
 		return managerSelectEmployeeButton;
 	}
 
 	public void setManagerSelectEmployeeButton(JButton managerSelectEmployeeButton) {
 		this.managerSelectEmployeeButton = managerSelectEmployeeButton;
-	}
-
-	public JButton getEmployeeLogoutButton() {
-		return employeeLogoutButton;
-	}
-
-	public void setEmployeeLogoutButton(JButton employeeLogoutButton) {
-		this.employeeLogoutButton = employeeLogoutButton;
-	}
-
-	public JButton getEmployeeCancelPropButton() {
-		return employeeCancelPropButton;
-	}
-
-	public void setEmployeeCancelPropButton(JButton employeeCancelPropButton) {
-		this.employeeCancelPropButton = employeeCancelPropButton;
 	}
 
 	public JFrame getProposalFrame() {

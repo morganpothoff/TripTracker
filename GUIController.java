@@ -40,15 +40,15 @@ public class GUIController {
 		view.getSelectLogoutButton().addActionListener((e -> logout()));
 		view.getManagerBackButton().addActionListener((e -> managerToSelection()));
 		view.getManagerAddButton().addActionListener((e -> addEmployee()));
-		view.getEmployeeProposalButton().addActionListener((e -> gotoProposalScreen()));
-		view.getEmployeeTripButton().addActionListener((e -> {
+		view.getEmployeeFrame().getProposalButton().addActionListener((e -> gotoProposalScreen()));
+		view.getEmployeeFrame().getTripButton().addActionListener((e -> {
 			try {
 				gotoTripScreen();
 			} catch (IOException ioException) {
 				ioException.printStackTrace();
 			}
 		}));
-		view.getEmployeeLogoutButton().addActionListener((e -> employeeLogout()));
+		view.getEmployeeFrame().getLogoutButton().addActionListener((e -> employeeLogout()));
 		view.getProposalBackButton().addActionListener((e -> proposalToEmployeeScreen()));
 		view.getProposalSubmitButton().addActionListener((e -> submitProposal()));
 		view.getTripBackButton().addActionListener((e -> tripToEmployeeScreen()));
@@ -151,7 +151,7 @@ public class GUIController {
 	 */
 	private void tripToEmployeeScreen() {
 		view.getTripFrame().setVisible(false);
-		view.getEmployeeScreenFrame().setVisible(true);
+		view.getEmployeeFrame().setVisible(true);
 	}
 
 	/**
@@ -166,20 +166,20 @@ public class GUIController {
 
 	private void proposalToEmployeeScreen() {
 		view.getProposalFrame().setVisible(false);
-		view.getEmployeeScreenFrame().setVisible(true);
+		view.getEmployeeFrame().setVisible(true);
 	}
 
 	private void gotoTripScreen() throws IOException {
 		//todo if no trip in progress, don't switch
 		String name = view.getLoginFrame().getIdTextField().getText();
 		//model.getEmployeeInfoMap().get(name);	   // todo get trip data and add all expenses to the trip list
-		view.getEmployeeScreenFrame().setVisible(false);
+		view.getEmployeeFrame().setVisible(false);
 		view.getTripFrame().setVisible(true);
 	}
 
 	private void gotoProposalScreen() {
-		view.getEmployeeNoteLabel().setText("Note: Current trip in progress");
-		view.getEmployeeScreenFrame().setVisible(false);
+		view.getEmployeeFrame().getNoteLabel().setText("Note: Current trip in progress");
+		view.getEmployeeFrame().setVisible(false);
 		view.getProposalFrame().setVisible(true);
 
 		// fill in the manager list
@@ -207,7 +207,8 @@ public class GUIController {
 			model.setUser(loginUser);
 			System.out.println(String.format("User %s logged in", id));
 
-			//TODO: go to next page
+			view.getLoginFrame().setVisible(false);
+			view.getEmployeeFrame().setVisible(true);
 		}
 		catch(Exception e) {
 			System.out.println(e.toString());
@@ -243,7 +244,7 @@ public class GUIController {
 	 * switch from login frame to employee menu
 	 */
 	private void loginEmployee() {
-		view.getEmployeeScreenFrame().setVisible(true);
+		view.getEmployeeFrame().setVisible(true);
 		view.getLoginFrame().setVisible(false);
 
 	}
@@ -261,7 +262,7 @@ public class GUIController {
 	 */
 	private void showEmployeeScreen() {
 		view.getManagerSelectionFrame().setVisible(false);
-		view.getEmployeeScreenFrame().setVisible(true);
+		view.getEmployeeFrame().setVisible(true);
 	}
 
 	/**
@@ -306,7 +307,7 @@ public class GUIController {
 		// return to selection screen
 		if(model.isManager()){
 			view.getManagerSelectionFrame().setVisible(true);
-			view.getEmployeeScreenFrame().setVisible(false);
+			view.getEmployeeFrame().setVisible(false);
 		}
 		else{
 			logout();
@@ -319,7 +320,7 @@ public class GUIController {
 	 */
 	private void logout() {
 		view.getManagerSelectionFrame().setVisible(false);
-		view.getEmployeeScreenFrame().setVisible(false);
+		view.getEmployeeFrame().setVisible(false);
 
 		// return to login screen and clear login text fields
 		view.getLoginFrame().getIdTextField().setText("");
