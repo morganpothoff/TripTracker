@@ -49,8 +49,8 @@ public class GUIController {
 			}
 		}));
 		view.getEmployeeFrame().getLogoutButton().addActionListener((e -> employeeLogout()));
-		view.getProposalBackButton().addActionListener((e -> proposalToEmployeeScreen()));
-		view.getProposalSubmitButton().addActionListener((e -> submitProposal()));
+		view.getProposalFrame().getBackButton().addActionListener((e -> proposalToEmployeeScreen()));
+		view.getProposalFrame().getSubmitButton().addActionListener((e -> submitProposal()));
 		view.getTripBackButton().addActionListener((e -> tripToEmployeeScreen()));
 		view.getTripAddButton().addActionListener((e -> addItem()));
 		view.getTripFinishButton().addActionListener((e -> finishTrip()));
@@ -184,8 +184,8 @@ public class GUIController {
 
 		// fill in the manager list
 
-		view.getProposalManagerList().addItem("hello");
-		view.getProposalManagerList().setSelectedIndex(0);
+		view.getProposalFrame().getManagerList().addItem("hello");
+		view.getProposalFrame().getManagerList().setSelectedIndex(0);
 
 	}
 

@@ -7,28 +7,13 @@ public class GUIView {
 	private RegisterFrame registerFrame;
 	private EmployeeFrame employeeFrame;
 	private ManagerFrame managerFrame;
+	private ProposalFrame proposalFrame;
 
 	//  manager selection
 	private JFrame managerSelectionFrame;
 	private JButton selectManagerViewButton;
 	private JButton selectEmployeeViewButton;
 	private JButton selectLogoutButton;
-
-	// proposal screen
-	private JFrame proposalFrame;
-	private JLabel proposalLocationLabel;
-	private JLabel proposalStartLabel;
-	private JLabel proposalEndLabel;
-	private JLabel proposalEstimateLabel;
-	private JLabel proposalDescriptionLabel;
-	private JTextField proposalLocationTextField;
-	private JTextField proposalStartTextField;
-	private JTextField proposalEndTextField;
-	private JTextField proposalEstimateTextField;
-	private JTextField proposalDescriptionTextField;
-	private JButton proposalBackButton;
-	private JButton proposalSubmitButton;
-	private JComboBox proposalManagerList;
 
 	// trip screen
 	private JFrame tripFrame;
@@ -50,6 +35,7 @@ public class GUIView {
 		registerFrame = new RegisterFrame(title);
 		employeeFrame = new EmployeeFrame(title);
 		managerFrame = new ManagerFrame(title);
+		proposalFrame = new ProposalFrame(title);
 
 		// manager selection
 		// frame setups
@@ -82,56 +68,6 @@ public class GUIView {
 		selectionLayout.linkSize(SwingConstants.HORIZONTAL, selectEmployeeViewButton, selectManagerViewButton, selectLogoutButton);
 		managerSelectionFrame.getContentPane().setLayout(selectionLayout);
 
-		// Proposal screen
-		// frame setups
-		proposalFrame = new JFrame("Proposal");
-		proposalFrame.getContentPane().setLayout(new BorderLayout());
-		proposalFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		proposalFrame.setSize(500, 700);
-		proposalFrame.setLocationRelativeTo(null);
-		proposalFrame.setVisible(false);
-
-		// Create UI elements
-		proposalLocationLabel = new JLabel("Location");
-		proposalLocationTextField = new JTextField("Ex: \"Austin, TX\"");
-		proposalStartLabel = new JLabel("Start Date");
-		proposalStartTextField = new JTextField("Ex: \"11/1/2021\"");
-		proposalEndLabel = new JLabel("End Date");
-		proposalEndTextField = new JTextField("Ex: \"11/8/2021\"");
-		proposalEstimateLabel = new JLabel("Expense Estimate");
-		proposalEstimateTextField = new JTextField("Ex: \"1250.75\"");
-		proposalDescriptionLabel = new JLabel("Description");
-		proposalDescriptionTextField = new JTextField("Ex: Conference with Mr. Doe about Project X");
-		proposalBackButton = new JButton("Back");
-		proposalSubmitButton = new JButton("Submit");
-		String[] managerStrings = { };
-		proposalManagerList = new JComboBox(managerStrings);
-
-		// Add UI element to frame
-		GroupLayout proposalLayout = new GroupLayout(proposalFrame.getContentPane());
-		proposalLayout.setAutoCreateGaps(true);
-		proposalLayout.setAutoCreateContainerGaps(true);
-
-		proposalLayout.setHorizontalGroup(proposalLayout.createSequentialGroup()
-				.addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(proposalLocationLabel)
-						.addComponent(proposalLocationTextField).addComponent(proposalStartLabel).addComponent(proposalStartTextField)
-						.addComponent(proposalEstimateLabel).addComponent(proposalEstimateTextField).addComponent(proposalDescriptionLabel)
-						.addComponent(proposalDescriptionTextField).addComponent(proposalSubmitButton).addComponent(proposalBackButton))
-				.addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(proposalEndLabel)
-						.addComponent(proposalEndTextField).addComponent(proposalManagerList)));
-		proposalLayout.setVerticalGroup(proposalLayout.createSequentialGroup()
-				.addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalLocationLabel))
-				.addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalLocationTextField))
-				.addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalStartLabel).addComponent(proposalEndLabel))
-				.addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalStartTextField).addComponent(proposalEndTextField))
-				.addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalEstimateLabel))
-				.addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalEstimateTextField))
-				.addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalDescriptionLabel))
-				.addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalDescriptionTextField))
-				.addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalSubmitButton).addComponent(proposalManagerList))
-				.addGroup(proposalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(proposalBackButton)));
-		proposalLayout.linkSize(SwingConstants.HORIZONTAL, employeeFrame.getProposalButton(), employeeFrame.getCancelPropButton());
-		proposalFrame.getContentPane().setLayout(proposalLayout);
 
 		// trip screen
 		// frame setups
@@ -206,6 +142,12 @@ public class GUIView {
 	}
 
 
+	public ProposalFrame getProposalFrame()
+	{
+		return proposalFrame;
+	}
+
+
 	public JFrame getManagerSelectionFrame() {
 		return managerSelectionFrame;
 	}
@@ -240,109 +182,6 @@ public class GUIView {
 
 
 
-	public JFrame getProposalFrame() {
-		return proposalFrame;
-	}
-
-	public void setProposalFrame(JFrame proposalFrame) {
-		this.proposalFrame = proposalFrame;
-	}
-
-	public JLabel getProposalLocationLabel() {
-		return proposalLocationLabel;
-	}
-
-	public void setProposalLocationLabel(JLabel proposalLocationLabel) {
-		this.proposalLocationLabel = proposalLocationLabel;
-	}
-
-	public JLabel getProposalStartLabel() {
-		return proposalStartLabel;
-	}
-
-	public void setProposalStartLabel(JLabel proposalStartLabel) {
-		this.proposalStartLabel = proposalStartLabel;
-	}
-
-	public JLabel getProposalEndLabel() {
-		return proposalEndLabel;
-	}
-
-	public void setProposalEndLabel(JLabel proposalEndLabel) {
-		this.proposalEndLabel = proposalEndLabel;
-	}
-
-	public JLabel getProposalEstimateLabel() {
-		return proposalEstimateLabel;
-	}
-
-	public void setProposalEstimateLabel(JLabel proposalEstimateLabel) {
-		this.proposalEstimateLabel = proposalEstimateLabel;
-	}
-
-	public JLabel getProposalDescriptionLabel() {
-		return proposalDescriptionLabel;
-	}
-
-	public void setProposalDescriptionLabel(JLabel proposalDescriptionLabel) {
-		this.proposalDescriptionLabel = proposalDescriptionLabel;
-	}
-
-	public JTextField getProposalLocationTextField() {
-		return proposalLocationTextField;
-	}
-
-	public void setProposalLocationTextField(JTextField proposalLocationTextField) {
-		this.proposalLocationTextField = proposalLocationTextField;
-	}
-
-	public JTextField getProposalStartTextField() {
-		return proposalStartTextField;
-	}
-
-	public void setProposalStartTextField(JTextField proposalStartTextField) {
-		this.proposalStartTextField = proposalStartTextField;
-	}
-
-	public JTextField getProposalEndTextField() {
-		return proposalEndTextField;
-	}
-
-	public void setProposalEndTextField(JTextField proposalEndTextField) {
-		this.proposalEndTextField = proposalEndTextField;
-	}
-
-	public JTextField getProposalEstimateTextField() {
-		return proposalEstimateTextField;
-	}
-
-	public void setProposalEstimateTextField(JTextField proposalEstimateTextField) {
-		this.proposalEstimateTextField = proposalEstimateTextField;
-	}
-
-	public JTextField getProposalDescriptionTextField() {
-		return proposalDescriptionTextField;
-	}
-
-	public void setProposalDescriptionTextField(JTextField proposalDescriptionTextField) {
-		this.proposalDescriptionTextField = proposalDescriptionTextField;
-	}
-
-	public JButton getProposalBackButton() {
-		return proposalBackButton;
-	}
-
-	public void setProposalBackButton(JButton proposalBackButton) {
-		this.proposalBackButton = proposalBackButton;
-	}
-
-	public JButton getProposalSubmitButton() {
-		return proposalSubmitButton;
-	}
-
-	public void setProposalSubmitButton(JButton proposalSubmitButton) {
-		this.proposalSubmitButton = proposalSubmitButton;
-	}
 
 	public JFrame getTripFrame() {
 		return tripFrame;
@@ -430,13 +269,5 @@ public class GUIView {
 
 	public void setTripExpenseList(JList tripExpenseList) {
 		this.tripExpenseList = tripExpenseList;
-	}
-
-	public JComboBox getProposalManagerList() {
-		return proposalManagerList;
-	}
-
-	public void setProposalManagerList(JComboBox proposalManagerList) {
-		this.proposalManagerList = proposalManagerList;
 	}
 }

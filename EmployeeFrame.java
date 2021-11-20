@@ -26,11 +26,11 @@ class EmployeeFrame extends MFrame
 
 	private void initialize_attributes()
 	{
-		this.proposalButton = new JButton("Make Proposal");;
-		this.tripButton = new JButton("Manage Trip");;
-		this.logoutButton = new JButton(("Logout"));;
-		this.cancelPropButton = new JButton(("Cancel Proposal"));;
-		this.noteLabel = new JLabel("NOTE: n/a");;
+		this.proposalButton = new JButton("Make Proposal");
+		this.tripButton = new JButton("Manage Trip");
+		this.logoutButton = new JButton(("Logout"));
+		this.cancelPropButton = new JButton(("Cancel Proposal"));
+		this.noteLabel = new JLabel("NOTE: n/a");
 	}
 
 
