@@ -295,7 +295,7 @@ public class GUIController {
      */
     private void showEmployeeScreen() {
         view.getManagerSelectionFrame().setVisible(false);
-        view.getEmployeeScreenFrame().setVisible(true);
+        loginEmployee();
     }
 
     /**
