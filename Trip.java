@@ -8,7 +8,7 @@ public class Trip {
 	protected String start_Date;
 	protected String end_date;
 	protected String location;
-	protected boolean completed;	//True = trip finished, false = trip not completed
+	protected boolean completed;	//True = trip finished, false = trip pending
 	protected int status;		//1 = accepted, 2 = rejected, 3 = undetermined
 	
 	
