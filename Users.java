@@ -67,6 +67,24 @@ public class Users {
         }
     }
 
+    public static Boolean addManager(String First_Name, String Last_Name, String UserName, String Password, String Email) {
+
+        try {
+            String form =   "INSERT INTO `Users` (`First_Name`, `Last_Name`, `UserName`, `Password`, `Email`, `isManager`) "
+                    + "VALUES ('%s', '%s', '%s', '%s', '%s', '%d');";
+            String add_user_query =  String.format(form, First_Name, Last_Name, UserName, Password, Email, true);
+
+            ConnectedDBConnection connection = new ConnectedDBConnection();
+            connection.insert(add_user_query);
+
+            return true;
+        }
+        catch(Exception error) {
+            System.out.println(error.toString());
+            return false;
+        }
+    }
+
 
     public static Boolean username_exists(String username) throws Exception {
         String get_user_query = String.format("SELECT * FROM `Users` WHERE `UserName` = '%s';", username);
