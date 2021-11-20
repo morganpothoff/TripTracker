@@ -95,11 +95,11 @@ public class Users {
         return email;
     }//End of getEmail
 
-    public void setPassword(String newPassword) {
+    public void setPassword(String newPassword) throws Exception {
          password = newPassword;  
     }//End of setPassword
     
-    public boolean updatePassword(String newPassword, String currentPassword) {
+    public boolean updatePassword(String newPassword, String currentPassword) throws Exception {
         boolean retVal = false;
         if(currentPassword.equals(password)) {
             password = newPassword;
@@ -118,7 +118,7 @@ public class Users {
         return retVal;
     }//End of updatePassword
 
-    public boolean setEmail(String newEmail, String currentEmail) {
+    public boolean setEmail(String newEmail, String currentEmail) throws Exception {
         boolean retVal = false;
         if(currentEmail.equals(email)) {
             email = newEmail;
@@ -137,4 +137,3 @@ public class Users {
     }//End of setEmail
 
 }//End of Users
-
