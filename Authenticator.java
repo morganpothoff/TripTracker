@@ -6,6 +6,8 @@ import java.util.*;
 public class Authenticator {
 
     String id, password;
+    String[] invalidChars = {};
+    int maxLength = 30;
     boolean valid;
     
     public Authenticator(String inputID, String inputPassword) {
@@ -28,6 +30,15 @@ public class Authenticator {
     }
     
     public void checkValidInput() {
+    	   for (String char : invalidChars) {
+    	   	if (id.contains(char)){
+    	   		valid = false;
+    	   	}
+    	   }
+    	   
+    	   if ((id.length() > maxLength) || (password.length > maxLength)){
+    	   	valid = false;
+    	   }
     	   return;
     }
 }
