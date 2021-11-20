@@ -24,6 +24,8 @@ public class GUIView {
     private JButton registerRegisterButton;
     private JButton registerReturnButton;
     private JCheckBox isManagerCheckBox;
+    private JTextField registerFirstTextField;
+    private JTextField registerLastTextField;
 
     //  manager selection
     private JFrame managerSelectionFrame;
@@ -153,6 +155,8 @@ public class GUIView {
         registerRegisterButton = new JButton("Register");
         registerReturnButton = new JButton("Back");
         isManagerCheckBox = new JCheckBox("Check if Manager");
+        registerFirstTextField = new JTextField("First Name");
+        registerLastTextField = new JTextField("Last Name");
 
         // Add UI element to frame
         GroupLayout registerLayout = new GroupLayout(registerFrame.getContentPane());
@@ -161,9 +165,9 @@ public class GUIView {
 
         registerLayout.setHorizontalGroup(registerLayout.createSequentialGroup()
                 .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(registerIdLabel)
-                        .addComponent(registerPasswordLabel).addComponent(registerEmailLabel).addComponent(registerReturnButton))
+                        .addComponent(registerPasswordLabel).addComponent(registerEmailLabel).addComponent(registerFirstTextField).addComponent(registerReturnButton))
                 .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(registerIdTextField)
-                        .addComponent(registerPasswordTextField).addComponent(registerEmailTextField).addComponent(registerRegisterButton))
+                        .addComponent(registerPasswordTextField).addComponent(registerEmailTextField).addComponent(registerLastTextField).addComponent(registerRegisterButton))
                 .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(isManagerCheckBox)));
         registerLayout.setVerticalGroup(registerLayout.createSequentialGroup()
                 .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(registerIdLabel)
@@ -172,6 +176,8 @@ public class GUIView {
                         .addComponent(registerPasswordTextField))
                 .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(registerEmailLabel)
                         .addComponent(registerEmailTextField))
+                .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(registerFirstTextField)
+                        .addComponent(registerLastTextField))
                 .addGroup(registerLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(registerReturnButton)
                         .addComponent(registerRegisterButton)));
         registerLayout.linkSize(SwingConstants.HORIZONTAL, registerRegisterButton, registerReturnButton);
@@ -1008,5 +1014,25 @@ public class GUIView {
 
     public void setProposalManagerList(JComboBox proposalManagerList) {
         this.proposalManagerList = proposalManagerList;
+    }
+
+    public void setIsManagerCheckBox(JCheckBox isManagerCheckBox) {
+        this.isManagerCheckBox = isManagerCheckBox;
+    }
+
+    public JTextField getRegisterFirstTextField() {
+        return registerFirstTextField;
+    }
+
+    public void setRegisterFirstTextField(JTextField registerFirstTextField) {
+        this.registerFirstTextField = registerFirstTextField;
+    }
+
+    public JTextField getRegisterLastTextField() {
+        return registerLastTextField;
+    }
+
+    public void setRegisterLastTextField(JTextField registerLastTextField) {
+        this.registerLastTextField = registerLastTextField;
     }
 }
