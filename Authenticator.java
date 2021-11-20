@@ -6,6 +6,7 @@ import java.util.*;
 public class Authenticator {
 
     String id, password;
+    boolean valid;
     
     public Authenticator(String inputID, String inputPassword) {
         id = inputID;
@@ -13,6 +14,20 @@ public class Authenticator {
     }
 
     public boolean authenticate(DBManager db) throws Exception {
-        return db.checkLogin(id, password);
+    	   valid = true;
+    	   
+	   checkValidInput();
+	       	   
+    	   if (valid == true){
+    	   	 if (!db.checkLogin(id, password)) {
+    	   		valid = false;
+    	  	 }
+    	   }
+    	   
+        return valid;
+    }
+    
+    public void checkValidInput() {
+    	   return;
     }
 }
