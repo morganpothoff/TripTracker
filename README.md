@@ -19,6 +19,7 @@ make run
 ```
 
 ## Structure
+```
 TripTracker
 ├── Build
 │   ├── ConnectedDBConnection.class
@@ -65,7 +66,7 @@ TripTracker
     │   └── TripFrame.java
     ├── TripTracker.java
     └── mysql-connector-java.jar
-
+```
 
 ## Use Cases:
 1. Login
