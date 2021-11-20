@@ -77,7 +77,7 @@ public class GUIController {
      * @throws IOException
      */
     private void registerUser() throws IOException {
-        //NOTE: how can we check something in the DB trying to put it in the DB? 
+        //NOTE: how can we check something in the DB trying to put it in the DB?
         if(view.getIsManagerCheckBox().isSelected()){ // if manager check box is selected
             // todo make sure they are a manager in database
         }
@@ -203,7 +203,7 @@ public class GUIController {
             if(!loginUser.getPassword().equals(pass)) {
                 throw new Exception("Invalid Password");
             }
-    
+
             model.setUser(loginUser);
             System.out.println(String.format("User %s logged in", id));
 
@@ -271,6 +271,8 @@ public class GUIController {
         view.getManagerSelectionFrame().setVisible(false);
         view.getManagerScreenFrame().setVisible(true);
         //TODO fill lists with appropriate names / info
+        // put every employee in EL
+        // all employee with pending and matching manager == USERNAME
         view.getEmployeesListModel().addElement("jerry man");
 
     }
