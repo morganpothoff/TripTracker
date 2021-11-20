@@ -103,16 +103,16 @@ public class Users {
         boolean retVal = false;
         if(currentPassword.equals(password)) {
             password = newPassword;
-            
-            try {
+            //Update database
             String get_user_query = String.format("UPDATE `Users` SET `Password` = '%s', WHERE 'User_ID' = '%d';", newPassword, getUserID());
             ConnectedDBConnection connection = new ConnectedDBConnection();
-            connection.update(get_user_query);
+            int user_results = connection.update(get_user_query);
+            if(user_results == 1) {
+            	retVal = true;
             }
-            catch (Exception error) {
-            	System.out.println(error.toString());
-            }
-            
+        	else {
+        		throw new Exception("No changes were made to database.");
+        	}
             retVal = true;
         }
         return retVal;
@@ -122,16 +122,17 @@ public class Users {
         boolean retVal = false;
         if(currentEmail.equals(email)) {
             email = newEmail;
-            
-            try {
-            	String get_user_query = String.format("UPDATE `Users` SET `eMail` = '%s', WHERE 'User_ID' = '%d';", newEmail, getUserID());
-            	ConnectedDBConnection connection = new ConnectedDBConnection();
-            	connection.update(get_user_query);
+            //Update database
+            String get_user_query = String.format("UPDATE `Users` SET `eMail` = '%s', WHERE 'User_ID' = '%d';", newEmail, getUserID());
+            ConnectedDBConnection connection = new ConnectedDBConnection();
+            int user_results = connection.update(get_user_query);
+            if(user_results == 1) {
+               	retVal = true;
             }
-            catch (Exception error) {
-            	System.out.println(error.toString());
+            else {
+            	throw new Exception("No changes were made to database.");
             }
-            
+        }
             retVal = true;
         }
         return retVal;
