@@ -53,7 +53,8 @@ public class GUI {
 		employeeFrame.getTripButton().addActionListener((e -> {
 			try {
 				gotoTripScreen();
-			} catch (IOException ioException) {
+			}
+			catch (IOException ioException) {
 				ioException.printStackTrace();
 			}
 		}));
@@ -68,9 +69,8 @@ public class GUI {
 			{
 				try {
 					login();
-				} catch (IOException ioException) {
-					ioException.printStackTrace();
-				} catch (Exception exception) {
+				}
+				catch (Exception exception) {
 					exception.printStackTrace();
 				}
 			}
@@ -99,7 +99,8 @@ public class GUI {
 		registerFrame.getRegisterButton().addActionListener((e -> {
 			try {
 				registerUser();
-			} catch (IOException ioException) {
+			}
+			catch (IOException ioException) {
 				ioException.printStackTrace();
 			}
 		}));
@@ -379,6 +380,4 @@ public class GUI {
 	private void exit() {
 		System.exit(0);
 	}
-
-
 }
