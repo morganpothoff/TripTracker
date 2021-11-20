@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.sql.*;
 
 public class GUIController {
-	private GUIModel model;
 	private GUIView view;
-	public GUIController(GUIModel m, GUIView v) {
-		model = m;
-		view = v;
+	private Users user;
+
+
+	public GUIController() {
+		this.view = new GUIView("LoginPage");
+		initController();
 	}
 
 	/**
@@ -56,17 +58,6 @@ public class GUIController {
 		view.getTripFinishButton().addActionListener((e -> finishTrip()));
 
 
-	}
-
-
-	/**
-	 * gets user input from text fields and passes to the login controller
-	 */
-	private void getLoginData() {
-
-		String id = view.getLoginFrame().getIdTextField().getText();
-		String pass = view.getLoginFrame().getPasswordTextField().getText();
-		model.getLoginController().getUserInput(id, pass);
 	}
 
 
@@ -124,12 +115,12 @@ public class GUIController {
 			double cost = Double.parseDouble(view.getTripCostTextField().getText());
 			String location = tempInput;
 			int Trip_ID = 1;  //TODO: once trip select is implemented, get trip
-			String User_ID = model.getLoginController().getID();
+			int User_ID = user.getUserID();
 
 			view.getTripExpenseModel().addElement(name + " " + company + " " + location + " " + cost);  //todo delete once add is working
 
 			// Set data
-			if(Expense.add(company, cost, location, name, Trip_ID, new Users(User_ID).getUserID())) {
+			if(Expense.add(company, cost, location, name, Trip_ID, User_ID)) {
 				System.out.println("Successfully added Expense");
 
 				view.getTripExpenseModel().addElement(view.getTripItemTextField().getText() + ' ' + view.getTripCostTextField().getText());
@@ -204,7 +195,7 @@ public class GUIController {
 				throw new Exception("Invalid Password");
 			}
 	
-			model.setUser(loginUser);
+			this.user = loginUser;
 			System.out.println(String.format("User %s logged in", id));
 
 			view.getLoginFrame().setVisible(false);
@@ -305,13 +296,13 @@ public class GUIController {
 	private void employeeLogout() {
 		// if is a manager
 		// return to selection screen
-		if(model.isManager()){
-			view.getManagerSelectionFrame().setVisible(true);
-			view.getEmployeeFrame().setVisible(false);
-		}
-		else{
+		// if(model.isManager()){
+		// 	view.getManagerSelectionFrame().setVisible(true);
+		// 	view.getEmployeeFrame().setVisible(false);
+		// }
+		// else{
 			logout();
-		}
+		// }
 
 	}
 

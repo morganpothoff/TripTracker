@@ -14,14 +14,13 @@
 
 # Compiles everything adding mysql-connector-java.jar to the class path. 
 all:
-	javac -cp '.:mysql-connector-java.jar' *.java
+	javac -cp 'Build:Source/mysql-connector-java.jar' Source/GUI/* Source/DBClasses/* Source/*.java -d Build
 	# For windows use
-	#  javac -cp '.;mysql-connector-java.jar' *.java
+	#  javac -cp 'Build;Source/mysql-connector-java.jar' Source/GUI/* Source/DBClasses/* Source/*.java -d Build
 
 
 # Runs everything adding mysql-connector-java.jar to the class path.
 run:
-	java -cp '.:mysql-connector-java.jar' GUIApplication
+	java -cp 'Build:Source/mysql-connector-java.jar' TripTracker
 	# For windows use
-	#  java -cp '.;mysql-connector-java.jar' GUIApplication
-
+	#  java -cp 'Build;Source/mysql-connector-java.jar' TripTracker
