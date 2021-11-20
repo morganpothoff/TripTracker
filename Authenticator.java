@@ -7,7 +7,7 @@ public class Authenticator {
 
     String id, password;
     String[] invalidChars = {};
-    int maxLength = 30;
+    int maxLength = 30, minLength = 6;
     boolean valid;
     
     public Authenticator(String inputID, String inputPassword) {
@@ -36,7 +36,7 @@ public class Authenticator {
     	   	}
     	   }
     	   
-    	   if ((id.length() > maxLength) || (password.length() > maxLength)){
+    	   if ((id.length() > maxLength) || (password.length() > maxLength) || (id.length() < minLength) || (password.length() < minLength)){
     	   	valid = false;
     	   }
     	   return;
