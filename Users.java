@@ -113,7 +113,7 @@ public class Users {
         	else {
         		throw new Exception("No changes were made to database.");
         	}
-            retVal = true;
+
         }
         return retVal;
     }//End of updatePassword
@@ -131,9 +131,7 @@ public class Users {
             }
             else {
             	throw new Exception("No changes were made to database.");
-            }
-        }
-            retVal = true;
+            	}
         }
         return retVal;
     }//End of setEmail
