@@ -67,129 +67,115 @@ public class Trip {
 		return completed;
 	}//End of getCompletion
 	
-	public boolean setDescription(String newDescription, String currentDescription) throws Exception{
+	public boolean setDescription(String newDescription) throws Exception{
 		boolean retVal = false;
-		if(myDescription == currentDescription) {
-			myDescription = newDescription;
-			//Update database
-            String get_user_query = String.format("UPDATE `Trip` SET `Set_Budget` = '%s', WHERE 'Trip_ID' = '%d';", newDescription, getTripID());
-            ConnectedDBConnection connection = new ConnectedDBConnection();
-            int user_results = connection.update(get_user_query);
-            if(user_results == 1) {
-               	retVal = true;
-            }
-            else {
-            	throw new Exception("No changes were made to database.");
-            }
-		}
+		myDescription = newDescription;
+		//Update database
+        	String get_user_query = String.format("UPDATE `Trip` SET `Set_Budget` = '%s', WHERE 'Trip_ID' = '%d';", newDescription, getTripID());
+        	ConnectedDBConnection connection = new ConnectedDBConnection();
+        	int user_results = connection.update(get_user_query);
+        	if(user_results == 1) {
+        	retVal = true;
+        	}
+        	else {
+        	throw new Exception("No changes were made to database.");
+        	}
 		return retVal;
 	}//End of setDescription
 	
-	public boolean setNewBudget(float newBudget, float currentBudget) throws Exception{
+	public boolean setNewBudget(float newBudget) throws Exception{
 		boolean retVal = false;
-		if(setBudget == currentBudget) {
-			setBudget = newBudget;
-			//Update database
-            String get_user_query = String.format("UPDATE `Trip` SET `Set_Budget` = '%f', WHERE 'Trip_ID' = '%d';", newBudget, getTripID());
-            ConnectedDBConnection connection = new ConnectedDBConnection();
-            int user_results = connection.update(get_user_query);
-            if(user_results == 1) {
-               	retVal = true;
-            }
-            else {
+		setBudget = newBudget;
+		//Update database
+        	String get_user_query = String.format("UPDATE `Trip` SET `Set_Budget` = '%f', WHERE 'Trip_ID' = '%d';", newBudget, getTripID());
+        	ConnectedDBConnection connection = new ConnectedDBConnection();
+        	int user_results = connection.update(get_user_query);
+        	if(user_results == 1) {
+          		retVal = true;
+        	}
+        	else {
             	throw new Exception("No changes were made to database.");
-            }
 		}
 		return retVal;
 	}//End of setNewBudget
 	
 	public boolean setStartDate(String newDate, String currentDate) throws Exception{
 		boolean retVal = false;
-		if(start_Date.equals(currentDate)) {
-			start_Date = newDate;
-			//Update database
-            String get_user_query = String.format("UPDATE `Trip` SET `Start_Date` = '%s', WHERE 'Trip_ID' = '%d';", newDate, getTripID());
-            ConnectedDBConnection connection = new ConnectedDBConnection();
-            int user_results = connection.update(get_user_query);
-            if(user_results == 1) {
-               	retVal = true;
-            }
-            else {
-            	throw new Exception("No changes were made to database.");
-            }
-		}
+		start_Date = newDate;
+		//Update database
+        	String get_user_query = String.format("UPDATE `Trip` SET `Start_Date` = '%s', WHERE 'Trip_ID' = '%d';", newDate, getTripID());
+        	ConnectedDBConnection connection = new ConnectedDBConnection();
+        	int user_results = connection.update(get_user_query);
+        	if(user_results == 1) {
+           		retVal = true;
+        	}
+        	else {
+        		throw new Exception("No changes were made to database.");
+        	}
 		return retVal;
 	}//End of setStartDate
 	
-	public boolean setEndDate(String newDate, String currentDate) throws Exception{
+	public boolean setEndDate(String newDate) throws Exception{
 		boolean retVal = false;
-		if(end_date.equals(currentDate)) {
-			end_date = newDate;
-			//Update database
-            String get_user_query = String.format("UPDATE `Trip` SET `End_Time` = '%s', WHERE 'Trip_ID' = '%d';", newDate, getTripID());
-            ConnectedDBConnection connection = new ConnectedDBConnection();
-            int user_results = connection.update(get_user_query);
-            if(user_results == 1) {
-               	retVal = true;
-            }
-            else {
-            	throw new Exception("No changes were made to database.");
-            }
-		}
+		end_date = newDate;
+		//Update database
+        	String get_user_query = String.format("UPDATE `Trip` SET `End_Time` = '%s', WHERE 'Trip_ID' = '%d';", newDate, getTripID());
+        	ConnectedDBConnection connection = new ConnectedDBConnection();
+        	int user_results = connection.update(get_user_query);
+        	if(user_results == 1) {
+           		retVal = true;
+        	}
+        	else {
+        		throw new Exception("No changes were made to database.");
+        	}
 		return retVal;
 	}//End of setEndDate
 	
-	public boolean setLocation(String newLocation, String currentLocation) throws Exception{
+	public boolean setLocation(String newLocation) throws Exception{
 		boolean retVal = false;
-		if(location.equals(currentLocation)) {
-			location = newLocation;
-			//Update database
-            String get_user_query = String.format("UPDATE `Trip` SET `Location` = '%s', WHERE 'Trip_ID' = '%d';", newLocation, getTripID());
-            ConnectedDBConnection connection = new ConnectedDBConnection();
-            int user_results = connection.update(get_user_query);
-            if(user_results == 1) {
-               	retVal = true;
-            }
-            else {
-            	throw new Exception("No changes were made to database.");
-            }
-		}
+		location = newLocation;
+		//Update database
+        	String get_user_query = String.format("UPDATE `Trip` SET `Location` = '%s', WHERE 'Trip_ID' = '%d';", newLocation, getTripID());
+        	ConnectedDBConnection connection = new ConnectedDBConnection();
+        	int user_results = connection.update(get_user_query);
+        	if(user_results == 1) {
+          	retVal = true;
+        	}
+        	else {
+        		throw new Exception("No changes were made to database.");
+        	}
 		return retVal;
 	}//End of setLocation
 	
-	public boolean setStatus(int newStatus, int currentStatus) throws Exception{
+	public boolean setStatus(int newStatus) throws Exception{
 		boolean retVal = false;
-		if(status == currentStatus) {
-			status = newStatus;
-			//Update database
-            String get_user_query = String.format("UPDATE `Trip` SET `Status` = '%d', WHERE 'Trip_ID' = '%d';", newStatus, getTripID());
-            ConnectedDBConnection connection = new ConnectedDBConnection();
-            int user_results = connection.update(get_user_query);
-            if(user_results == 1) {
-               	retVal = true;
-            }
-            else {
-            	throw new Exception("No changes were made to database.");
-            }
-		}
+		status = newStatus;
+		//Update database
+        	String get_user_query = String.format("UPDATE `Trip` SET `Status` = '%d', WHERE 'Trip_ID' = '%d';", newStatus, getTripID());
+        	ConnectedDBConnection connection = new ConnectedDBConnection();
+        	int user_results = connection.update(get_user_query);
+        	if(user_results == 1) {
+           		retVal = true;
+        	}
+        	else {
+        		throw new Exception("No changes were made to database.");
+        	}
 		return retVal;
 	}//End of setStatus
 	
-	public boolean setCompletion(boolean newCompStatus, boolean currentCompStatus) throws Exception{
+	public boolean setCompletion(boolean newCompStatus) throws Exception{
 		boolean retVal = false;
-		if(completed == currentCompStatus) {
-			completed = newCompStatus;
-			//Update database
-            String get_user_query = String.format("UPDATE `Users` SET `Completed` = '%d', WHERE 'Trip_ID' = '%d';", newCompStatus, getTripID());
-            ConnectedDBConnection connection = new ConnectedDBConnection();
-            int user_results = connection.update(get_user_query);
-            if(user_results == 1) {
-               	retVal = true;
-            }
-            else {
-            	throw new Exception("No changes were made to database.");
-            }
-		}
+		completed = newCompStatus;
+		//Update database
+        	String get_user_query = String.format("UPDATE `Users` SET `Completed` = '%d', WHERE 'Trip_ID' = '%d';", newCompStatus, getTripID());
+        	ConnectedDBConnection connection = new ConnectedDBConnection();
+       		int user_results = connection.update(get_user_query);
+        	if(user_results == 1) {
+           	retVal = true;
+        	}
+        	else {
+        	throw new Exception("No changes were made to database.");
+        	}
 		return retVal;
 	}//End of setCompletion
 }//End of Trip
