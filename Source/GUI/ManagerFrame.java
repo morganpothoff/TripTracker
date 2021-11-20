@@ -34,9 +34,9 @@ class ManagerFrame extends MFrame
 	private JScrollPane pendingScrollPane;
 
 
-	public ManagerFrame(String title)
+	public ManagerFrame()
 	{
-		super(title, false);
+		super("Manager", false);
 
 		initialize_attributes();
 		setup_frame_elements();

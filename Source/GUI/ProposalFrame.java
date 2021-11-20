@@ -24,9 +24,9 @@ class ProposalFrame extends MFrame
 	private JComboBox managerList;
 
 
-	public ProposalFrame(String title)
+	public ProposalFrame()
 	{
-		super(title, false);
+		super("Proposal", false);
 
 		initialize_attributes();
 		setup_frame_elements();

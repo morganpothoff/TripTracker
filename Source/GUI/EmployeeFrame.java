@@ -16,9 +16,9 @@ class EmployeeFrame extends MFrame
 	private JLabel noteLabel;
 
 
-	public EmployeeFrame(String title)
+	public EmployeeFrame()
 	{
-		super(title, false);
+		super("Employee", false);
 
 		initialize_attributes();
 		setup_frame_elements();

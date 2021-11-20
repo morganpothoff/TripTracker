@@ -9,7 +9,6 @@ import java.util.Arrays;
 
 class TripFrame extends MFrame
 {
-	private JFrame frame;
 	private JLabel expensesLabel;
 	private JLabel itemLabel;
 	private JLabel costLabel;
@@ -23,9 +22,9 @@ class TripFrame extends MFrame
 	JScrollPane expenseScrollPane;
 
 
-	public TripFrame(String title)
+	public TripFrame()
 	{
-		super(title, false);
+		super("Trip", false);
 	   
 		initialize_attributes();
 		setup_frame_elements();
@@ -80,11 +79,6 @@ class TripFrame extends MFrame
 
 
 	// —————————————————————————————————————————————————— GETTERS —————————————————————————————————————————————————— //
-	public JFrame getFrame()
-	{
-		return this.frame;
-	}
-
 
 	public JLabel getExpensesLabel()
 	{
@@ -144,6 +138,4 @@ class TripFrame extends MFrame
 	{
 		return this.expenseList;
 	}
-
-
 }

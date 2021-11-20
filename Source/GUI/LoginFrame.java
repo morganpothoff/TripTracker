@@ -18,9 +18,9 @@ class LoginFrame extends MFrame
 	private JButton exitButton;
 
 
-	public LoginFrame(String title)
+	public LoginFrame()
 	{
-		super(title, true);
+		super("Login", true);
 	   
 		initialize_attributes();
 		setup_frame_elements();

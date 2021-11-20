@@ -20,9 +20,9 @@ class RegisterFrame extends MFrame
 	private JCheckBox isManagerCheckBox;
 
 
-	public RegisterFrame(String title)
+	public RegisterFrame()
 	{
-		super(title, false);
+		super("Register", false);
 
 		this.initialize_attributes();
 		this.setup_frame_elements();
