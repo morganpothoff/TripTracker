@@ -30,13 +30,13 @@ public class Authenticator {
     }
     
     public void checkValidInput() {
-    	   for (String char : invalidChars) {
-    	   	if (id.contains(char)){
+    	   for (String cha : invalidChars) {
+    	   	if (id.contains(cha)){
     	   		valid = false;
     	   	}
     	   }
     	   
-    	   if ((id.length() > maxLength) || (password.length > maxLength)){
+    	   if ((id.length() > maxLength) || (password.length() > maxLength)){
     	   	valid = false;
     	   }
     	   return;
