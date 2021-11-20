@@ -53,9 +53,9 @@ public class GUIController {
 		view.getEmployeeFrame().getLogoutButton().addActionListener((e -> employeeLogout()));
 		view.getProposalFrame().getBackButton().addActionListener((e -> proposalToEmployeeScreen()));
 		view.getProposalFrame().getSubmitButton().addActionListener((e -> submitProposal()));
-		view.getTripBackButton().addActionListener((e -> tripToEmployeeScreen()));
-		view.getTripAddButton().addActionListener((e -> addItem()));
-		view.getTripFinishButton().addActionListener((e -> finishTrip()));
+		view.getTripFrame().getBackButton().addActionListener((e -> tripToEmployeeScreen()));
+		view.getTripFrame().getAddButton().addActionListener((e -> addItem()));
+		view.getTripFrame().getFinishButton().addActionListener((e -> finishTrip()));
 
 
 	}
@@ -107,26 +107,26 @@ public class GUIController {
 	private void addItem() {
 		try {
 			// Get data
-			String tempInput = view.getTripItemTextField().getText();	  // get text and parse ex: "Item,StarBucks,Austin"
+			String tempInput = view.getTripFrame().getItemTextField().getText();	  // get text and parse ex: "Item,StarBucks,Austin"
 			String name = tempInput.substring(0, tempInput.indexOf(','));   // following lines parse the input string
 			tempInput = tempInput.substring(tempInput.indexOf(',')+1);
 			String company = tempInput.substring(0, tempInput.indexOf(','));
 			tempInput = tempInput.substring(tempInput.indexOf(',')+1);
-			double cost = Double.parseDouble(view.getTripCostTextField().getText());
+			double cost = Double.parseDouble(view.getTripFrame().getCostTextField().getText());
 			String location = tempInput;
 			int Trip_ID = 1;  //TODO: once trip select is implemented, get trip
 			int User_ID = user.getUserID();
 
-			view.getTripExpenseModel().addElement(name + " " + company + " " + location + " " + cost);  //todo delete once add is working
+			view.getTripFrame().getExpenseModel().addElement(name + " " + company + " " + location + " " + cost);  //todo delete once add is working
 
 			// Set data
 			if(Expense.add(company, cost, location, name, Trip_ID, User_ID)) {
 				System.out.println("Successfully added Expense");
 
-				view.getTripExpenseModel().addElement(view.getTripItemTextField().getText() + ' ' + view.getTripCostTextField().getText());
-				view.getTripItemTextField().setText("");
-				view.getTripCostTextField().setText("");
-				view.getTripExpenseModel().addElement(name + " " + company + " " + location + " " + cost);
+				view.getTripFrame().getExpenseModel().addElement(view.getTripFrame().getItemTextField().getText() + ' ' + view.getTripFrame().getCostTextField().getText());
+				view.getTripFrame().getItemTextField().setText("");
+				view.getTripFrame().getCostTextField().setText("");
+				view.getTripFrame().getExpenseModel().addElement(name + " " + company + " " + location + " " + cost);
 			}
 			else {
 				System.out.println("Try again");
