@@ -78,22 +78,21 @@ public class GUIController {
      */
     private void registerUser() throws IOException {
         //NOTE: how can we check something in the DB trying to put it in the DB?
-        if(view.getIsManagerCheckBox().isSelected()){ // if manager check box is selected
-            // todo make sure they are a manager in database
-        }
+
         String UserName = view.getRegisterIdTextField().getText();
         String pass = view.getRegisterPasswordTextField().getText();
         String email = view.getRegisterEmailTextField().getText();
-        //TODO: add field for First and Last names
-        String First_Name = "Test";
-        String Last_Name = "User";
+        String First_Name = view.getRegisterFirstTextField().getText();
+        String Last_Name = view.getRegisterLastTextField().getText();
 
         try {
             if(Users.username_exists(UserName)) {
                 throw new Exception("Invalid ID - already exists");
             }
-
-            if(Users.add(First_Name, Last_Name, UserName, pass, email)) {
+            else if(view.getIsManagerCheckBox().isSelected() && Users.addManager(First_Name, Last_Name, UserName, pass, email)) {
+                back();
+            }
+            else if(Users.add(First_Name, Last_Name, UserName, pass, email)){
                 back();
             }
             else {
