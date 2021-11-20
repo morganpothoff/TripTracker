@@ -38,8 +38,8 @@ public class GUIController {
 		view.getSelectManagerViewButton().addActionListener((e -> showManagerScreen()));
 		view.getSelectEmployeeViewButton().addActionListener((e -> showEmployeeScreen()));
 		view.getSelectLogoutButton().addActionListener((e -> logout()));
-		view.getManagerBackButton().addActionListener((e -> managerToSelection()));
-		view.getManagerAddButton().addActionListener((e -> addEmployee()));
+		view.getManagerFrame().getBackButton().addActionListener((e -> managerToSelection()));
+		view.getManagerFrame().getAddButton().addActionListener((e -> addEmployee()));
 		view.getEmployeeFrame().getProposalButton().addActionListener((e -> gotoProposalScreen()));
 		view.getEmployeeFrame().getTripButton().addActionListener((e -> {
 			try {
@@ -270,9 +270,9 @@ public class GUIController {
 	 */
 	private void showManagerScreen() {
 		view.getManagerSelectionFrame().setVisible(false);
-		view.getManagerScreenFrame().setVisible(true);
+		view.getManagerFrame().setVisible(true);
 		//TODO fill lists with appropriate names / info
-		view.getEmployeesListModel().addElement("jerry man");
+		view.getManagerFrame().getEmployeesListModel().addElement("jerry man");
 
 	}
 
@@ -281,7 +281,7 @@ public class GUIController {
 	 */
 	private void managerToSelection() {
 		view.getManagerSelectionFrame().setVisible(true);
-		view.getManagerScreenFrame().setVisible(false);
+		view.getManagerFrame().setVisible(false);
 	}
 
 	/**
@@ -290,10 +290,10 @@ public class GUIController {
 	 */
 	private void addEmployee() {
 		// TODO if employee does not exist within company && is not tied to a manager
-		if(view.getNewNameTextField().getText().equals(""))
-			view.getNewNameTextField().setText("Invalid name");
+		if(view.getManagerFrame().getNewNameTextField().getText().equals(""))
+			view.getManagerFrame().getNewNameTextField().setText("Invalid name");
 		else{
-			view.getEmployeesListModel().addElement(view.getNewNameTextField().getText());
+			view.getManagerFrame().getEmployeesListModel().addElement(view.getManagerFrame().getNewNameTextField().getText());
 			//TODO go to model to link employee to manager
 		}
 	}
