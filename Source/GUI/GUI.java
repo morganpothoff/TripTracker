@@ -2,6 +2,9 @@
 import javax.swing.*;
 import java.io.IOException;
 import java.sql.*;
+import java.util.List;
+import java.util.Arrays;
+
 
 public class GUI {
 	private LoginFrame loginFrame;
@@ -11,6 +14,7 @@ public class GUI {
 	private ProposalFrame proposalFrame;
 	private RegisterFrame registerFrame;
 	private TripFrame tripFrame;
+	private List<MFrame> frames;
 
 	// DATA
 	private Users user;
@@ -25,6 +29,8 @@ public class GUI {
 		registerFrame = new RegisterFrame();
 		tripFrame = new TripFrame();
 
+		frames = Arrays.asList(loginFrame, employeeFrame, managerFrame, managerSelectionFrame, proposalFrame,
+		  registerFrame, tripFrame);
 		initialize_callbacks();
 	}
 
@@ -63,7 +69,7 @@ public class GUI {
 
 	private void initialize_login_callbacks()
 	{
-		loginFrame.getRegisterButton().addActionListener(e -> register());
+		loginFrame.getRegisterButton().addActionListener(e -> hide_all_frames_except(registerFrame));
 		loginFrame.getExitButton().addActionListener((e -> exit()));
 		loginFrame.getLoginButton().addActionListener(e ->
 			{
@@ -88,7 +94,7 @@ public class GUI {
 	private void initialize_managerSelection_callbacks()
 	{
 		managerSelectionFrame.getManagerViewButton().addActionListener((e -> showManagerScreen()));
-		managerSelectionFrame.getEmployeeViewButton().addActionListener((e -> showEmployeeScreen()));
+		managerSelectionFrame.getEmployeeViewButton().addActionListener((e -> hide_all_frames_except(employeeFrame)));
 		managerSelectionFrame.getLogoutButton().addActionListener((e -> logout()));
 	}
 
@@ -109,20 +115,42 @@ public class GUI {
 
 	private void initialize_proposal_callbacks()
 	{
-		proposalFrame.getBackButton().addActionListener((e -> proposalToEmployeeScreen()));
+		proposalFrame.getBackButton().addActionListener((e -> hide_all_frames_except(employeeFrame)));
 		proposalFrame.getSubmitButton().addActionListener((e -> submitProposal()));
 	}
 
 
 	private void initialize_trip_callbacks()
 	{
-		tripFrame.getBackButton().addActionListener((e -> tripToEmployeeScreen()));
+		tripFrame.getBackButton().addActionListener((e -> hide_all_frames_except(employeeFrame)));
 		tripFrame.getAddButton().addActionListener((e -> addItem()));
 		tripFrame.getFinishButton().addActionListener((e -> finishTrip()));
 	}
 
 
 	// ————————————————————————————————————————————————— CALLBACKS ————————————————————————————————————————————————— //
+	// ————————————————————————————————————————————————————————————————————————————————————————————————————————————— //
+
+	/**
+	 * switch from manager menu to manager view
+	 */
+	private void showManagerScreen() {
+		hide_all_frames_except(managerFrame);
+		//TODO fill lists with appropriate names / info
+		managerFrame.getEmployeesListModel().addElement("jerry man");
+	}
+
+
+	/**
+	 * switch from login frame to register frame
+	 */
+	private void loginFrame_to_managerFrame() {
+		hide_all_frames_except(managerFrame);
+	}
+
+
+	// ————————————————————————————————————————————————————————————————————————————————————————————————————————————— //
+
 
 	/**
 	 * when registration button is pressed
@@ -161,7 +189,7 @@ public class GUI {
 
 	private void finishTrip() {
 		// todo archive trip details
-		tripToEmployeeScreen();
+		hide_all_frames_except(employeeFrame);
 	}
 
 	/**
@@ -200,40 +228,26 @@ public class GUI {
 		}
 	}
 
-	/**
-	 * switch frames from trip manager to employee main menu
-	 */
-	private void tripToEmployeeScreen() {
-		tripFrame.setVisible(false);
-		employeeFrame.setVisible(true);
-	}
 
 	/**
 	 * submit proposal details and switch screen back to menu
 	 */
 	private void submitProposal() {
 		// todo actually submit the proposal
-		proposalToEmployeeScreen();
+		hide_all_frames_except(employeeFrame);
 	}
 
-
-	private void proposalToEmployeeScreen() {
-		proposalFrame.setVisible(false);
-		employeeFrame.setVisible(true);
-	}
 
 	private void gotoTripScreen() throws IOException {
 		//todo if no trip in progress, don't switch
 		String name = loginFrame.getIdTextField().getText();
 		//model.getEmployeeInfoMap().get(name);	   // todo get trip data and add all expenses to the trip list
-		employeeFrame.setVisible(false);
-		tripFrame.setVisible(true);
+		hide_all_frames_except(tripFrame);
 	}
 
 	private void gotoProposalScreen() {
 		employeeFrame.getNoteLabel().setText("Note: Current trip in progress");
-		employeeFrame.setVisible(false);
-		proposalFrame.setVisible(true);
+		hide_all_frames_except(proposalFrame);
 
 		// fill in the manager list
 
@@ -259,8 +273,7 @@ public class GUI {
 			this.user = loginUser;
 			System.out.println(String.format("User %s logged in", id));
 
-			loginFrame.setVisible(false);
-			employeeFrame.setVisible(true);
+			hide_all_frames_except(employeeFrame);
 		}
 		catch(Exception e) {
 			System.out.println(e.toString());
@@ -268,13 +281,6 @@ public class GUI {
 		}
 	}
 
-	/**
-	 * switch from login frame to register frame
-	 */
-	private void register() {
-		loginFrame.setVisible(false);
-		registerFrame.setVisible(true);
-	}
 
 	/**
 	 * switch from register frame to login frame
@@ -285,50 +291,14 @@ public class GUI {
 		registerFrame.getPasswordTextField().setText("");
 		registerFrame.getEmailTextField().setText("");
 
-		loginFrame.setVisible(true);
-		registerFrame.setVisible(false);
-	}
-
-	/**
-	 * switch from login frame to employee menu
-	 */
-	private void loginEmployee() {
-		employeeFrame.setVisible(true);
-		loginFrame.setVisible(false);
-	}
-
-	/**
-	 * switch from login frame to manager menu
-	 */
-	private void loginManager() {
-		managerSelectionFrame.setVisible(true);
-		loginFrame.setVisible(false);
-	}
-
-	/**
-	 * switch from manger menu to employee view
-	 */
-	private void showEmployeeScreen() {
-		managerSelectionFrame.setVisible(false);
-		employeeFrame.setVisible(true);
-	}
-
-	/**
-	 * switch from manager menu to manager view
-	 */
-	private void showManagerScreen() {
-		managerSelectionFrame.setVisible(false);
-		managerFrame.setVisible(true);
-		//TODO fill lists with appropriate names / info
-		managerFrame.getEmployeesListModel().addElement("jerry man");
+		hide_all_frames_except(loginFrame);
 	}
 
 	/**
 	 * switch from manager view to manager menu
 	 */
 	private void managerToSelection() {
-		managerSelectionFrame.setVisible(true);
-		managerFrame.setVisible(false);
+		hide_all_frames_except(managerSelectionFrame);
 	}
 
 	/**
@@ -353,8 +323,7 @@ public class GUI {
 		// if is a manager
 		// return to selection screen
 		// if(model.isManager()){
-		// 	managerSelectionFrame.setVisible(true);
-		// 	employeeFrame.setVisible(false);
+		// 	hide_all_frames_except(managerSelectionFrame)
 		// }
 		// else{
 			logout();
@@ -365,13 +334,10 @@ public class GUI {
 	 * clear login screen and only show login screen
 	 */
 	private void logout() {
-		managerSelectionFrame.setVisible(false);
-		employeeFrame.setVisible(false);
-
-		// return to login screen and clear login text fields
 		loginFrame.getIdTextField().setText("");
 		loginFrame.getPasswordTextField().setText("");
-		loginFrame.setVisible(true);
+		user = null;
+		hide_all_frames_except(loginFrame);
 	}
 
 	/**
@@ -379,5 +345,16 @@ public class GUI {
 	 */
 	private void exit() {
 		System.exit(0);
+	}
+
+
+	// —————————————————————————————————————————————————— UTILITY —————————————————————————————————————————————————— //
+
+	private void hide_all_frames_except(MFrame visible_screen)
+	{
+		for(int x = 0; x < frames.size(); x++)
+		{
+			frames.get(x).setVisible(frames.get(x) == visible_screen);
+		}
 	}
 }
