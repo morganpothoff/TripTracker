@@ -115,13 +115,21 @@ public class GUIController {
     private void addItem() {
         try {
             // Get data
+            double cost;
+            try{
+                cost = Double.parseDouble(view.getTripCostTextField().getText());
+            }
+            catch(NumberFormatException e){
+                return;
+            }
             String tempInput = view.getTripItemTextField().getText();       // get text and parse ex: "Item,StarBucks,Austin"
-            String name = tempInput.substring(0, tempInput.indexOf(','));   // following lines parse the input string
-            tempInput = tempInput.substring(tempInput.indexOf(',')+1);
-            String company = tempInput.substring(0, tempInput.indexOf(','));
-            tempInput = tempInput.substring(tempInput.indexOf(',')+1);
-            double cost = Double.parseDouble(view.getTripCostTextField().getText());
-            String location = tempInput;
+            String[] tokens = tempInput.split(",");
+            if(tokens.length != 3)
+                return;
+
+            String name = tokens[0];   // following lines parse the input string
+            String company = tokens[1];
+            String location = tokens[2];
             int Trip_ID = 1;  //TODO: once trip select is implemented, get trip
             String User_ID = model.getLoginController().getID();
 
@@ -169,12 +177,14 @@ public class GUIController {
     }
 
     private void gotoTripScreen() throws IOException {
-        //todo if no trip in progress, don't switch
+        // if no trip in progress, don't switch
         if(model.getCurrTrip().getStatus() != 1){
             return;
         }
-        String name = view.getIdTextField().getText();
-        //model.getEmployeeInfoMap().get(name);                   // todo get trip data and add all expenses to the trip list
+
+        // todo get trip data and add all expenses to the trip list
+
+
         view.getEmployeeScreenFrame().setVisible(false);
         view.getTripFrame().setVisible(true);
     }
