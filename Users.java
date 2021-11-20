@@ -103,6 +103,9 @@ public class Users {
         boolean retVal = false;
         if(currentPassword.equals(password)) {
             password = newPassword;
+            String get_user_query = String.format("UPDATE `Users` SET `Password` = '%s', WHERE 'User_ID' = '%d';", newPassword, getUserID());
+            ConnectedDBConnection connection = new ConnectedDBConnection();
+            ResultSet user_results = connection.select(get_user_query);
             retVal = true;
         }
         return retVal;
@@ -112,6 +115,9 @@ public class Users {
         boolean retVal = false;
         if(currentEmail.equals(email)) {
             email = newEmail;
+            String get_user_query = String.format("UPDATE `Users` SET `eMail` = '%s', WHERE 'User_ID' = '%d';", newEmail, getUserID());
+            ConnectedDBConnection connection = new ConnectedDBConnection();
+            ResultSet user_results = connection.select(get_user_query);
             retVal = true;
         }
         return retVal;
