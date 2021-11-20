@@ -53,7 +53,7 @@ public class Authenticator {
         hasDigit = digit.matcher(password);
         hasSpecial = special.matcher(password);
         
-        if (!hasLowercase.find() || || !hasUppercase.find() || !hasDigit.find() || !hasSpecial.find()) {
+        if (!hasLowercase.find() || !hasUppercase.find() || !hasDigit.find() || !hasSpecial.find()) {
         valid = false;
         }
 
