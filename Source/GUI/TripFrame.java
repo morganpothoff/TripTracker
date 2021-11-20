@@ -22,9 +22,9 @@ class TripFrame extends MFrame
 	JScrollPane expenseScrollPane;
 
 
-	public TripFrame()
+	public TripFrame(GUI gui)
 	{
-		super("Trip", false);
+		super(gui, "Trip", false);
 	   
 		initialize_attributes();
 		setup_frame_elements();
@@ -44,6 +44,8 @@ class TripFrame extends MFrame
 		this.backButton = new JButton("Back");
 		this.finishButton = new JButton("Finish");
 		this.expenseScrollPane = new JScrollPane(this.expenseList);
+	
+		this.reset_components = Arrays.asList();  //TODO: populate
 	}
 
 
@@ -75,6 +77,11 @@ class TripFrame extends MFrame
 		expenseList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		expenseList.setSelectedIndex(0);
 		expenseList.setVisibleRowCount(10);
+
+		// CALLBACKS
+		addButton.addActionListener(e -> add());
+		backButton.addActionListener(e -> gui.getEmployeeFrame().focus());
+		finishButton.addActionListener(e -> finish());
 	}
 
 
@@ -137,5 +144,48 @@ class TripFrame extends MFrame
 	public JList getExpenseList()
 	{
 		return this.expenseList;
+	}
+
+
+	// ————————————————————————————————————————————————— CALLBACKS ————————————————————————————————————————————————— //
+
+	private void add() {
+		try {
+			// Get data
+			String tempInput = itemTextField.getText();	  // get text and parse ex: "Item,StarBucks,Austin"
+			String name = tempInput.substring(0, tempInput.indexOf(','));   // following lines parse the input string
+			tempInput = tempInput.substring(tempInput.indexOf(',')+1);
+			String company = tempInput.substring(0, tempInput.indexOf(','));
+			tempInput = tempInput.substring(tempInput.indexOf(',')+1);
+			double cost = Double.parseDouble(costTextField.getText());
+			String location = tempInput;
+			int Trip_ID = 1;  //TODO: once trip select is implemented, get trip
+			int User_ID = gui.getUser().getUserID();
+
+			expenseModel.addElement(name + " " + company + " " + location + " " + cost);  //todo delete once add is working
+
+			// Set data
+			if(Expense.add(company, cost, location, name, Trip_ID, User_ID)) {
+				System.out.println("Successfully added Expense");
+
+				expenseModel.addElement(itemTextField.getText() + ' ' + costTextField.getText());
+				itemTextField.setText("");
+				costTextField.setText("");
+				expenseModel.addElement(name + " " + company + " " + location + " " + cost);
+			}
+			else {
+				System.out.println("Try again");
+			}
+		}
+		catch(Exception error) {
+			error.printStackTrace(System.out);
+			System.out.println(error.toString());
+		}
+	}
+
+
+	private void finish()
+	{
+		gui.getEmployeeFrame().focus();
 	}
 }

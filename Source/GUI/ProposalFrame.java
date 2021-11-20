@@ -24,9 +24,9 @@ class ProposalFrame extends MFrame
 	private JComboBox managerList;
 
 
-	public ProposalFrame()
+	public ProposalFrame(GUI gui)
 	{
-		super("Proposal", false);
+		super(gui, "Proposal", false);
 
 		initialize_attributes();
 		setup_frame_elements();
@@ -48,6 +48,8 @@ class ProposalFrame extends MFrame
 		submitButton = new JButton("Submit");
 		String[] managerStrings = { };
 		managerList = new JComboBox(managerStrings);
+
+		this.reset_components = Arrays.asList();  //TODO: populate
 	}
 
 
@@ -82,6 +84,10 @@ class ProposalFrame extends MFrame
 		//TODO: needs real values
 		// layout.linkSize(SwingConstants.HORIZONTAL, this.employeeProposalButton, this.cancelPropButton);
 		this.getContentPane().setLayout(layout);
+
+		// CALLBACKS
+		backButton.addActionListener(e -> gui.hide_all_frames_except(gui.getEmployeeFrame()));
+		submitButton.addActionListener(e -> submitProposal());
 	}
 
 
@@ -165,4 +171,11 @@ class ProposalFrame extends MFrame
 	}
 
 
+	// ————————————————————————————————————————————————— CALLBACKS ————————————————————————————————————————————————— //
+
+	private void submitProposal()
+	{
+		//TODO: Submit Proposal
+		gui.hide_all_frames_except(gui.getEmployeeFrame());
+	}
 }

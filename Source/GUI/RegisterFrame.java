@@ -20,9 +20,9 @@ class RegisterFrame extends MFrame
 	private JCheckBox isManagerCheckBox;
 
 
-	public RegisterFrame()
+	public RegisterFrame(GUI gui)
 	{
-		super("Register", false);
+		super(gui, "Register", false);
 
 		this.initialize_attributes();
 		this.setup_frame_elements();
@@ -40,6 +40,8 @@ class RegisterFrame extends MFrame
 		registerButton = new JButton("Register");
 		returnButton = new JButton("Back");
 		isManagerCheckBox = new JCheckBox("Check if Manager");
+
+		reset_components = Arrays.asList(idTextField, passwordTextField, emailTextField);
 	}
 
 
@@ -65,6 +67,10 @@ class RegisterFrame extends MFrame
 
 		layout.linkSize(SwingConstants.HORIZONTAL, this.registerButton, this.returnButton);
 		this.getContentPane().setLayout(layout);
+
+		// CALLBACKS
+		registerButton.addActionListener(e -> registerUser());
+		returnButton.addActionListener(e -> gui.getLoginFrame().focus());
 	}
 
 
@@ -98,5 +104,39 @@ class RegisterFrame extends MFrame
 
 	public JCheckBox getIsManagerCheckBox() {
 		return this.isManagerCheckBox;
+	}
+
+
+	// ————————————————————————————————————————————————— CALLBACKS ————————————————————————————————————————————————— //
+
+	public void registerUser()
+	{
+		//NOTE: how can we check something in the DB trying to put it in the DB? 
+		if(isManagerCheckBox.isSelected()){ // if manager check box is selected
+			// todo make sure they are a manager in database
+		}
+		String UserName = idTextField.getText();
+		String pass = passwordTextField.getText();
+		String email = emailTextField.getText();
+		//TODO: add field for First and Last names
+		String First_Name = "Test";
+		String Last_Name = "User";
+
+		try {
+			if(Users.username_exists(UserName)) {
+				throw new Exception("Invalid ID - already exists");
+			}
+
+			if(Users.add(First_Name, Last_Name, UserName, pass, email)) {
+				gui.setUser(new Users(UserName));
+				gui.getEmployeeFrame().focus();
+			}
+			else {
+				idTextField.setText("Failed to add User to DB");
+			}
+		}
+		catch(Exception e) {
+			idTextField.setText(e.toString());
+		}
 	}
 }

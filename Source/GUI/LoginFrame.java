@@ -18,9 +18,9 @@ class LoginFrame extends MFrame
 	private JButton exitButton;
 
 
-	public LoginFrame()
+	public LoginFrame(GUI gui)
 	{
-		super("Login", true);
+		super(gui, "Login", true);
 	   
 		initialize_attributes();
 		setup_frame_elements();
@@ -36,6 +36,8 @@ class LoginFrame extends MFrame
 		registerButton = new JButton("Register");
 		loginButton = new JButton("Login");
 		exitButton = new JButton("Exit");
+
+		reset_components = Arrays.asList(idTextField, passwordTextField);
 	}
 
 
@@ -61,6 +63,10 @@ class LoginFrame extends MFrame
 
 		layout.linkSize(SwingConstants.HORIZONTAL, this.registerButton, this.loginButton);
 		this.getContentPane().setLayout(layout);
+
+		exitButton.addActionListener(e -> gui.exit());
+		loginButton.addActionListener(e -> login());
+		registerButton.addActionListener(e -> gui.getRegisterFrame().focus());
 	}
 
 
@@ -105,5 +111,31 @@ class LoginFrame extends MFrame
 	public JButton getExitButton()
 	{
 		return exitButton;
+	}
+
+
+	// ————————————————————————————————————————————————— CALLBACKS ————————————————————————————————————————————————— //
+
+	private void login()
+	{
+		String username = idTextField.getText();
+		String password = passwordTextField.getText();
+		System.out.println("LoginFrame::login::Username: " + idTextField);
+
+		try {
+			Users user = new Users(username);
+			if(!user.getPassword().equals(password)) {
+				throw new Exception("Invalid Password");
+			}
+	
+			this.gui.setUser(user);
+			System.out.println(String.format("User %s logged in", username));
+
+			gui.getEmployeeFrame().focus();
+		}
+		catch(Exception e) {
+			System.out.println(e.toString());
+			idTextField.setText("invalid id or password");
+		}
 	}
 }

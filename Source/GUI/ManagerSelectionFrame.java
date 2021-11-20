@@ -14,9 +14,9 @@ class ManagerSelectionFrame extends MFrame
 	private JButton logoutButton;
 
 
-	public ManagerSelectionFrame()
+	public ManagerSelectionFrame(GUI gui)
 	{
-		super("Manager Select", false);
+		super(gui, "Manager Select", false);
 	   
 		initialize_attributes();
 		setup_frame_elements();
@@ -28,6 +28,8 @@ class ManagerSelectionFrame extends MFrame
 		this.managerViewButton = new JButton("Manager Menu");
 		this.employeeViewButton = new JButton("Employee Menu");
 		this.logoutButton = new JButton("Logout");
+
+		this.reset_components = Arrays.asList();  //TODO: populate
 	}
 
 
@@ -51,6 +53,11 @@ class ManagerSelectionFrame extends MFrame
 
 		layout.linkSize(SwingConstants.HORIZONTAL, this.employeeViewButton, this.managerViewButton, this.logoutButton);
 		this.getContentPane().setLayout(layout);
+
+		// CALLBACKS
+		employeeViewButton.addActionListener(e -> gui.hide_all_frames_except(gui.getEmployeeFrame()));
+		logoutButton.addActionListener(e -> gui.logout());
+		managerViewButton.addActionListener(e -> gui.hide_all_frames_except(gui.getManagerFrame()));
 	}
 
 

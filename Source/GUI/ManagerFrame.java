@@ -34,9 +34,9 @@ class ManagerFrame extends MFrame
 	private JScrollPane pendingScrollPane;
 
 
-	public ManagerFrame()
+	public ManagerFrame(GUI gui)
 	{
-		super("Manager", false);
+		super(gui, "Manager", false);
 
 		initialize_attributes();
 		setup_frame_elements();
@@ -67,6 +67,8 @@ class ManagerFrame extends MFrame
 		this.backButton = new JButton("Back");
 		this.employeeScrollPane = new JScrollPane(this.employeesList);
 		this.pendingScrollPane = new JScrollPane(this.pendingList);
+
+		this.reset_components = Arrays.asList();  //TODO: populate
 	}
 
 
@@ -108,6 +110,10 @@ class ManagerFrame extends MFrame
 
 		// layout.linkSize(SwingConstants.HORIZONTAL, selectEmployeeViewButton, selectManagerViewButton, selectLogoutButton);
 		this.getContentPane().setLayout(layout);
+
+		// CALLBACKS
+		backButton.addActionListener(e -> gui.hide_all_frames_except(gui.getManagerSelectionFrame()));
+		addButton.addActionListener(e -> addEmployee());
 	}
 
 
@@ -248,5 +254,13 @@ class ManagerFrame extends MFrame
 	public JScrollPane getPendingScrollPane()
 	{
 		return this.pendingScrollPane;
+	}
+
+
+	// ————————————————————————————————————————————————— CALLBACKS ————————————————————————————————————————————————— //
+
+	private void addEmployee()
+	{
+		//TODO
 	}
 }

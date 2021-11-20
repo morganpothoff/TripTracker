@@ -16,9 +16,9 @@ class EmployeeFrame extends MFrame
 	private JLabel noteLabel;
 
 
-	public EmployeeFrame()
+	public EmployeeFrame(GUI gui)
 	{
-		super("Employee", false);
+		super(gui, "Employee", false);
 
 		initialize_attributes();
 		setup_frame_elements();
@@ -31,6 +31,8 @@ class EmployeeFrame extends MFrame
 		this.logoutButton = new JButton(("Logout"));
 		this.cancelPropButton = new JButton(("Cancel Proposal"));
 		this.noteLabel = new JLabel("NOTE: n/a");
+
+		this.reset_components = Arrays.asList();
 	}
 
 
@@ -55,6 +57,11 @@ class EmployeeFrame extends MFrame
 
 		layout.linkSize(SwingConstants.HORIZONTAL, this.proposalButton, this.cancelPropButton);
 		this.getContentPane().setLayout(layout);
+
+		// CALLBACKS
+		logoutButton.addActionListener(e -> gui.logout());
+		proposalButton.addActionListener(e -> gui.hide_all_frames_except(gui.getProposalFrame()));
+		tripButton.addActionListener(e -> gui.hide_all_frames_except(gui.getTripFrame()));
 	}
 
 
