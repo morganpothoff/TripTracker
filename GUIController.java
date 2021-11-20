@@ -170,6 +170,9 @@ public class GUIController {
 
     private void gotoTripScreen() throws IOException {
         //todo if no trip in progress, don't switch
+        if(model.getCurrTrip().getStatus() != 1){
+            return;
+        }
         String name = view.getIdTextField().getText();
         //model.getEmployeeInfoMap().get(name);                   // todo get trip data and add all expenses to the trip list
         view.getEmployeeScreenFrame().setVisible(false);
@@ -202,11 +205,27 @@ public class GUIController {
             if(!loginUser.getPassword().equals(pass)) {
                 throw new Exception("Invalid Password");
             }
+            else{
+                model.setUser(loginUser);
+                model.setCurrTrip(new Trip(loginUser.getUserID()));
+                System.out.println(String.format("User %s logged in", id));
+                // login
+                // check if manager
+                String get_user_query = String.format("SELECT isManager FROM Users WHERE User_ID = %d;", loginUser.getUserID());
+                ConnectedDBConnection connection = new ConnectedDBConnection();
+                ResultSet user_results = connection.select(get_user_query);
+                model.setManager(user_results.getBoolean("isManager"));
 
-            model.setUser(loginUser);
-            System.out.println(String.format("User %s logged in", id));
+                if(model.isManager())
+                    loginManager();
+                else
+                    loginEmployee();
+            }
 
-            //TODO: go to next page
+
+
+
+
         }
         catch(Exception e) {
             System.out.println(e.toString());
@@ -244,6 +263,22 @@ public class GUIController {
     private void loginEmployee() {
         view.getEmployeeScreenFrame().setVisible(true);
         view.getLoginFrame().setVisible(false);
+
+        // fix note depending on trip status
+        switch(model.getCurrTrip().getStatus()){
+            case 3:
+                view.getEmployeeNoteLabel().setText("Trip approval pending.");
+                break;
+            case 2:
+                view.getEmployeeNoteLabel().setText("Your trip has been rejected; propose a new trip.\nManager note: ");
+                break;
+            case 1:
+                view.getEmployeeNoteLabel().setText("Your trip has been approved.\nClick the trip tracker to record expenses.");
+                break;
+            default:
+                break;
+
+        }
 
     }
 

@@ -9,6 +9,7 @@ public class GUIModel {
     private HashMap<String, HashMap<String, String>> employeeInfoMap;
     private Users currUser;
     private boolean isManager;
+    private Trip currTrip;
 
     // constructor
     public GUIModel() throws IOException {
@@ -52,5 +53,17 @@ public class GUIModel {
 
     public void setManager(boolean manager) {
         isManager = manager;
+    }
+
+    public void setCurrUser(Users currUser) {
+        this.currUser = currUser;
+    }
+
+    public Trip getCurrTrip() {
+        return currTrip;
+    }
+
+    public void setCurrTrip(Trip currTrip) {
+        this.currTrip = currTrip;
     }
 }
