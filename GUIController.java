@@ -55,7 +55,13 @@ public class GUIController {
         }));
         view.getEmployeeLogoutButton().addActionListener((e -> employeeLogout()));
         view.getProposalBackButton().addActionListener((e -> proposalToEmployeeScreen()));
-        view.getProposalSubmitButton().addActionListener((e -> submitProposal()));
+        view.getProposalSubmitButton().addActionListener((e -> {
+            try {
+                submitProposal();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }));
         view.getTripBackButton().addActionListener((e -> tripToEmployeeScreen()));
         view.getTripAddButton().addActionListener((e -> addItem()));
         view.getTripFinishButton().addActionListener((e -> finishTrip()));
@@ -95,9 +101,21 @@ public class GUIController {
                 throw new Exception("Invalid ID - already exists");
             }
             else if(view.getIsManagerCheckBox().isSelected() && Users.addManager(First_Name, Last_Name, UserName, pass, email)) {
+                String get_user_query = String.format("SELECT `User_ID` FROM `Users` WHERE `UserName` = '%s';", UserName);
+                ConnectedDBConnection connection = new ConnectedDBConnection();
+                ResultSet user_results = connection.select(get_user_query);
+                user_results.next();
+                int id = user_results.getInt("User_ID");
+                new Trip(id,1);
                 back();
             }
             else if(Users.add(First_Name, Last_Name, UserName, pass, email)){
+                String get_user_query = String.format("SELECT `User_ID` FROM `Users` WHERE `UserName` = '%s';", UserName);
+                ConnectedDBConnection connection = new ConnectedDBConnection();
+                ResultSet user_results = connection.select(get_user_query);
+                user_results.next();
+                int id = user_results.getInt("User_ID");
+                new Trip(id,1);
                 back();
             }
             else {
@@ -169,18 +187,19 @@ public class GUIController {
     /**
      * submit proposal details and switch screen back to menu
      */
-    private void submitProposal() {
+    private void submitProposal() throws Exception {
         // todo actually submit the proposal
         String location = view.getProposalLocationTextField().getText();
         String sDate = view.getStartDateTextField().getText();
         String dDate = view.getEndDateTextField().getText();
-        try {
-            double budget = Double.parseDouble(view.getProposalEstimateTextField().getText());
-        }
-        catch (NumberFormatException e){
-            view.getProposalEstimateTextField().setText("please enter a double value");
-        }
+        double budget = 0;
+        try {budget = Double.parseDouble(view.getProposalEstimateTextField().getText());}
+        catch (NumberFormatException e){view.getProposalEstimateTextField().setText("please enter a double value");}
         String desc = view.getProposalDescriptionTextField().getText();
+
+        // todo make a trip to reference
+        model.getCurrTrip().setNewBudget(budget);
+
 
 
 
@@ -244,7 +263,7 @@ public class GUIController {
             else{
                 model.setUser(loginUser);
 
-                model.setCurrTrip(new Trip(loginUser.getUserID(),1));
+                model.setCurrTrip(new Trip(loginUser.getUserID()));
                 System.out.println(String.format("User %s logged in", id));
                 // login
                 // check if manager

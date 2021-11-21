@@ -4,7 +4,7 @@ public class Trip {
 	//Variables
 	protected String myDescription;
 	protected int tripID;
-	protected float setBudget;
+	protected double setBudget;
 	protected String start_Date;
 	protected String end_date;
 	protected String location;
@@ -42,7 +42,7 @@ public class Trip {
 	//Generating a singular trip tied to user, linked to fake manager
 	Trip(int userID, int managerID) throws Exception {
 	try {
-            String form =   "INSERT INTO `Trip` (`User_ID`, `Manager_ID`, `Set_Budget`, 'MyDescription', 'Start_Date', 'End_Time', 'Location', 'Completed', 'Status') "
+            String form =   "INSERT INTO `Trip` (User_ID, Manager_ID, Set_Budget, MyDescription, Start_Date, End_Time, Location, Completed, Status)"
                             + "VALUES ('%d', '%d', '%f', '%s', '%s', '%s', '%s', '%d', '%d');";
             String add_trip_query =  String.format(form, userID, managerID, 0.00, "TBD", "00/00/0000", "00/00/0000", "TBD", 0, 3);
 
@@ -81,7 +81,7 @@ public class Trip {
 		return tripID;
 	}//End of getTripID
 	
-	public float getBudget()	{
+	public double getBudget()	{
 		return setBudget;
 	}//End of getBudget
 		
@@ -121,7 +121,7 @@ public class Trip {
 		return retVal;
 	}//End of setDescription
 	
-	public boolean setNewBudget(float newBudget) throws Exception{
+	public boolean setNewBudget(double newBudget) throws Exception{
 		boolean retVal = false;
 		setBudget = newBudget;
 		//Update database
