@@ -96,7 +96,7 @@ public class GUIController {
         String First_Name = view.getRegisterFirstTextField().getText();
         String Last_Name = view.getRegisterLastTextField().getText();
 
-	   Authentcator auth = new Authentcator(UserName, pass);
+        Authenticator auth = new Authenticator(UserName, pass);
         try {
             boolean validChecker = auth.checkValidInput();
             System.out.println(validChecker);      
@@ -127,7 +127,7 @@ public class GUIController {
             }
         }
         catch(Exception e) {
-            view.getRegisterIdTextField().setText(e.toString());
+            view.getRegisterIdTextField().setText("Invalid ID - already exists");
         }
     }
 
