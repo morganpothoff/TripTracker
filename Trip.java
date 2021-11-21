@@ -54,28 +54,7 @@ public class Trip {
         	}
 	}
 	
-	Trip(int userID, int status) throws Exception {
-		String get_user_query = String.format("SELECT * FROM `AllTrips` WHERE `User_ID` = %d;", userID);
-		ConnectedDBConnection connection = new ConnectedDBConnection();
-		ResultSet trip_results = connection.select(get_user_query);
-
-		// Check that atleast 1 row is returned
-		if(!trip_results.next()) {
-			throw new Exception("No user results found for trip ID");
-		}
-
-		userID = trip_results.getInt("User_ID");
-		managerID = trip_results.getInt("Manager_ID");
-		tripID = trip_results.getInt("Trip_ID");
-		myDescription = trip_results.getString("MyDescription");
-		start_Date = trip_results.getString("Start_Date");
-		end_date = trip_results.getString("End_Time");
-		location = trip_results.getString("Location");
-		setBudget = trip_results.getFloat("Set_Budget");
-		completed = trip_results.getBoolean("Completed");
-		this.status = trip_results.getInt(status);
-
-	}
+	
 
 	
 	//Methods
