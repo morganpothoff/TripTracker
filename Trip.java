@@ -38,6 +38,22 @@ public class Trip {
 		status = trip_results.getInt("Status");
     	
 	}
+	
+		//Generating a singular trip tied to user, linked to fake manager
+	Trip(int userID, int managerID) throws Exception {
+	try {
+            String form =   "INSERT INTO `Trip` (`User_ID`, `Manager+ID`, `Set_Budget`) "
+                            + "VALUES ('%d', '%d', '%f');";
+            String add_trip_query =  String.format(form, userID, managerID, 0.00);
+
+            ConnectedDBConnection connection = new ConnectedDBConnection();
+            connection.insert(add_trip_query);
+        }
+        catch(Exception error) {
+            System.out.println(error.toString());
+        	}
+	}
+	
 	Trip(int userID, int status) throws Exception {
 		String get_user_query = String.format("SELECT * FROM `AllTrips` WHERE `User_ID` = %d;", userID);
 		ConnectedDBConnection connection = new ConnectedDBConnection();
