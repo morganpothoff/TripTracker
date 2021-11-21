@@ -48,6 +48,21 @@ public class Trip {
 
             ConnectedDBConnection connection = new ConnectedDBConnection();
             connection.insert(add_trip_query);
+		
+		String get_user_query = String.format("SELECT Trip_ID FROM `Trip` WHERE `User_ID` = %d;", userID);
+    		ResultSet trip_results = connection.select(get_user_query);
+    		trip_results.next();
+    		
+            this.userID = userID;
+            this.managerID = managerID;
+            myDescription = "TBD";
+        	tripID = trip_results.getInt("Trip_ID");
+        	setBudget = (float) 0.00;
+        	start_Date = "00/00/0000";
+        	end_date = "00/00/0000";;
+        	location = "TBD";
+        	completed = false;	
+        	status = 3;	
         	}
         catch(Exception error) {
             System.out.println(error.toString());
