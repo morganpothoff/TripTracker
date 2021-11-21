@@ -21,12 +21,13 @@ public class Authenticator {
     public Authenticator(String inputID, String inputPassword) {
         id = inputID;
         password = inputPassword;
+        valid = true;
     }
 
     public boolean authenticate(DBManager db) throws Exception {
     	   valid = true;
     	   
-	   checkValidInput();
+	   valid = checkValidInput();
 	       	   
     	   if (valid == true){
     	   	 if (!db.checkLogin(id, password)) {
@@ -38,7 +39,7 @@ public class Authenticator {
         return valid;
     }
     
-    public void checkValidInput() {
+    public boolean checkValidInput() {
     	   for (String cha : invalidChars) {
     	   	if (id.contains(cha)){
     	   		valid = false;
@@ -58,6 +59,6 @@ public class Authenticator {
         valid = false;
         }
 
-    	   return;
+    	   return valid;
     }
 }
