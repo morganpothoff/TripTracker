@@ -86,6 +86,14 @@ public class GUIView {
     private DefaultListModel tripExpenseModel;
     private JList tripExpenseList;
 
+    // review screen (manager review proposals)
+    private JFrame reviewFrame;
+    private JTextArea reviewTextArea;
+    private JLabel reviewFeedbackLabel;
+    private JTextField reviewFeedbackTextField;
+    private JButton reviewBackButton;
+    private JButton reviewSendButton;
+
 
 
     public GUIView(String title) {
@@ -396,6 +404,40 @@ public class GUIView {
                 .addGroup(tripLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(tripAddButton))
                 .addGroup(tripLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(tripBackButton).addComponent(tripFinishButton)));
         tripFrame.getContentPane().setLayout(tripLayout);
+
+
+        // review screen
+        // frame setups
+        reviewFrame = new JFrame("Expense Tracker");
+        reviewFrame.getContentPane().setLayout(new BorderLayout());
+        reviewFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        reviewFrame.setSize(500, 350);
+        reviewFrame.setLocationRelativeTo(null);
+        reviewFrame.setVisible(false);
+
+        // Create UI elements
+        reviewTextArea = new JTextArea();
+        reviewTextArea.setEditable(false);
+        reviewFeedbackLabel = new JLabel("Feedback:");
+        reviewFeedbackTextField = new JTextField("n/a");
+        reviewBackButton = new JButton("Back");
+        reviewSendButton = new JButton("Send");
+
+        // Add UI element to frame
+        GroupLayout reviewLayout = new GroupLayout(reviewFrame.getContentPane());
+        reviewLayout.setAutoCreateGaps(true);
+        reviewLayout.setAutoCreateContainerGaps(true);
+
+        reviewLayout.setHorizontalGroup(reviewLayout.createSequentialGroup()
+                .addGroup(reviewLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(reviewTextArea)
+                        .addComponent(reviewFeedbackLabel).addComponent(reviewFeedbackTextField).addComponent(reviewBackButton))
+                .addGroup(reviewLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(reviewSendButton)));
+        reviewLayout.setVerticalGroup(reviewLayout.createSequentialGroup()
+                .addGroup(reviewLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(reviewTextArea))
+                .addGroup(reviewLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(reviewFeedbackLabel))
+                .addGroup(reviewLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(reviewFeedbackTextField))
+                .addGroup(reviewLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(reviewBackButton).addComponent(reviewSendButton)));
+        reviewFrame.getContentPane().setLayout(reviewLayout);
 
     }
 
@@ -956,5 +998,53 @@ public class GUIView {
 
     public void setRegisterLastTextField(JTextField registerLastTextField) {
         this.registerLastTextField = registerLastTextField;
+    }
+
+    public JFrame getReviewFrame() {
+        return reviewFrame;
+    }
+
+    public void setReviewFrame(JFrame reviewFrame) {
+        this.reviewFrame = reviewFrame;
+    }
+
+    public JTextArea getReviewTextArea() {
+        return reviewTextArea;
+    }
+
+    public void setReviewTextArea(JTextArea reviewTextArea) {
+        this.reviewTextArea = reviewTextArea;
+    }
+
+    public JLabel getReviewFeedbackLabel() {
+        return reviewFeedbackLabel;
+    }
+
+    public void setReviewFeedbackLabel(JLabel reviewFeedbackLabel) {
+        this.reviewFeedbackLabel = reviewFeedbackLabel;
+    }
+
+    public JTextField getReviewFeedbackTextField() {
+        return reviewFeedbackTextField;
+    }
+
+    public void setReviewFeedbackTextField(JTextField reviewFeedbackTextField) {
+        this.reviewFeedbackTextField = reviewFeedbackTextField;
+    }
+
+    public JButton getReviewBackButton() {
+        return reviewBackButton;
+    }
+
+    public void setReviewBackButton(JButton reviewBackButton) {
+        this.reviewBackButton = reviewBackButton;
+    }
+
+    public JButton getReviewSendButton() {
+        return reviewSendButton;
+    }
+
+    public void setReviewSendButton(JButton reviewSendButton) {
+        this.reviewSendButton = reviewSendButton;
     }
 }

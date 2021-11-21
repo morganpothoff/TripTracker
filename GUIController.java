@@ -35,7 +35,13 @@ public class GUIController {
             }
         }));
         view.getExitButton().addActionListener((e -> exit()));
-        view.getSelectManagerViewButton().addActionListener((e -> showManagerScreen()));
+        view.getSelectManagerViewButton().addActionListener((e -> {
+            try {
+                showManagerScreen();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }));
         view.getSelectEmployeeViewButton().addActionListener((e -> showEmployeeScreen()));
         view.getSelectLogoutButton().addActionListener((e -> logout()));
         view.getManagerBackButton().addActionListener((e -> managerToSelection()));
@@ -211,7 +217,7 @@ public class GUIController {
 
         String temp = view.getProposalManagerList().getSelectedItem().toString();
         int managerID = Integer.parseInt(temp.substring(temp.indexOf(',')));
-
+        model.getCurrTrip().setManager(managerID);
 
         proposalToEmployeeScreen();
     }
@@ -236,7 +242,6 @@ public class GUIController {
     }
 
     private void gotoProposalScreen() throws Exception {
-        //todo if trip status is approve, dont allow
         view.getProposalManagerList().removeAllItems();
 
         view.getEmployeeScreenFrame().setVisible(false);
@@ -369,12 +374,22 @@ public class GUIController {
     /**
      * switch from manager menu to manager view
      */
-    private void showManagerScreen() {
+    private void showManagerScreen() throws Exception {
         view.getManagerSelectionFrame().setVisible(false);
         view.getManagerScreenFrame().setVisible(true);
         //TODO fill lists with appropriate names / info
         // put every employee in EL
         // all employee with pending and matching manager == USERNAME
+
+        String get_user_query = String.format("SELECT `User_ID`, `Trip_ID` FROM `Trip` WHERE `Status` = '%d' AND `Manager_ID` = '%d';"
+                , 3, model.getCurrUser().getUserID());
+        ConnectedDBConnection connection = new ConnectedDBConnection();
+        ResultSet user_results = connection.select(get_user_query);
+
+        while(user_results.next() == true){
+            String n = String.format("User: %d\tTrip: %d", user_results.getInt("User_ID"), user_results.getInt("Trip_ID"));
+            view.getPendingListModel().addElement(n);
+        }
         view.getPendingListModel().addElement("jerry man");
 
     }
