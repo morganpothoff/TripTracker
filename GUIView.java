@@ -43,16 +43,9 @@ public class GUIView {
 
     // manager screen
     private JFrame managerScreenFrame;
-    private JLabel managerEmployeesLabel;
-    private DefaultListModel employeesListModel;
-    private JList managerEmployeesList;
-    private JButton managerRemoveButton;
-    private JButton managerAddButton;
-    private JTextField newNameTextField;
     private JLabel managerPendingLabel;
     private DefaultListModel pendingListModel;
     private JList managerPendingList;
-    private JButton managerSelectEmployeeButton;
     private JButton managerSelectProposalButton;
     private JLabel managerBudgetLabel;
     private JTextArea budgetTextArea;
@@ -261,17 +254,10 @@ public class GUIView {
         managerScreenFrame.setVisible(false);
 
         // Create UI elements
-        employeesListModel = new DefaultListModel();
         pendingListModel = new DefaultListModel();
-        managerEmployeesLabel = new JLabel("Employees");
-        managerEmployeesList = new JList<>(employeesListModel);
-        managerRemoveButton = new JButton("Remove");
-        managerAddButton = new JButton("Add");
-        managerSelectEmployeeButton = new JButton("Select");
         managerSelectProposalButton = new JButton("Select");
         viewHistoryButton = new JButton("View History");
         generateReportButton = new JButton("Generate Report");
-        newNameTextField = new JTextField();
         startDateTextField = new JTextField();
         endDateTextField = new JTextField();
         managerBaseTextField = new JTextField();
@@ -282,10 +268,6 @@ public class GUIView {
         budgetTextArea = new JTextArea();
         managerBackButton = new JButton("Back");
 
-        managerEmployeesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        managerEmployeesList.setSelectedIndex(0);
-        managerEmployeesList.setVisibleRowCount(5);
-        JScrollPane employeeScrollPane = new JScrollPane(managerEmployeesList);
 
         managerPendingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         managerPendingList.setSelectedIndex(0);
@@ -298,31 +280,24 @@ public class GUIView {
         managerScreenLayout.setAutoCreateContainerGaps(true);
 
         managerScreenLayout.setHorizontalGroup(managerScreenLayout.createSequentialGroup()
-                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(managerEmployeesLabel)
-                        .addComponent(employeeScrollPane).addComponent(managerSelectEmployeeButton).addComponent(managerPendingLabel)
+                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(managerPendingLabel)
                         .addComponent(pendingScrollPane).addComponent(managerSelectProposalButton).addComponent(managerBackButton))
-                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(managerRemoveButton)
-                        .addComponent(managerAddButton).addComponent(newNameTextField))
                 .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(managerBudgetLabel)
                         .addComponent(budgetTextArea).addComponent(managerBaseTextField).addComponent(managerBaseButton)
                         .addComponent(startDateTextField).addComponent(endDateTextField).addComponent(viewHistoryButton)
                         .addComponent(generateReportButton)));
         managerScreenLayout.setVerticalGroup(managerScreenLayout.createSequentialGroup()
-                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(managerEmployeesLabel)
+                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(managerPendingLabel)
                         .addComponent(managerBudgetLabel))
-                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(employeeScrollPane)
-                        .addComponent(managerRemoveButton).addComponent(budgetTextArea))
-                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(managerSelectEmployeeButton)
-                        .addComponent(managerAddButton).addComponent(managerBaseTextField))
-                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(newNameTextField)
-                        .addComponent(managerBaseButton))
-                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(managerPendingLabel))
                 .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(pendingScrollPane)
-                        .addComponent(startDateTextField))
-                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(managerSelectProposalButton).addComponent(endDateTextField))
+                        .addComponent(budgetTextArea))
+                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(managerSelectProposalButton)
+                        .addComponent(managerBaseTextField))
+                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(managerBaseButton))
+                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(startDateTextField))
+                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(endDateTextField))
                 .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(managerBackButton).addComponent(viewHistoryButton))
                 .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(generateReportButton)));
-        //managerScreenLayout.linkSize(SwingConstants.HORIZONTAL, selectEmployeeViewButton, selectManagerViewButton, selectLogoutButton);
         managerScreenFrame.getContentPane().setLayout(managerScreenLayout);
 
         // Proposal screen
@@ -611,42 +586,6 @@ public class GUIView {
         this.managerScreenFrame = managerScreenFrame;
     }
 
-    public JLabel getManagerEmployeesLabel() {
-        return managerEmployeesLabel;
-    }
-
-    public void setManagerEmployeesLabel(JLabel managerEmployeesLabel) {
-        this.managerEmployeesLabel = managerEmployeesLabel;
-    }
-
-    public JList<String> getManagerEmployeesList() {
-        return managerEmployeesList;
-    }
-
-    public JButton getManagerRemoveButton() {
-        return managerRemoveButton;
-    }
-
-    public void setManagerRemoveButton(JButton managerRemoveButton) {
-        this.managerRemoveButton = managerRemoveButton;
-    }
-
-    public JButton getManagerAddButton() {
-        return managerAddButton;
-    }
-
-    public void setManagerAddButton(JButton managerAddButton) {
-        this.managerAddButton = managerAddButton;
-    }
-
-    public JTextField getNewNameTextField() {
-        return newNameTextField;
-    }
-
-    public void setNewNameTextField(JTextField newNameTextField) {
-        this.newNameTextField = newNameTextField;
-    }
-
     public JLabel getManagerPendingLabel() {
         return managerPendingLabel;
     }
@@ -740,17 +679,6 @@ public class GUIView {
         this.managerBackButton = managerBackButton;
     }
 
-    public DefaultListModel getEmployeesListModel() {
-        return employeesListModel;
-    }
-
-    public void setEmployeesListModel(DefaultListModel employeesListModel) {
-        this.employeesListModel = employeesListModel;
-    }
-
-    public void setManagerEmployeesList(JList managerEmployeesList) {
-        this.managerEmployeesList = managerEmployeesList;
-    }
 
     public DefaultListModel getPendingListModel() {
         return pendingListModel;
@@ -788,13 +716,7 @@ public class GUIView {
         this.employeeNoteLabel = employeeNoteLabel;
     }
 
-    public JButton getManagerSelectEmployeeButton() {
-        return managerSelectEmployeeButton;
-    }
 
-    public void setManagerSelectEmployeeButton(JButton managerSelectEmployeeButton) {
-        this.managerSelectEmployeeButton = managerSelectEmployeeButton;
-    }
 
     public JButton getEmployeeLogoutButton() {
         return employeeLogoutButton;
