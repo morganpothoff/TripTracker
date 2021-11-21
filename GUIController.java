@@ -191,16 +191,22 @@ public class GUIController {
         // todo actually submit the proposal
         String location = view.getProposalLocationTextField().getText();
         String sDate = view.getStartDateTextField().getText();
-        String dDate = view.getEndDateTextField().getText();
-        double budget = 0;
-        try {budget = Double.parseDouble(view.getProposalEstimateTextField().getText());}
+        String eDate = view.getEndDateTextField().getText();
+        float budget = 0;
+        try {budget = Float.parseFloat(view.getProposalEstimateTextField().getText());}
         catch (NumberFormatException e){view.getProposalEstimateTextField().setText("please enter a double value");}
         String desc = view.getProposalDescriptionTextField().getText();
 
         // todo make a trip to reference
         model.getCurrTrip().setNewBudget(budget);
+        model.getCurrTrip().setLocation(location);
+        model.getCurrTrip().setStartDate(sDate);
+        model.getCurrTrip().setEndDate(eDate);
+        model.getCurrTrip().setDescription(desc);
+        model.getCurrTrip().setStatus(3);
 
-
+        String temp = view.getProposalManagerList().getSelectedItem().toString();
+        int managerID = Integer.parseInt(temp.substring(temp.indexOf(',')));
 
 
         proposalToEmployeeScreen();

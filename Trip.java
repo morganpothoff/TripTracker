@@ -4,12 +4,12 @@ public class Trip {
 	//Variables
 	protected String myDescription;
 	protected int tripID;
-	protected double setBudget;
+	protected float setBudget;
 	protected String start_Date;
 	protected String end_date;
 	protected String location;
 	protected boolean completed;	//True = trip finished, false = trip pending
-	protected int status;		//1 = accepted, 2 = rejected, 3 = undetermined
+	protected int status;		//1 = accepted, 2 = rejected, 3 = pending
 	protected int userID;
 	protected int managerID;
 
@@ -109,7 +109,7 @@ public class Trip {
 		boolean retVal = false;
 		myDescription = newDescription;
 		//Update database
-        	String get_user_query = String.format("UPDATE `Trip` SET `Set_Budget` = '%s', WHERE 'Trip_ID' = '%d';", newDescription, getTripID());
+        	String get_user_query = String.format("UPDATE `Trip` SET `Set_Budget` = '%s' WHERE 'Trip_ID' = '%d';", newDescription, getTripID());
         	ConnectedDBConnection connection = new ConnectedDBConnection();
         	int user_results = connection.update(get_user_query);
         	if(user_results == 1) {
@@ -121,11 +121,11 @@ public class Trip {
 		return retVal;
 	}//End of setDescription
 	
-	public boolean setNewBudget(double newBudget) throws Exception{
+	public boolean setNewBudget(float newBudget) throws Exception{
 		boolean retVal = false;
 		setBudget = newBudget;
 		//Update database
-        	String get_user_query = String.format("UPDATE `Trip` SET `Set_Budget` = '%f', WHERE 'Trip_ID' = '%d';", newBudget, getTripID());
+        	String get_user_query = String.format("UPDATE `Trip` SET `Set_Budget` = '%f' WHERE 'Trip_ID' = '%d';", newBudget, getTripID());
         	ConnectedDBConnection connection = new ConnectedDBConnection();
         	int user_results = connection.update(get_user_query);
         	if(user_results == 1) {
@@ -137,11 +137,11 @@ public class Trip {
 		return retVal;
 	}//End of setNewBudget
 	
-	public boolean setStartDate(String newDate, String currentDate) throws Exception{
+	public boolean setStartDate(String newDate) throws Exception{
 		boolean retVal = false;
 		start_Date = newDate;
 		//Update database
-        	String get_user_query = String.format("UPDATE `Trip` SET `Start_Date` = '%s', WHERE 'Trip_ID' = '%d';", newDate, getTripID());
+        	String get_user_query = String.format("UPDATE `Trip` SET `Start_Date` = '%s' WHERE 'Trip_ID' = '%d';", newDate, getTripID());
         	ConnectedDBConnection connection = new ConnectedDBConnection();
         	int user_results = connection.update(get_user_query);
         	if(user_results == 1) {
@@ -157,7 +157,7 @@ public class Trip {
 		boolean retVal = false;
 		end_date = newDate;
 		//Update database
-        	String get_user_query = String.format("UPDATE `Trip` SET `End_Time` = '%s', WHERE 'Trip_ID' = '%d';", newDate, getTripID());
+        	String get_user_query = String.format("UPDATE `Trip` SET `End_Time` = '%s' WHERE 'Trip_ID' = '%d';", newDate, getTripID());
         	ConnectedDBConnection connection = new ConnectedDBConnection();
         	int user_results = connection.update(get_user_query);
         	if(user_results == 1) {
@@ -173,7 +173,7 @@ public class Trip {
 		boolean retVal = false;
 		location = newLocation;
 		//Update database
-        	String get_user_query = String.format("UPDATE `Trip` SET `Location` = '%s', WHERE 'Trip_ID' = '%d';", newLocation, getTripID());
+        	String get_user_query = String.format("UPDATE `Trip` SET `Location` = '%s' WHERE 'Trip_ID' = '%d';", newLocation, getTripID());
         	ConnectedDBConnection connection = new ConnectedDBConnection();
         	int user_results = connection.update(get_user_query);
         	if(user_results == 1) {
@@ -189,7 +189,7 @@ public class Trip {
 		boolean retVal = false;
 		status = newStatus;
 		//Update database
-        	String get_user_query = String.format("UPDATE `Trip` SET `Status` = '%d', WHERE 'Trip_ID' = '%d';", newStatus, getTripID());
+        	String get_user_query = String.format("UPDATE `Trip` SET `Status` = '%d' WHERE 'Trip_ID' = '%d';", newStatus, getTripID());
         	ConnectedDBConnection connection = new ConnectedDBConnection();
         	int user_results = connection.update(get_user_query);
         	if(user_results == 1) {
@@ -205,7 +205,7 @@ public class Trip {
 		boolean retVal = false;
 		completed = newCompStatus;
 		//Update database
-        	String get_user_query = String.format("UPDATE `Users` SET `Completed` = '%d', WHERE 'Trip_ID' = '%d';", newCompStatus, getTripID());
+        	String get_user_query = String.format("UPDATE `Users` SET `Completed` = '%d' WHERE 'Trip_ID' = '%d';", newCompStatus, getTripID());
         	ConnectedDBConnection connection = new ConnectedDBConnection();
        		int user_results = connection.update(get_user_query);
         	if(user_results == 1) {
