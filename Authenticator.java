@@ -34,6 +34,7 @@ public class Authenticator {
     	  	 }
     	   }
     	   
+    	   System.out.println(valid);
         return valid;
     }
     
