@@ -39,16 +39,16 @@ public class Trip {
     	
 	}
 	
-		//Generating a singular trip tied to user, linked to fake manager
+	//Generating a singular trip tied to user, linked to fake manager
 	Trip(int userID, int managerID) throws Exception {
 	try {
-            String form =   "INSERT INTO `Trip` (`User_ID`, `Manager+ID`, `Set_Budget`) "
-                            + "VALUES ('%d', '%d', '%f');";
-            String add_trip_query =  String.format(form, userID, managerID, 0.00);
+            String form =   "INSERT INTO `Trip` (`User_ID`, `Manager_ID`, `Set_Budget`, 'MyDescription', 'Start_Date', 'End_Time', 'Location', 'Completed', 'Status') "
+                            + "VALUES ('%d', '%d', '%f', '%s', '%s', '%s', '%s', '%d', '%d');";
+            String add_trip_query =  String.format(form, userID, managerID, 0.00, "TBD", "00/00/0000", "00/00/0000", "TBD", 0, 3);
 
             ConnectedDBConnection connection = new ConnectedDBConnection();
             connection.insert(add_trip_query);
-        }
+        	}
         catch(Exception error) {
             System.out.println(error.toString());
         	}
