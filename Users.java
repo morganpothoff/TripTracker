@@ -70,7 +70,7 @@ public class Users {
         try {
             String form =   "INSERT INTO `Users` (`First_Name`, `Last_Name`, `UserName`, `Password`, `Email`, `isManager`) "
                     + "VALUES ('%s', '%s', '%s', '%s', '%s', '%d');";
-            String add_user_query =  String.format(form, First_Name, Last_Name, UserName, Password, Email, true);
+            String add_user_query =  String.format(form, First_Name, Last_Name, UserName, Password, Email, 1);
 
             ConnectedDBConnection connection = new ConnectedDBConnection();
             connection.insert(add_user_query);

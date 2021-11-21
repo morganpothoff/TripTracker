@@ -237,7 +237,9 @@ public class GUIController {
                 String get_user_query = String.format("SELECT isManager FROM Users WHERE User_ID = %d;", loginUser.getUserID());
                 ConnectedDBConnection connection = new ConnectedDBConnection();
                 ResultSet user_results = connection.select(get_user_query);
-                model.setManager(user_results.getBoolean("isManager"));
+                user_results.next();
+                Boolean test = user_results.getBoolean("isManager");
+                model.setManager(test);
 
                 if(model.isManager())
                     loginManager();
