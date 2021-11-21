@@ -39,8 +39,13 @@ public class GUIController {
         view.getSelectEmployeeViewButton().addActionListener((e -> showEmployeeScreen()));
         view.getSelectLogoutButton().addActionListener((e -> logout()));
         view.getManagerBackButton().addActionListener((e -> managerToSelection()));
-        view.getManagerAddButton().addActionListener((e -> addEmployee()));
-        view.getEmployeeProposalButton().addActionListener((e -> gotoProposalScreen()));
+        view.getEmployeeProposalButton().addActionListener((e -> {
+            try {
+                gotoProposalScreen();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }));
         view.getEmployeeTripButton().addActionListener((e -> {
             try {
                 gotoTripScreen();
@@ -201,14 +206,23 @@ public class GUIController {
         view.getTripFrame().setVisible(true);
     }
 
-    private void gotoProposalScreen() {
-        view.getEmployeeNoteLabel().setText("Note: Current trip in progress");
+    private void gotoProposalScreen() throws Exception {
+        //todo if trip status is approve, dont allow
+        view.getProposalManagerList().removeAllItems();
+
         view.getEmployeeScreenFrame().setVisible(false);
         view.getProposalFrame().setVisible(true);
 
         // fill in the manager list
+        String get_user_query = String.format("SELECT `First_Name`, `Last_Name` , `User_ID` FROM `Users` WHERE `isManager` = '%d';", 1);
+        ConnectedDBConnection connection = new ConnectedDBConnection();
+        ResultSet user_results = connection.select(get_user_query);
 
-        view.getProposalManagerList().addItem("hello");
+        while(user_results.next() == true){
+            String n = String.format("%s %s,%d", user_results.getString("First_Name"),
+                    user_results.getString("Last_Name"), user_results.getInt("User_ID"));
+            view.getProposalManagerList().addItem(n);
+        }
         view.getProposalManagerList().setSelectedIndex(0);
 
     }
@@ -230,7 +244,7 @@ public class GUIController {
             else{
                 model.setUser(loginUser);
 
-                //model.setCurrTrip(new Trip(loginUser.getUserID()));
+                model.setCurrTrip(new Trip(loginUser.getUserID(),1));
                 System.out.println(String.format("User %s logged in", id));
                 // login
                 // check if manager
@@ -332,7 +346,7 @@ public class GUIController {
         //TODO fill lists with appropriate names / info
         // put every employee in EL
         // all employee with pending and matching manager == USERNAME
-        view.getEmployeesListModel().addElement("jerry man");
+        view.getPendingListModel().addElement("jerry man");
 
     }
 
@@ -344,19 +358,6 @@ public class GUIController {
         view.getManagerScreenFrame().setVisible(false);
     }
 
-    /**
-     * search for existing employee in database, if they are
-     * not tied to a manager, make the link to currently signed in manager
-     */
-    private void addEmployee() {
-        // TODO if employee does not exist within company && is not tied to a manager
-        if(view.getNewNameTextField().getText().equals(""))
-            view.getNewNameTextField().setText("Invalid name");
-        else{
-            view.getEmployeesListModel().addElement(view.getNewNameTextField().getText());
-            //TODO go to model to link employee to manager
-        }
-    }
 
     /**
      * switch from employee screen to login, and delete currently signed in user
