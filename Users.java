@@ -24,7 +24,7 @@ public class Users {
         name = user_results.getString("First_Name") + " " + user_results.getString("Last_Name");
         password = user_results.getString("Password");
         email = user_results.getString("Email");
-        
+
     }
 
     // Constructor throws an exception if there are no results found for expense ID.

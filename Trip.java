@@ -23,7 +23,7 @@ public class Trip {
 	    
 	    // Check that atleast 1 row is returned
     	if(!trip_results.next()) {
-    		throw new Exception("No user results found for trip ID");
+    		// throw new Exception("No user results found for trip ID");
     	}
 
 		userID = trip_results.getInt("User_ID");
