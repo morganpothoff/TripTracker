@@ -167,6 +167,9 @@ public class GUIController {
     private void submitProposal() {
         // todo actually submit the proposal
 
+
+
+
         proposalToEmployeeScreen();
     }
 

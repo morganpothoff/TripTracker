@@ -14,7 +14,7 @@ public class Trip {
 	
 	//Constructor
 	Trip(int userID) throws Exception {
-		String get_user_query = String.format("SELECT * FROM `AllTrips` WHERE `User_ID` = %d;", userID);
+		String get_user_query = String.format("SELECT * FROM `Trip` WHERE `User_ID` = %d;", userID);
        	ConnectedDBConnection connection = new ConnectedDBConnection();
 		ResultSet trip_results = connection.select(get_user_query);
 	    
@@ -23,14 +23,14 @@ public class Trip {
     		throw new Exception("No user results found for trip ID");
     	}
 
-    	tripID = trip_results.getInt("Trip_ID");
-    	myDescription = trip_results.getString("First_Name");
-    	start_Date = trip_results.getString("Last_Name");
-    	end_date = trip_results.getString("Password");
-    	location = trip_results.getString("Email");
-    	setBudget = trip_results.getFloat("Set_Budget");
-    	completed = trip_results.getBoolean("Completed");
-    	status = trip_results.getInt("Status");
+		tripID = trip_results.getInt("Trip_ID");
+		myDescription = trip_results.getString("MyDescription");
+		start_Date = trip_results.getString("Start_Date");
+		end_date = trip_results.getString("End_Time");
+		location = trip_results.getString("Location");
+		setBudget = trip_results.getFloat("Set_Budget");
+		completed = trip_results.getBoolean("Completed");
+		status = trip_results.getInt("Status");
     	
 	}
 	Trip(int userID, int status) throws Exception {
@@ -44,10 +44,10 @@ public class Trip {
 		}
 
 		tripID = trip_results.getInt("Trip_ID");
-		myDescription = trip_results.getString("First_Name");
-		start_Date = trip_results.getString("Last_Name");
-		end_date = trip_results.getString("Password");
-		location = trip_results.getString("Email");
+		myDescription = trip_results.getString("MyDescription");
+		start_Date = trip_results.getString("Start_Date");
+		end_date = trip_results.getString("End_Time");
+		location = trip_results.getString("Location");
 		setBudget = trip_results.getFloat("Set_Budget");
 		completed = trip_results.getBoolean("Completed");
 		this.status = trip_results.getInt(status);
