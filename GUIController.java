@@ -166,7 +166,16 @@ public class GUIController {
      */
     private void submitProposal() {
         // todo actually submit the proposal
-
+        String location = view.getProposalLocationTextField().getText();
+        String sDate = view.getStartDateTextField().getText();
+        String dDate = view.getEndDateTextField().getText();
+        try {
+            double budget = Double.parseDouble(view.getProposalEstimateTextField().getText());
+        }
+        catch (NumberFormatException e){
+            view.getProposalEstimateTextField().setText("please enter a double value");
+        }
+        String desc = view.getProposalDescriptionTextField().getText();
 
 
 
@@ -221,7 +230,7 @@ public class GUIController {
             else{
                 model.setUser(loginUser);
 
-                model.setCurrTrip(new Trip(loginUser.getUserID()));
+                //model.setCurrTrip(new Trip(loginUser.getUserID()));
                 System.out.println(String.format("User %s logged in", id));
                 // login
                 // check if manager
