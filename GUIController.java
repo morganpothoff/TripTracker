@@ -220,6 +220,7 @@ public class GUIController {
             }
             else{
                 model.setUser(loginUser);
+
                 model.setCurrTrip(new Trip(loginUser.getUserID()));
                 System.out.println(String.format("User %s logged in", id));
                 // login

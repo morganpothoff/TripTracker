@@ -10,8 +10,11 @@ public class Trip {
 	protected String location;
 	protected boolean completed;	//True = trip finished, false = trip pending
 	protected int status;		//1 = accepted, 2 = rejected, 3 = undetermined
-	
-	
+	protected int userID;
+	protected int managerID;
+
+
+
 	//Constructor
 	Trip(int userID) throws Exception {
 		String get_user_query = String.format("SELECT * FROM `Trip` WHERE `User_ID` = %d;", userID);
@@ -23,6 +26,8 @@ public class Trip {
     		throw new Exception("No user results found for trip ID");
     	}
 
+		userID = trip_results.getInt("User_ID");
+		managerID = trip_results.getInt("Manager_ID");
 		tripID = trip_results.getInt("Trip_ID");
 		myDescription = trip_results.getString("MyDescription");
 		start_Date = trip_results.getString("Start_Date");
@@ -43,6 +48,8 @@ public class Trip {
 			throw new Exception("No user results found for trip ID");
 		}
 
+		userID = trip_results.getInt("User_ID");
+		managerID = trip_results.getInt("Manager_ID");
 		tripID = trip_results.getInt("Trip_ID");
 		myDescription = trip_results.getString("MyDescription");
 		start_Date = trip_results.getString("Start_Date");
@@ -53,6 +60,7 @@ public class Trip {
 		this.status = trip_results.getInt(status);
 
 	}
+
 	
 	//Methods
 	public String getDescription()	{

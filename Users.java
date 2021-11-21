@@ -25,8 +25,6 @@ public class Users {
         password = user_results.getString("Password");
         email = user_results.getString("Email");
         
-        //Generate Trip Object
-        Trip myTrip = new Trip(id,1);
     }
 
     // Constructor throws an exception if there are no results found for expense ID.
