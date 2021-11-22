@@ -50,9 +50,9 @@ public class Users {
     public static Boolean add(String First_Name, String Last_Name, String UserName, String Password, String Email) {
         
         try {
-            String form =   "INSERT INTO `Users` (`First_Name`, `Last_Name`, `UserName`, `Password`, `Email`) "
+            String form =   "INSERT INTO `Users` (`First_Name`, `Last_Name`, `UserName`, `Password`, `Email`, `isManager`) "
                             + "VALUES ('%s', '%s', '%s', '%s', '%s');";
-            String add_user_query =  String.format(form, First_Name, Last_Name, UserName, Password, Email);
+            String add_user_query =  String.format(form, First_Name, Last_Name, UserName, Password, Email, 0);
 
             ConnectedDBConnection connection = new ConnectedDBConnection();
             connection.insert(add_user_query);
