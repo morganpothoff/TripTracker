@@ -106,9 +106,12 @@ public class GUIController {
         view.getManagerScreenFrame().setVisible(false);
         view.getReviewFrame().setVisible(true);
         view.getReviewFeedbackTextField().setText("n/a");
+        selected = selected.substring(selected.indexOf(' ')+1);
         // fill in the text area with info from selected employee and trip
-        int tripID = Integer.parseInt(selected.substring(selected.indexOf(' ')+1));
         int userID = Integer.parseInt(selected.substring(0, selected.indexOf(' ')));
+        int tripID = Integer.parseInt(selected.substring(selected.indexOf(':')+2));
+
+
 
         String get_user_query = String.format("SELECT `First_Name`, `Last_Name` FROM `Users` WHERE `User_ID` = '%d';", userID);
         ConnectedDBConnection connection = new ConnectedDBConnection();
@@ -117,18 +120,18 @@ public class GUIController {
         String fname = user_results.getString("First_Name");
         String lname = user_results.getString("Last_Name");
 
-        get_user_query = String.format("SELECT `Location`, `Start_Date`, `End_Date`, `Set_Budget`, `Description` FROM `Trip` WHERE `Trip_ID` = '%d';", tripID);
+        get_user_query = String.format("SELECT `Location`, `Start_Date`, `End_Time`, `Set_Budget`, `MyDescription` FROM `Trip` WHERE `Trip_ID` = '%d';", tripID);
         connection = new ConnectedDBConnection();
         user_results = connection.select(get_user_query);
         user_results.next();
 
         String location = user_results.getString("Location");
         String sdate = user_results.getString("Start_Date");
-        String edate = user_results.getString("End_Date");
+        String edate = user_results.getString("End_Time");
         String bud = user_results.getString("Set_Budget");
-        String desc = user_results.getString("Description");
+        String desc = user_results.getString("MyDescription");
 
-        String buffer = String.format("Employee: %s %s\nLocation: %d\nTravel Date: %s - %s\nEst. Expenses: $%d\nDescription: %s",
+        String buffer = String.format("Employee: %s %s\nLocation: %s\nTravel Date: %s - %s\nEst. Expenses: $%s\nDescription: %s",
                 fname, lname, location, sdate, edate, bud, desc);
         view.getReviewTextArea().setText(buffer);
 
@@ -479,10 +482,16 @@ public class GUIController {
         // put every employee in EL
         // all employee with pending and matching manager == USERNAME
 
-        String get_user_query = String.format("SELECT `User_ID`, `Trip_ID` FROM `Trip` WHERE `Status` = '%d' AND `Manager_ID` = '%d';"
-                , 3, model.getCurrUser().getUserID());
+        // get manager ID using user ID
+        String get_user_query = String.format("SELECT `Manager_ID` FROM `Manager` WHERE `User_ID` = '%d';", model.getCurrUser().getUserID());
         ConnectedDBConnection connection = new ConnectedDBConnection();
         ResultSet user_results = connection.select(get_user_query);
+        user_results.next();
+        int managerID = user_results.getInt("Manager_ID");
+
+        get_user_query = String.format("SELECT `User_ID`, `Trip_ID` FROM `Trip` WHERE `Status` = '%d' AND `Manager_ID` = '%d';"
+                , 3, managerID);
+        user_results = connection.select(get_user_query);
 
         while(user_results.next() == true){
             String n = String.format("User: %d Trip: %d", user_results.getInt("User_ID"), user_results.getInt("Trip_ID"));
