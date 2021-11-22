@@ -92,7 +92,8 @@ public class GUIView {
     private JLabel reviewFeedbackLabel;
     private JTextField reviewFeedbackTextField;
     private JButton reviewBackButton;
-    private JButton reviewSendButton;
+    private JButton reviewRejectButton;
+    private JButton reviewApproveButton;
 
 
 
@@ -421,7 +422,8 @@ public class GUIView {
         reviewFeedbackLabel = new JLabel("Feedback:");
         reviewFeedbackTextField = new JTextField("n/a");
         reviewBackButton = new JButton("Back");
-        reviewSendButton = new JButton("Send");
+        reviewApproveButton = new JButton("Approve");
+        reviewRejectButton = new JButton("Reject");
 
         // Add UI element to frame
         GroupLayout reviewLayout = new GroupLayout(reviewFrame.getContentPane());
@@ -431,12 +433,12 @@ public class GUIView {
         reviewLayout.setHorizontalGroup(reviewLayout.createSequentialGroup()
                 .addGroup(reviewLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(reviewTextArea)
                         .addComponent(reviewFeedbackLabel).addComponent(reviewFeedbackTextField).addComponent(reviewBackButton))
-                .addGroup(reviewLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(reviewSendButton)));
+                .addGroup(reviewLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(reviewRejectButton).addComponent(reviewApproveButton)));
         reviewLayout.setVerticalGroup(reviewLayout.createSequentialGroup()
                 .addGroup(reviewLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(reviewTextArea))
                 .addGroup(reviewLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(reviewFeedbackLabel))
-                .addGroup(reviewLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(reviewFeedbackTextField))
-                .addGroup(reviewLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(reviewBackButton).addComponent(reviewSendButton)));
+                .addGroup(reviewLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(reviewFeedbackTextField).addComponent(reviewRejectButton))
+                .addGroup(reviewLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(reviewBackButton).addComponent(reviewApproveButton)));
         reviewFrame.getContentPane().setLayout(reviewLayout);
 
     }
@@ -1040,11 +1042,19 @@ public class GUIView {
         this.reviewBackButton = reviewBackButton;
     }
 
-    public JButton getReviewSendButton() {
-        return reviewSendButton;
+    public JButton getReviewRejectButton() {
+        return reviewRejectButton;
     }
 
-    public void setReviewSendButton(JButton reviewSendButton) {
-        this.reviewSendButton = reviewSendButton;
+    public void setReviewRejectButton(JButton reviewRejectButton) {
+        this.reviewRejectButton = reviewRejectButton;
+    }
+
+    public JButton getReviewApproveButton() {
+        return reviewApproveButton;
+    }
+
+    public void setReviewApproveButton(JButton reviewApproveButton) {
+        this.reviewApproveButton = reviewApproveButton;
     }
 }
