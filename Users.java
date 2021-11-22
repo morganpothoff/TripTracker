@@ -57,6 +57,14 @@ public class Users {
             ConnectedDBConnection connection = new ConnectedDBConnection();
             connection.insert(add_user_query);
 
+            String get_user_query = String.format("SELECT `User_ID` FROM `Users` WHERE `UserName` = '%s';", UserName);
+            ResultSet user_results = connection.select(get_user_query);
+            
+            int pulledID = user_results.getInt("User_ID");
+            
+            add_user_query = String.format("INSERT INTO `Manager` (User_ID) VALUES (%d);", pulledID);
+            connection.insert(add_user_query);
+            
             return true;
         }
         catch(Exception error) {
@@ -74,7 +82,7 @@ public class Users {
 
             ConnectedDBConnection connection = new ConnectedDBConnection();
             connection.insert(add_user_query);
-
+            
             return true;
         }
         catch(Exception error) {
@@ -110,7 +118,7 @@ public class Users {
     public String getEmail() {
         return email;
     }//End of getEmail
-
+    
     public void setPassword(String newPassword) throws Exception {
          password = newPassword;  
     }//End of setPassword
@@ -120,7 +128,7 @@ public class Users {
         if(currentPassword.equals(password)) {
             password = newPassword;
             //Update database
-            String get_user_query = String.format("UPDATE `Users` SET `Password` = '%s', WHERE 'User_ID' = '%d';", newPassword, getUserID());
+            String get_user_query = String.format("UPDATE `Users` SET `Password` = '%s', WHERE `User_ID` = '%d';", newPassword, getUserID());
             ConnectedDBConnection connection = new ConnectedDBConnection();
             int user_results = connection.update(get_user_query);
             if(user_results == 1) {
