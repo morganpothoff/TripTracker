@@ -71,7 +71,67 @@ public class GUIController {
         view.getTripBackButton().addActionListener((e -> tripToEmployeeScreen()));
         view.getTripAddButton().addActionListener((e -> addItem()));
         view.getTripFinishButton().addActionListener((e -> finishTrip()));
+        view.getReviewBackButton().addActionListener((e -> reviewBack()));
+        //view.getReviewSendButton().addActionListener((e -> reviewSend()));// todo update this and view
+        view.getManagerSelectProposalButton().addActionListener((e -> {
+            try {
+                selectProposal();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }));
 
+
+    }
+
+    private void selectProposal() throws Exception {
+        String selected = view.getManagerPendingList().getSelectedValue();
+        if(selected.equals("")){ // if nothing selected
+           return;
+        }
+
+        view.getManagerScreenFrame().setVisible(false);
+        view.getReviewFrame().setVisible(true);
+
+        // fill in the text area with info from selected employee and trip
+        int tripID = Integer.parseInt(selected.substring(selected.indexOf(' ')+1));
+        int userID = Integer.parseInt(selected.substring(0, selected.indexOf(' ')));
+
+        String get_user_query = String.format("SELECT `First_Name`, `Last_Name` FROM `Users` WHERE `User_ID` = '%d';", userID);
+        ConnectedDBConnection connection = new ConnectedDBConnection();
+        ResultSet user_results = connection.select(get_user_query);
+        user_results.next();
+        String fname = user_results.getString("First_Name");
+        String lname = user_results.getString("Last_Name");
+
+        get_user_query = String.format("SELECT `Location`, `Start_Date`, `End_Date`, `Set_Budget`, `Description` FROM `Trip` WHERE `Trip_ID` = '%d';", tripID);
+        connection = new ConnectedDBConnection();
+        user_results = connection.select(get_user_query);
+        user_results.next();
+
+        String location = user_results.getString("Location");
+        String sdate = user_results.getString("Start_Date");
+        String edate = user_results.getString("End_Date");
+        String bud = user_results.getString("Set_Budget");
+        String desc = user_results.getString("Description");
+
+        String buffer = String.format("Employee: %s %s\nLocation: %d\nTravel Date: %s - %s\nEst. Expenses: $%d\nDescription: %s",
+                fname, lname, location, sdate, edate, bud, desc);
+        view.getReviewTextArea().setText(buffer);
+
+    }
+
+    private void reviewApprove() {
+        // todo
+
+    }
+    private void reviewReject() {
+        // todo
+
+    }
+
+    private void reviewBack() {
+        // todo
 
     }
 
@@ -216,7 +276,7 @@ public class GUIController {
         model.getCurrTrip().setStatus(3);
 
         String temp = view.getProposalManagerList().getSelectedItem().toString();
-        int managerID = Integer.parseInt(temp.substring(temp.indexOf(',')));
+        int managerID = Integer.parseInt(temp.substring(temp.indexOf(',')+1));
         model.getCurrTrip().setManager(managerID);
 
         proposalToEmployeeScreen();
@@ -387,10 +447,9 @@ public class GUIController {
         ResultSet user_results = connection.select(get_user_query);
 
         while(user_results.next() == true){
-            String n = String.format("User: %d\tTrip: %d", user_results.getInt("User_ID"), user_results.getInt("Trip_ID"));
+            String n = String.format("User: %d Trip: %d", user_results.getInt("User_ID"), user_results.getInt("Trip_ID"));
             view.getPendingListModel().addElement(n);
         }
-        view.getPendingListModel().addElement("jerry man");
 
     }
 
