@@ -73,6 +73,15 @@ public class Trip {
 
 	
 	//Methods
+
+	public int getUserID() {
+		return userID;
+	}//End of getUserID
+
+	public int getManagerID() {
+		return managerID;
+	}//End of getManagerID
+
 	public String getDescription()	{
 		return myDescription;
 	}//End of getDescription
@@ -231,4 +240,6 @@ public class Trip {
         	}
 		return retVal;
 	}//End of setCompletion
+
+
 }//End of Trip
