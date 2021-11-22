@@ -57,13 +57,7 @@ public class Users {
             ConnectedDBConnection connection = new ConnectedDBConnection();
             connection.insert(add_user_query);
 
-            String get_user_query = String.format("SELECT `User_ID` FROM `Users` WHERE `UserName` = '%s';", UserName);
-            ResultSet user_results = connection.select(get_user_query);
-            
-            int pulledID = user_results.getInt("User_ID");
-            
-            add_user_query = String.format("INSERT INTO `Manager` (User_ID) VALUES (%d);", pulledID);
-            connection.insert(add_user_query);
+
             
             return true;
         }
@@ -82,7 +76,20 @@ public class Users {
 
             ConnectedDBConnection connection = new ConnectedDBConnection();
             connection.insert(add_user_query);
-            
+
+            String get_user_query = String.format("SELECT `User_ID` FROM `Users` WHERE `UserName` = '%s';", UserName);
+            ResultSet user_results = connection.select(get_user_query);
+
+            if(!user_results.next()){
+                System.out.println("didnt pull out lmfao");
+            }
+            int pulledID = user_results.getInt("User_ID");
+
+            System.out.println(pulledID);
+
+            add_user_query = String.format("INSERT INTO `Manager` (User_ID) VALUES (%d);", pulledID);
+            connection.insert(add_user_query);
+
             return true;
         }
         catch(Exception error) {

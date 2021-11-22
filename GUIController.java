@@ -72,7 +72,20 @@ public class GUIController {
         view.getTripAddButton().addActionListener((e -> addItem()));
         view.getTripFinishButton().addActionListener((e -> finishTrip()));
         view.getReviewBackButton().addActionListener((e -> reviewBack()));
-        //view.getReviewSendButton().addActionListener((e -> reviewSend()));// todo update this and view
+        view.getReviewApproveButton().addActionListener((e -> {
+            try {
+                reviewApprove();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }));
+        view.getReviewRejectButton().addActionListener((e -> {
+            try {
+                reviewReject();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }));
         view.getManagerSelectProposalButton().addActionListener((e -> {
             try {
                 selectProposal();
@@ -92,7 +105,7 @@ public class GUIController {
 
         view.getManagerScreenFrame().setVisible(false);
         view.getReviewFrame().setVisible(true);
-
+        view.getReviewFeedbackTextField().setText("n/a");
         // fill in the text area with info from selected employee and trip
         int tripID = Integer.parseInt(selected.substring(selected.indexOf(' ')+1));
         int userID = Integer.parseInt(selected.substring(0, selected.indexOf(' ')));
@@ -121,18 +134,43 @@ public class GUIController {
 
     }
 
-    private void reviewApprove() {
+    private void reviewApprove() throws Exception {
         // todo
+        String selected = view.getManagerPendingList().getSelectedValue();
+        int tripID = Integer.parseInt(selected.substring(selected.indexOf(' ')+1));
+
+        String get_user_query = String.format("UPDATE `Trip` SET `Status` = '%d', `Note` = '%s' WHERE `Trip_ID` = '%d';",
+                1, view.getReviewFeedbackTextField().getText(), tripID);
+        ConnectedDBConnection connection = new ConnectedDBConnection();
+
+        int user_results = connection.update(get_user_query);           // check that database was updated
+        if(user_results != 1) {
+            throw new Exception("No changes were made to database.");
+        }
+        reviewBack();
 
     }
-    private void reviewReject() {
+    private void reviewReject() throws Exception {
         // todo
+        String selected = view.getManagerPendingList().getSelectedValue();
+        int tripID = Integer.parseInt(selected.substring(selected.indexOf(' ')+1));
+
+        String get_user_query = String.format("UPDATE `Trip` SET `Status` = '%d', `Note` = '%s' WHERE `Trip_ID` = '%d';",
+                2, view.getReviewFeedbackTextField().getText(), tripID);
+        ConnectedDBConnection connection = new ConnectedDBConnection();
+
+        int user_results = connection.update(get_user_query);           // check that database was updated
+        if(user_results != 1) {
+            throw new Exception("No changes were made to database.");
+        }
+        reviewBack();
 
     }
 
     private void reviewBack() {
         // todo
-
+        view.getReviewFrame().setVisible(false);
+        view.getManagerScreenFrame().setVisible(true);
     }
 
 
@@ -308,13 +346,13 @@ public class GUIController {
         view.getProposalFrame().setVisible(true);
 
         // fill in the manager list
-        String get_user_query = String.format("SELECT `First_Name`, `Last_Name` , `User_ID` FROM `Users` WHERE `isManager` = '%d';", 1);
+        String get_user_query = String.format("SELECT u.First_Name, u.Last_Name, m.Manager_ID FROM Users AS u NATURAL JOIN Manager AS m WHERE isManager = '%d';", 1);
         ConnectedDBConnection connection = new ConnectedDBConnection();
         ResultSet user_results = connection.select(get_user_query);
 
         while(user_results.next() == true){
-            String n = String.format("%s %s,%d", user_results.getString("First_Name"),
-                    user_results.getString("Last_Name"), user_results.getInt("User_ID"));
+            String n = String.format("%s %s,%d", user_results.getString("u.First_Name"),
+                    user_results.getString("u.Last_Name"), user_results.getInt("m.Manager_ID"));
             view.getProposalManagerList().addItem(n);
         }
         view.getProposalManagerList().setSelectedIndex(0);

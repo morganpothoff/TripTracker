@@ -109,7 +109,7 @@ public class Trip {
 		boolean retVal = false;
 		myDescription = newDescription;
 		//Update database
-        	String get_user_query = String.format("UPDATE `Trip` SET `Set_Budget` = '%s' WHERE `Trip_ID` = '%d';", newDescription, getTripID());
+        	String get_user_query = String.format("UPDATE `Trip` SET `MyDescription` = '%s' WHERE `Trip_ID` = '%d';", newDescription, getTripID());
         	ConnectedDBConnection connection = new ConnectedDBConnection();
         	int user_results = connection.update(get_user_query);
         	if(user_results == 1) {
