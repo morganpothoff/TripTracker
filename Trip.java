@@ -150,7 +150,8 @@ public class Trip {
 		boolean retVal = false;
 		start_Date = newDate;
 		//Update database
-        	String get_user_query = String.format("UPDATE `Trip` SET `Start_Date` = '%s' WHERE `Trip_ID` = '%d';", newDate, getTripID());
+		System.out.println(newDate);
+        	String get_user_query = String.format("UPDATE `Trip` SET `Start_Date` = \"%s\" WHERE `Trip_ID` = '%d';", newDate, getTripID());
         	ConnectedDBConnection connection = new ConnectedDBConnection();
         	int user_results = connection.update(get_user_query);
         	if(user_results == 1) {
@@ -166,7 +167,7 @@ public class Trip {
 		boolean retVal = false;
 		end_date = newDate;
 		//Update database
-        	String get_user_query = String.format("UPDATE `Trip` SET `End_Time` = '%s' WHERE `Trip_ID` = '%d';", newDate, getTripID());
+        	String get_user_query = String.format("UPDATE `Trip` SET `End_Time` = \"%s\" WHERE `Trip_ID` = '%d';", newDate, getTripID());
         	ConnectedDBConnection connection = new ConnectedDBConnection();
         	int user_results = connection.update(get_user_query);
         	if(user_results == 1) {
