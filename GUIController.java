@@ -138,9 +138,9 @@ public class GUIController {
     }
 
     private void reviewApprove() throws Exception {
-        // todo
+        
         String selected = view.getManagerPendingList().getSelectedValue();
-        int tripID = Integer.parseInt(selected.substring(selected.indexOf(' ')+1));
+        int tripID = Integer.parseInt(selected.substring(selected.indexOf('p')+3));
 
         String get_user_query = String.format("UPDATE `Trip` SET `Status` = '%d', `Note` = '%s' WHERE `Trip_ID` = '%d';",
                 1, view.getReviewFeedbackTextField().getText(), tripID);
@@ -154,9 +154,9 @@ public class GUIController {
 
     }
     private void reviewReject() throws Exception {
-        // todo
+
         String selected = view.getManagerPendingList().getSelectedValue();
-        int tripID = Integer.parseInt(selected.substring(selected.indexOf(' ')+1));
+        int tripID = Integer.parseInt(selected.substring(selected.indexOf('p')+3));
 
         String get_user_query = String.format("UPDATE `Trip` SET `Status` = '%d', `Note` = '%s' WHERE `Trip_ID` = '%d';",
                 2, view.getReviewFeedbackTextField().getText(), tripID);
@@ -301,8 +301,8 @@ public class GUIController {
     private void submitProposal() throws Exception {
         // todo actually submit the proposal
         String location = view.getProposalLocationTextField().getText();
-        String sDate = view.getStartDateTextField().getText();
-        String eDate = view.getEndDateTextField().getText();
+        String sDate = view.getProposalStartTextField().getText();
+        String eDate = view.getProposalEndTextField().getText();
         float budget = 0;
         try {budget = Float.parseFloat(view.getProposalEstimateTextField().getText());}
         catch (NumberFormatException e){view.getProposalEstimateTextField().setText("please enter a double value");}
