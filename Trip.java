@@ -1,163 +1,234 @@
 import java.sql.*;
 
-
-public class Users {
-    //Variables
-    protected String name;
-    protected int userID;
-    protected String password;
-    protected String email;
-
-    // Constructors added by Morgan Pothoff
-    // Constructor throws an exception if there are no results found for expense ID.
-    Users(int id) throws Exception {
-        String get_user_query = String.format("SELECT * FROM `Users` WHERE `User_ID` = %d;", id);
-        ConnectedDBConnection connection = new ConnectedDBConnection();
-        ResultSet user_results = connection.select(get_user_query);
-
-        // Check that atleast 1 row is returned
-        if(!user_results.next()) {
-            throw new Exception("No user results found for user ID");
-        }
-
-        userID = id;
-        name = user_results.getString("First_Name") + " " + user_results.getString("Last_Name");
-        password = user_results.getString("Password");
-        email = user_results.getString("Email");
-
-    }
-
-    // Constructor throws an exception if there are no results found for expense ID.
-    Users(String username) throws Exception {
-        String get_user_query = String.format("SELECT * FROM `Users` WHERE `UserName` = '%s';", username);
-        ConnectedDBConnection connection = new ConnectedDBConnection();
-        ResultSet user_results = connection.select(get_user_query);
-
-        // Check that atleast 1 row is returned
-        if(!user_results.next()) {
-            throw new Exception("No user results found for user ID");
-        }
-
-        email = user_results.getString("eMail");
-        name = user_results.getString("First_Name") + " " + user_results.getString("Last_Name");
-        password = user_results.getString("Password");
-        userID = user_results.getInt("User_ID");
-    }
+public class Trip {
+	//Variables
+	protected String myDescription;
+	protected int tripID;
+	protected float setBudget;
+	protected String start_Date;
+	protected String end_date;
+	protected String location;
+	protected boolean completed;	//True = trip finished, false = trip pending
+	protected int status;		//1 = accepted, 2 = rejected, 3 = pending
+	protected int userID;
+	protected int managerID;
 
 
-    // Adds a user to the database using the connection insert method.
-    // Returns T/F depending upon its success.
-    public static Boolean add(String First_Name, String Last_Name, String UserName, String Password, String Email) {
-        
-        try {
-            String form =   "INSERT INTO `Users` (`First_Name`, `Last_Name`, `UserName`, `Password`, `Email`) "
-                            + "VALUES ('%s', '%s', '%s', '%s', '%s');";
-            String add_user_query =  String.format(form, First_Name, Last_Name, UserName, Password, Email);
+
+	//Constructor
+	Trip(int userID) throws Exception {
+		String get_user_query = String.format("SELECT * FROM `Trip` WHERE `User_ID` = %d;", userID);
+       	ConnectedDBConnection connection = new ConnectedDBConnection();
+		ResultSet trip_results = connection.select(get_user_query);
+	    
+	    // Check that atleast 1 row is returned
+    	if(!trip_results.next()) {
+    		// throw new Exception("No user results found for trip ID");
+    	}
+
+		userID = trip_results.getInt("User_ID");
+		managerID = trip_results.getInt("Manager_ID");
+		tripID = trip_results.getInt("Trip_ID");
+		myDescription = trip_results.getString("MyDescription");
+		start_Date = trip_results.getString("Start_Date");
+		end_date = trip_results.getString("End_Time");
+		location = trip_results.getString("Location");
+		setBudget = trip_results.getFloat("Set_Budget");
+		completed = trip_results.getBoolean("Completed");
+		status = trip_results.getInt("Status");
+    	
+	}
+	
+	//Generating a singular trip tied to user, linked to fake manager
+	Trip(int userID, int managerID) throws Exception {
+	try {
+            String form =   "INSERT INTO `Trip` (User_ID, Manager_ID, Set_Budget, MyDescription, Start_Date, End_Time, Location, Completed, Status)"
+                            + "VALUES ('%d', '%d', '%f', '%s', '%s', '%s', '%s', '%d', '%d');";
+            String add_trip_query =  String.format(form, userID, managerID, 0.00, "TBD", "00/00/0000", "00/00/0000", "TBD", 0, 2);
 
             ConnectedDBConnection connection = new ConnectedDBConnection();
-            connection.insert(add_user_query);
-
-            String get_user_query = String.format("SELECT `User_ID` FROM `Users` WHERE `UserName` = '%s';", UserName);
-            ResultSet user_results = connection.select(get_user_query);
-            
-            int pulledID = user_results.getInt("User_ID");
-            
-            add_user_query = String.format("INSERT INTO `Manager` (User_ID) VALUES (%d);", pulledID);
-            connection.insert(add_user_query);
-            
-            return true;
-        }
+            connection.insert(add_trip_query);
+		
+		String get_user_query = String.format("SELECT Trip_ID FROM `Trip` WHERE `User_ID` = %d;", userID);
+    		ResultSet trip_results = connection.select(get_user_query);
+    		trip_results.next();
+    		
+            this.userID = userID;
+            this.managerID = managerID;
+            myDescription = "TBD";
+        	tripID = trip_results.getInt("Trip_ID");
+        	setBudget = (float) 0.00;
+        	start_Date = "00/00/0000";
+        	end_date = "00/00/0000";;
+        	location = "TBD";
+        	completed = false;	
+        	status = 3;	
+        	}
         catch(Exception error) {
             System.out.println(error.toString());
-            return false;
-        }
-    }
-
-    public static Boolean addManager(String First_Name, String Last_Name, String UserName, String Password, String Email) {
-
-        try {
-            String form =   "INSERT INTO `Users` (`First_Name`, `Last_Name`, `UserName`, `Password`, `Email`, `isManager`) "
-                    + "VALUES ('%s', '%s', '%s', '%s', '%s', '%d');";
-            String add_user_query =  String.format(form, First_Name, Last_Name, UserName, Password, Email, 1);
-
-            ConnectedDBConnection connection = new ConnectedDBConnection();
-            connection.insert(add_user_query);
-            
-            return true;
-        }
-        catch(Exception error) {
-            System.out.println(error.toString());
-            return false;
-        }
-    }
+        	}
+	}
+	
 
 
-    public static Boolean username_exists(String username) throws Exception {
-        String get_user_query = String.format("SELECT * FROM `Users` WHERE `UserName` = '%s';", username);
-        ConnectedDBConnection connection = new ConnectedDBConnection();
-        ResultSet user_results = connection.select(get_user_query);
-
-        // Check that atleast 1 row is returned
-        return user_results.next();
-    }
-
-
-    //Methods
-    public String getName() {
-        return name;
-    }//End of getName
-
-    public int getUserID() {
-        return userID;
-    }//End of getUserID
-
-    public String getPassword() {
-        return password;
-    }//End of getPassword
-
-    public String getEmail() {
-        return email;
-    }//End of getEmail
-    
-    public void setPassword(String newPassword) throws Exception {
-         password = newPassword;  
-    }//End of setPassword
-    
-    public boolean updatePassword(String newPassword, String currentPassword) throws Exception {
-        boolean retVal = false;
-        if(currentPassword.equals(password)) {
-            password = newPassword;
-            //Update database
-            String get_user_query = String.format("UPDATE `Users` SET `Password` = '%s', WHERE `User_ID` = '%d';", newPassword, getUserID());
-            ConnectedDBConnection connection = new ConnectedDBConnection();
-            int user_results = connection.update(get_user_query);
-            if(user_results == 1) {
-            	retVal = true;
-            }
+	
+	//Methods
+	public String getDescription()	{
+		return myDescription;
+	}//End of getDescription
+		
+	public int getTripID()	{
+		return tripID;
+	}//End of getTripID
+	
+	public double getBudget()	{
+		return setBudget;
+	}//End of getBudget
+		
+	public String getStartDate()	{
+		return start_Date;
+	}//End of getStartDate
+		
+	public String getEndDate()	{
+		return end_date;
+	}//End of getEndDate
+		
+	public String getLocation()	{
+		return location;
+	}//End of getLocation
+	
+	public int getStatus()	{
+		return status;
+	}//End of getStatus
+	
+	public Boolean getCompletion()	{
+		return completed;
+	}//End of getCompletion
+	
+	public boolean setDescription(String newDescription) throws Exception{
+		boolean retVal = false;
+		myDescription = newDescription;
+		//Update database
+        	String get_user_query = String.format("UPDATE `Trip` SET `Set_Budget` = '%s' WHERE `Trip_ID` = '%d';", newDescription, getTripID());
+        	ConnectedDBConnection connection = new ConnectedDBConnection();
+        	int user_results = connection.update(get_user_query);
+        	if(user_results == 1) {
+        	retVal = true;
+        	}
+        	else {
+        	throw new Exception("No changes were made to database.");
+        	}
+		return retVal;
+	}//End of setDescription
+	
+	public boolean setNewBudget(float newBudget) throws Exception{
+		boolean retVal = false;
+		setBudget = newBudget;
+		//Update database
+        	String get_user_query = String.format("UPDATE `Trip` SET `Set_Budget` = '%f' WHERE `Trip_ID` = '%d';", newBudget, getTripID());
+        	ConnectedDBConnection connection = new ConnectedDBConnection();
+        	int user_results = connection.update(get_user_query);
+        	if(user_results == 1) {
+          		retVal = true;
+        	}
+        	else {
+            	throw new Exception("No changes were made to database.");
+		}
+		return retVal;
+	}//End of setNewBudget
+	
+	public boolean setStartDate(String newDate) throws Exception{
+		boolean retVal = false;
+		start_Date = newDate;
+		//Update database
+        	String get_user_query = String.format("UPDATE `Trip` SET `Start_Date` = '%s' WHERE `Trip_ID` = '%d';", newDate, getTripID());
+        	ConnectedDBConnection connection = new ConnectedDBConnection();
+        	int user_results = connection.update(get_user_query);
+        	if(user_results == 1) {
+           		retVal = true;
+        	}
         	else {
         		throw new Exception("No changes were made to database.");
         	}
+		return retVal;
+	}//End of setStartDate
+	
+	public boolean setEndDate(String newDate) throws Exception{
+		boolean retVal = false;
+		end_date = newDate;
+		//Update database
+        	String get_user_query = String.format("UPDATE `Trip` SET `End_Time` = '%s' WHERE `Trip_ID` = '%d';", newDate, getTripID());
+        	ConnectedDBConnection connection = new ConnectedDBConnection();
+        	int user_results = connection.update(get_user_query);
+        	if(user_results == 1) {
+           		retVal = true;
+        	}
+        	else {
+        		throw new Exception("No changes were made to database.");
+        	}
+		return retVal;
+	}//End of setEndDate
+	
+	public boolean setLocation(String newLocation) throws Exception{
+		boolean retVal = false;
+		location = newLocation;
+		//Update database
+        	String get_user_query = String.format("UPDATE `Trip` SET `Location` = '%s' WHERE `Trip_ID` = '%d';", newLocation, getTripID());
+        	ConnectedDBConnection connection = new ConnectedDBConnection();
+        	int user_results = connection.update(get_user_query);
+        	if(user_results == 1) {
+          	retVal = true;
+        	}
+        	else {
+        		throw new Exception("No changes were made to database.");
+        	}
+		return retVal;
+	}//End of setLocation
 
-        }
-        return retVal;
-    }//End of updatePassword
-
-    public boolean setEmail(String newEmail, String currentEmail) throws Exception {
-        boolean retVal = false;
-        if(currentEmail.equals(email)) {
-            email = newEmail;
-            //Update database
-            String get_user_query = String.format("UPDATE `Users` SET `eMail` = '%s', WHERE 'User_ID' = '%d';", newEmail, getUserID());
-            ConnectedDBConnection connection = new ConnectedDBConnection();
-            int user_results = connection.update(get_user_query);
-            if(user_results == 1) {
-               	retVal = true;
-            }
-            else {
-            	throw new Exception("No changes were made to database.");
-            	}
-        }
-        return retVal;
-    }//End of setEmail
-
-}//End of Users
+	public boolean setStatus(int newStatus) throws Exception{
+		boolean retVal = false;
+		status = newStatus;
+		//Update database
+		String get_user_query = String.format("UPDATE `Trip` SET `Status` = '%d' WHERE `Trip_ID` = '%d';", newStatus, getTripID());
+		ConnectedDBConnection connection = new ConnectedDBConnection();
+		int user_results = connection.update(get_user_query);
+		if(user_results == 1) {
+			retVal = true;
+		}
+		else {
+			throw new Exception("No changes were made to database.");
+		}
+		return retVal;
+	}//End of setStatus
+	public boolean setManager(int newManager) throws Exception{
+		boolean retVal = false;
+		managerID = newManager;
+		//Update database
+		String get_user_query = String.format("UPDATE `Trip` SET `Manager_ID` = '%d' WHERE `Trip_ID` = '%d';", newManager, getTripID());
+		ConnectedDBConnection connection = new ConnectedDBConnection();
+		int user_results = connection.update(get_user_query);
+		if(user_results == 1) {
+			retVal = true;
+		}
+		else {
+			throw new Exception("No changes were made to database.");
+		}
+		return retVal;
+	}//End of setStatus
+	
+	public boolean setCompletion(boolean newCompStatus) throws Exception{
+		boolean retVal = false;
+		completed = newCompStatus;
+		//Update database
+        	String get_user_query = String.format("UPDATE `Users` SET `Completed` = '%d' WHERE `Trip_ID` = '%d';", newCompStatus, getTripID());
+        	ConnectedDBConnection connection = new ConnectedDBConnection();
+       		int user_results = connection.update(get_user_query);
+        	if(user_results == 1) {
+           	retVal = true;
+        	}
+        	else {
+        	throw new Exception("No changes were made to database.");
+        	}
+		return retVal;
+	}//End of setCompletion
+}//End of Trip
