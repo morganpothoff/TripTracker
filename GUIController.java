@@ -138,7 +138,7 @@ public class GUIController {
     }
 
     private void reviewApprove() throws Exception {
-        
+
         String selected = view.getManagerPendingList().getSelectedValue();
         int tripID = Integer.parseInt(selected.substring(selected.indexOf('p')+3));
 
