@@ -586,6 +586,15 @@ public class GUIController {
             view.getPendingListModel().addElement(n);
         }
 
+        // update budget textarea
+        float budget;
+        get_user_query = String.format("SELECT `TotalBudget` FROM `Manager` WHERE `User_ID` = '%d';", model.getCurrUser().getUserID());
+        user_results = connection.select(get_user_query);
+        user_results.next();
+        budget = user_results.getFloat("TotalBudget");
+
+        view.getBudgetTextArea().setText("Total Budget: $" + budget);
+
     }
 
     /**

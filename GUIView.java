@@ -283,6 +283,7 @@ public class GUIView {
         managerBudgetLabel = new JLabel("Budget");
         managerPendingList = new JList<>(pendingListModel);
         budgetTextArea = new JTextArea();
+        budgetTextArea.setEditable(false);
         managerBackButton = new JButton("Back");
 
 
