@@ -40,6 +40,7 @@ public class GUIView {
     private JButton employeeLogoutButton;
     private JButton employeeCancelPropButton;
     private JLabel employeeNoteLabel;
+    private JLabel employeeManagerNote;
 
     // manager screen
     private JFrame managerScreenFrame;
@@ -233,6 +234,7 @@ public class GUIView {
         employeeLogoutButton = new JButton(("Logout"));
         employeeCancelPropButton = new JButton(("Cancel Proposal"));
         employeeNoteLabel = new JLabel("NOTE: n/a");
+        employeeManagerNote = new JLabel("Manager note: ");
 
         // Add UI element to frame
         GroupLayout employeeScreenLayout = new GroupLayout(employeeScreenFrame.getContentPane());
@@ -241,7 +243,7 @@ public class GUIView {
 
         employeeScreenLayout.setHorizontalGroup(employeeScreenLayout.createSequentialGroup()
                 .addGroup(employeeScreenLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(employeeProposalButton)
-                        .addComponent(employeeCancelPropButton).addComponent(employeeNoteLabel))
+                        .addComponent(employeeCancelPropButton).addComponent(employeeNoteLabel).addComponent(employeeManagerNote))
                 .addGroup(employeeScreenLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(employeeTripButton)
                         .addComponent(employeeLogoutButton)));
         employeeScreenLayout.setVerticalGroup(employeeScreenLayout.createSequentialGroup()
@@ -249,7 +251,8 @@ public class GUIView {
                         .addComponent(employeeTripButton))
                 .addGroup(employeeScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(employeeCancelPropButton)
                         .addComponent(employeeLogoutButton))
-                .addGroup(employeeScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(employeeNoteLabel)));
+                .addGroup(employeeScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(employeeNoteLabel))
+                .addGroup(employeeScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(employeeManagerNote)));
         employeeScreenLayout.linkSize(SwingConstants.HORIZONTAL, employeeProposalButton, employeeCancelPropButton);
         employeeScreenFrame.getContentPane().setLayout(employeeScreenLayout);
 
@@ -1056,5 +1059,13 @@ public class GUIView {
 
     public void setReviewApproveButton(JButton reviewApproveButton) {
         this.reviewApproveButton = reviewApproveButton;
+    }
+
+    public JLabel getEmployeeManagerNote() {
+        return employeeManagerNote;
+    }
+
+    public void setEmployeeManagerNote(JLabel employeeManagerNote) {
+        this.employeeManagerNote = employeeManagerNote;
     }
 }

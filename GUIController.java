@@ -42,7 +42,13 @@ public class GUIController {
                 exception.printStackTrace();
             }
         }));
-        view.getSelectEmployeeViewButton().addActionListener((e -> showEmployeeScreen()));
+        view.getSelectEmployeeViewButton().addActionListener((e -> {
+            try {
+                showEmployeeScreen();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }));
         view.getSelectLogoutButton().addActionListener((e -> logout()));
         view.getManagerBackButton().addActionListener((e -> managerToSelection()));
         view.getEmployeeProposalButton().addActionListener((e -> {
@@ -434,7 +440,7 @@ public class GUIController {
     /**
      * switch from login frame to employee menu
      */
-    private void loginEmployee() {
+    private void loginEmployee() throws Exception {
         view.getEmployeeScreenFrame().setVisible(true);
         view.getLoginFrame().setVisible(false);
 
@@ -444,7 +450,13 @@ public class GUIController {
                 view.getEmployeeNoteLabel().setText("Trip approval pending.");
                 break;
             case 2:
-                view.getEmployeeNoteLabel().setText("Your trip has been rejected; propose a new trip.\nManager note: ");
+                view.getEmployeeNoteLabel().setText("Your trip has been rejected; propose a new trip.");
+                //String get_user_query = String.format("SELECT `Note` FROM `Trip` WHERE `Trip_ID` = '%d';", model.getCurrTrip().getUserID());
+                //ConnectedDBConnection connection = new ConnectedDBConnection();
+                //ResultSet user_results = connection.select(get_user_query);
+                //user_results.next();
+                //String note = user_results.getString("Note");
+                //view.getEmployeeManagerNote().setText("Manager note: " + note);
                 break;
             case 1:
                 view.getEmployeeNoteLabel().setText("Your trip has been approved.\nClick the trip tracker to record expenses.");
@@ -467,7 +479,7 @@ public class GUIController {
     /**
      * switch from manger menu to employee view
      */
-    private void showEmployeeScreen() {
+    private void showEmployeeScreen() throws Exception {
         view.getManagerSelectionFrame().setVisible(false);
         loginEmployee();
     }
