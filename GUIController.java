@@ -131,9 +131,11 @@ public class GUIController {
     }
 
     private void updateManagerBudget() throws Exception {
-        // todo error check for double only
 
-        float newBudget = Float.parseFloat(view.getManagerBaseTextField().getText());
+        float newBudget = 0;
+        try {newBudget = Float.parseFloat(view.getManagerBaseTextField().getText());}
+        catch (NumberFormatException e){view.getManagerBaseTextField().setText("Invalid input - float values only");}
+
         view.getManagerBaseTextField().setText("");
         String get_user_query = String.format("UPDATE `Manager` SET `TotalBudget` = '%f' WHERE `User_ID` = '%d';",
                 newBudget, model.getCurrUser().getUserID());
@@ -645,8 +647,8 @@ public class GUIController {
         }
         float sub = budget - totalEst - totalFinished;
 
-        view.getBudgetTextArea().setText(String.format("Total Budget:\t\t%f\nTotal Trip Estimates:\t%f\nFinished Trip Costs:\t%f" +
-                "\nTotal - Est - Costs = \t%f", budget, totalEst, totalFinished, sub));
+        view.getBudgetTextArea().setText(String.format("Total Budget:\t\t$%.2f\nTotal Trip Estimates:\t$%.2f\nFinished Trip Costs:\t$%.2f" +
+                "\nTotal - Est - Costs = \t$%.2f", budget, totalEst, totalFinished, sub));
 
         // total
 

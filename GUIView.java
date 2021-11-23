@@ -54,7 +54,6 @@ public class GUIView {
     private JButton managerBaseButton;
     private JTextField startDateTextField;
     private JTextField endDateTextField;
-    private JButton viewHistoryButton;
     private JButton generateReportButton;
     private JButton managerBackButton;
 
@@ -273,7 +272,6 @@ public class GUIView {
         // Create UI elements
         pendingListModel = new DefaultListModel();
         managerSelectProposalButton = new JButton("Select");
-        viewHistoryButton = new JButton("View History");
         generateReportButton = new JButton("Generate Report");
         startDateTextField = new JTextField();
         endDateTextField = new JTextField();
@@ -285,6 +283,13 @@ public class GUIView {
         budgetTextArea = new JTextArea();
         budgetTextArea.setEditable(false);
         managerBackButton = new JButton("Back");
+
+        TextPrompt basePrompt = new TextPrompt("New Budget - Ex: 1450.95", managerBaseTextField);
+        basePrompt.changeAlpha(.5f);
+        TextPrompt managerStartPrompt = new TextPrompt("StartDate - Ex: mm/dd/yyyy", startDateTextField);
+        managerStartPrompt.changeAlpha(.5f);
+        TextPrompt managerEndPrompt = new TextPrompt("New Budget - Ex: mm/dd/yyyy", endDateTextField);
+        managerEndPrompt.changeAlpha(.5f);
 
 
         managerPendingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -302,8 +307,7 @@ public class GUIView {
                         .addComponent(pendingScrollPane).addComponent(managerSelectProposalButton).addComponent(managerBackButton))
                 .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(managerBudgetLabel)
                         .addComponent(budgetTextArea).addComponent(managerBaseTextField).addComponent(managerBaseButton)
-                        .addComponent(startDateTextField).addComponent(endDateTextField).addComponent(viewHistoryButton)
-                        .addComponent(generateReportButton)));
+                        .addComponent(startDateTextField).addComponent(endDateTextField).addComponent(generateReportButton)));
         managerScreenLayout.setVerticalGroup(managerScreenLayout.createSequentialGroup()
                 .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(managerPendingLabel)
                         .addComponent(managerBudgetLabel))
@@ -314,8 +318,7 @@ public class GUIView {
                 .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(managerBaseButton))
                 .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(startDateTextField))
                 .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(endDateTextField))
-                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(managerBackButton).addComponent(viewHistoryButton))
-                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(generateReportButton)));
+                .addGroup(managerScreenLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(managerBackButton).addComponent(generateReportButton)));
         managerScreenFrame.getContentPane().setLayout(managerScreenLayout);
 
         // Proposal screen
@@ -345,9 +348,9 @@ public class GUIView {
 
         TextPrompt locPrompt = new TextPrompt("Ex: \"Austin, TX\"", proposalLocationTextField);
         locPrompt.changeAlpha(.5f);
-        TextPrompt sPrompt = new TextPrompt("Ex: \"11/1/2021\"", proposalStartTextField);
+        TextPrompt sPrompt = new TextPrompt("Ex: \"mm/dd/yyyy\"", proposalStartTextField);
         sPrompt.changeAlpha(.5f);
-        TextPrompt ePrompt = new TextPrompt("Ex: \"11/8/2021\"", proposalEndTextField);
+        TextPrompt ePrompt = new TextPrompt("Ex: \"mm/dd/yyyy\"", proposalEndTextField);
         ePrompt.changeAlpha(.5f);
         TextPrompt budPrompt = new TextPrompt("Ex: \"1250.75\"", proposalEstimateTextField);
         budPrompt.changeAlpha(.5f);
@@ -721,14 +724,6 @@ public class GUIView {
 
     public void setEndDateTextField(JTextField endDateTextField) {
         this.endDateTextField = endDateTextField;
-    }
-
-    public JButton getViewHistoryButton() {
-        return viewHistoryButton;
-    }
-
-    public void setViewHistoryButton(JButton viewHistoryButton) {
-        this.viewHistoryButton = viewHistoryButton;
     }
 
     public JButton getGenerateReportButton() {
