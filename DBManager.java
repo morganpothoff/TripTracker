@@ -45,6 +45,7 @@ public class DBManager {
     //Parse database file for employee information. Return hash map of employee information.
     public HashMap<String, HashMap<String, String>> getEmployeeInfoMap() throws IOException {
         HashMap<String, HashMap<String, String>> employeeInfoMap = new HashMap<String, HashMap<String, String>>();
+        /*No longer necessary, using mySQL DB instead
         BufferedReader br = null;
         File file = null;
         try {
@@ -77,6 +78,7 @@ public class DBManager {
              employeeInfoMap.put(id, employeeData);
         }
         br.close();
+        */
         return employeeInfoMap;
     }
 
