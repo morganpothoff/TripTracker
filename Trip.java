@@ -13,6 +13,7 @@ public class Trip {
 	protected int status;		//1 = accepted, 2 = rejected, 3 = pending
 	protected int userID;
 	protected int managerID;
+	protected String note;
 
 
 
@@ -37,15 +38,16 @@ public class Trip {
 		setBudget = trip_results.getFloat("Set_Budget");
 		completed = trip_results.getBoolean("Completed");
 		status = trip_results.getInt("Status");
+		note = trip_results.getString("Note");
     	
 	}
 	
 	//Generating a singular trip tied to user, linked to fake manager
 	Trip(int userID, int managerID) throws Exception {
 	try {
-            String form =   "INSERT INTO `Trip` (User_ID, Manager_ID, Set_Budget, MyDescription, Start_Date, End_Time, Location, Completed, Status)"
-                            + "VALUES ('%d', '%d', '%f', '%s', '%s', '%s', '%s', '%d', '%d');";
-            String add_trip_query =  String.format(form, userID, managerID, 0.00, "TBD", "00/00/0000", "00/00/0000", "TBD", 0, 2);
+            String form =   "INSERT INTO `Trip` (User_ID, Manager_ID, Set_Budget, MyDescription, Start_Date, End_Time, Location, Completed, Status, Note)"
+                            + "VALUES ('%d', '%d', '%f', '%s', '%s', '%s', '%s', '%d', '%d', '%s');";
+            String add_trip_query =  String.format(form, userID, managerID, 0.00, "TBD", "00/00/0000", "00/00/0000", "TBD", 0, 2, "TBD");
 
             ConnectedDBConnection connection = new ConnectedDBConnection();
             connection.insert(add_trip_query);
@@ -63,7 +65,8 @@ public class Trip {
         	end_date = "00/00/0000";;
         	location = "TBD";
         	completed = false;	
-        	status = 3;	
+        	status = 3;
+		note = "TBD";
         	}
         catch(Exception error) {
             System.out.println(error.toString());
@@ -114,6 +117,10 @@ public class Trip {
 	public Boolean getCompletion()	{
 		return completed;
 	}//End of getCompletion
+	
+	public String getNote() {
+		return note;
+	}//End of getNote
 	
 	public boolean setDescription(String newDescription) throws Exception{
 		boolean retVal = false;
@@ -231,7 +238,11 @@ public class Trip {
 		boolean retVal = false;
 		completed = newCompStatus;
 		//Update database
-        	String get_user_query = String.format("UPDATE `Users` SET `Completed` = '%d' WHERE `Trip_ID` = '%d';", newCompStatus, getTripID());
+		int sqlStatus = 0;
+		if(newCompStatus == true) {
+			sqlStatus = 1;
+		}
+        	String get_user_query = String.format("UPDATE `Trip` SET `Completed` = '%d' WHERE `Trip_ID` = '%d';", sqlStatus, getTripID());
         	ConnectedDBConnection connection = new ConnectedDBConnection();
        		int user_results = connection.update(get_user_query);
         	if(user_results == 1) {
@@ -243,5 +254,20 @@ public class Trip {
 		return retVal;
 	}//End of setCompletion
 
+	public boolean setNote(String newNote) throws Exception{
+		boolean retVal = false;
+		note = newNote;
+		//Update database
+        	String get_user_query = String.format("UPDATE `Trip` SET `Note` = '%s' WHERE `Trip_ID` = '%d';", newNote, getTripID());
+        	ConnectedDBConnection connection = new ConnectedDBConnection();
+       		int user_results = connection.update(get_user_query);
+        	if(user_results == 1) {
+           	retVal = true;
+        	}
+        	else {
+        	throw new Exception("No changes were made to database.");
+        	}
+		return retVal;
+	}//End of setNote
 
 }//End of Trip
