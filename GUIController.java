@@ -300,19 +300,16 @@ public class GUIController {
             String name = tokens[0];   // following lines parse the input string
             String company = tokens[1];
             String location = tokens[2];
-            int Trip_ID = 1;  //TODO: once trip select is implemented, get trip
-            String User_ID = model.getLoginController().getID();
-
-            view.getTripExpenseModel().addElement(name + " " + company + " " + location + " " + cost);  //todo delete once add is working
+            int Trip_ID = model.getCurrTrip().getTripID();
+            int User_ID = model.getCurrUser().getUserID();
 
             // Set data
-            if(Expense.add(company, cost, location, name, Trip_ID, new Users(User_ID).getUserID())) {
-                System.out.println("Successfully added Expense");
-
-                view.getTripExpenseModel().addElement(view.getTripItemTextField().getText() + ' ' + view.getTripCostTextField().getText());
+            if(Expense.add(company, cost, location, name, Trip_ID, User_ID)) {
                 view.getTripItemTextField().setText("");
                 view.getTripCostTextField().setText("");
-                view.getTripExpenseModel().addElement(name + " " + company + " " + location + " " + cost);
+                view.getTripExpenseModel().addElement(name + ' ' + cost);
+
+                System.out.println("Successfully added Expense");
             }
             else {
                 System.out.println("Try again");
@@ -412,10 +409,12 @@ public class GUIController {
     private void gotoTripScreen() throws IOException {
         // if no trip in progress, don't switch
         if(model.getCurrTrip().getStatus() != 1){
+            System.out.println("Here");
             return;
         }
 
         try {
+            view.getTripExpenseModel().removeAllElements();
             ArrayList<Expense> expenses_for_trip = Expense.all_expenses_for_trip(model.getCurrTrip().getTripID());  // Get the list of expenses for a trip
 
             for(int i = 0; i < expenses_for_trip.size(); i++) {  // Loop through expenses

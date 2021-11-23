@@ -82,6 +82,8 @@ public class LoginController {
         description = dataMap.get("description");
         trips = dataMap.get("trips");
     }
+
+    //TODO: FIX (ID IS AN INT, NOT A STRING)
     public String getID() {
         return id;
     }
@@ -104,5 +106,18 @@ public class LoginController {
         return lastName;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public int getUserID() {
+        try{
+            return Integer.parseInt(id);
+        }
+        catch(Exception e) {
+            System.out.println(e.toString());
+            return -1;
+        }
+    }
 
 }
