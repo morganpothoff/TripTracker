@@ -237,7 +237,11 @@ public class Trip {
 		boolean retVal = false;
 		completed = newCompStatus;
 		//Update database
-        	String get_user_query = String.format("UPDATE `Trip` SET `Completed` = '%d' WHERE `Trip_ID` = '%d';", newCompStatus, getTripID());
+		int sqlStatus = 0;
+		if(newCompStatus == true) {
+			sqlStatus = 1;
+		}
+        	String get_user_query = String.format("UPDATE `Trip` SET `Completed` = '%d' WHERE `Trip_ID` = '%d';", sqlStatus, getTripID());
         	ConnectedDBConnection connection = new ConnectedDBConnection();
        		int user_results = connection.update(get_user_query);
         	if(user_results == 1) {

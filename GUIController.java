@@ -408,7 +408,7 @@ public class GUIController {
         try {
             Users loginUser = new Users(id);
             if(!loginUser.getPassword().equals(pass)) {
-                throw new Exception("Invalid Password");
+                throw new Exception("Invalid Password or Username is not in use");
             }
             else{
                 model.setUser(loginUser);
