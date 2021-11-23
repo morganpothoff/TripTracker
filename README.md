@@ -1,4 +1,13 @@
-# TripTracker
+# TripTracker\
+#####
+# User Intructions
+#####
+# User ID and Password Rules
+#ID must not contain any characters in string invalidCharacters in Authenticator(currently no characters are restricted).
+#ID and Password length must be between 6 and 30 characters.
+#Password must contain at least one lowercase letter, one uppercase letter, one number, and one 'special' character([!@#$%&*()_+=|<>?{}\\[\\]~-]).
+#####
+#####
 #####
 # Use Case: Login
 #Upon clicking login button on login page, the GUIController calls the LoginController to update with the user's data from the GUI.<br>
