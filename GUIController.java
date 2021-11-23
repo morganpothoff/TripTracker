@@ -52,6 +52,13 @@ public class GUIController {
         }));
         view.getSelectLogoutButton().addActionListener((e -> logout()));
         view.getManagerBackButton().addActionListener((e -> managerToSelection()));
+        view.getManagerBaseButton().addActionListener((e -> {
+            try {
+                updateManagerBudget();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }));
         view.getEmployeeProposalButton().addActionListener((e -> {
             try {
                 gotoProposalScreen();
@@ -120,6 +127,22 @@ public class GUIController {
             }
         }));
 
+
+    }
+
+    private void updateManagerBudget() throws Exception {
+        // todo error check for double only
+
+        float newBudget = Float.parseFloat(view.getManagerBaseTextField().getText());
+        view.getManagerBaseTextField().setText("");
+        String get_user_query = String.format("UPDATE `Manager` SET `TotalBudget` = '%f' WHERE `User_ID` = '%d';",
+                newBudget, model.getCurrUser().getUserID());
+        ConnectedDBConnection connection = new ConnectedDBConnection();
+        int user_results = connection.update(get_user_query);
+        if(user_results != 1) {
+            throw new Exception("No changes were made to database.");
+        }
+        showManagerScreen();
 
     }
 
