@@ -158,8 +158,13 @@ public class GUIView {
         registerRegisterButton = new JButton("Register");
         registerReturnButton = new JButton("Back");
         isManagerCheckBox = new JCheckBox("Check if Manager");
-        registerFirstTextField = new JTextField("First Name");
-        registerLastTextField = new JTextField("Last Name");
+        registerFirstTextField = new JTextField();
+        registerLastTextField = new JTextField();
+
+        TextPrompt firstNamePrompt = new TextPrompt("FirstName", registerFirstTextField);
+        firstNamePrompt.changeAlpha(.5f);
+        TextPrompt lastNamePrompt = new TextPrompt("LastName", registerLastTextField);
+        lastNamePrompt.changeAlpha(.5f);
 
         // Add UI element to frame
         GroupLayout registerLayout = new GroupLayout(registerFrame.getContentPane());
@@ -323,19 +328,31 @@ public class GUIView {
 
         // Create UI elements
         proposalLocationLabel = new JLabel("Location");
-        proposalLocationTextField = new JTextField("Ex: \"Austin, TX\"");
+        proposalLocationTextField = new JTextField();
         proposalStartLabel = new JLabel("Start Date");
-        proposalStartTextField = new JTextField("Ex: \"11/1/2021\"");
+        proposalStartTextField = new JTextField();
         proposalEndLabel = new JLabel("End Date");
-        proposalEndTextField = new JTextField("Ex: \"11/8/2021\"");
+        proposalEndTextField = new JTextField();
         proposalEstimateLabel = new JLabel("Expense Estimate");
-        proposalEstimateTextField = new JTextField("Ex: \"1250.75\"");
+        proposalEstimateTextField = new JTextField();
         proposalDescriptionLabel = new JLabel("Description");
-        proposalDescriptionTextField = new JTextField("Ex: Conference with Mr. Doe about Project X");
+        proposalDescriptionTextField = new JTextField();
         proposalBackButton = new JButton("Back");
         proposalSubmitButton = new JButton("Submit");
         String[] managerStrings = { };
         proposalManagerList = new JComboBox(managerStrings);
+
+        TextPrompt locPrompt = new TextPrompt("Ex: \"Austin, TX\"", proposalLocationTextField);
+        locPrompt.changeAlpha(.5f);
+        TextPrompt sPrompt = new TextPrompt("Ex: \"11/1/2021\"", proposalStartTextField);
+        sPrompt.changeAlpha(.5f);
+        TextPrompt ePrompt = new TextPrompt("Ex: \"11/8/2021\"", proposalEndTextField);
+        ePrompt.changeAlpha(.5f);
+        TextPrompt budPrompt = new TextPrompt("Ex: \"1250.75\"", proposalEstimateTextField);
+        budPrompt.changeAlpha(.5f);
+        TextPrompt descPrompt = new TextPrompt("Ex: Conference with Mr. Doe about Project X", proposalDescriptionTextField);
+        descPrompt.changeAlpha(.5f);
+
 
         // Add UI element to frame
         GroupLayout proposalLayout = new GroupLayout(proposalFrame.getContentPane());
@@ -423,10 +440,13 @@ public class GUIView {
         reviewTextArea = new JTextArea();
         reviewTextArea.setEditable(false);
         reviewFeedbackLabel = new JLabel("Feedback:");
-        reviewFeedbackTextField = new JTextField("n/a");
+        reviewFeedbackTextField = new JTextField();
         reviewBackButton = new JButton("Back");
         reviewApproveButton = new JButton("Approve");
         reviewRejectButton = new JButton("Reject");
+
+        TextPrompt feedbackPrompt = new TextPrompt("Ex: Budget too high.", reviewFeedbackTextField);
+        feedbackPrompt.changeAlpha(.5f);
 
         // Add UI element to frame
         GroupLayout reviewLayout = new GroupLayout(reviewFrame.getContentPane());

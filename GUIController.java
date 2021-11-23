@@ -66,7 +66,13 @@ public class GUIController {
             }
         }));
         view.getEmployeeLogoutButton().addActionListener((e -> employeeLogout()));
-        view.getProposalBackButton().addActionListener((e -> proposalToEmployeeScreen()));
+        view.getProposalBackButton().addActionListener((e -> {
+            try {
+                proposalToEmployeeScreen();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }));
         view.getProposalSubmitButton().addActionListener((e -> {
             try {
                 submitProposal();
@@ -75,9 +81,16 @@ public class GUIController {
             }
         }));
         view.getTripBackButton().addActionListener((e -> tripToEmployeeScreen()));
+        view.getEmployeeCancelPropButton().addActionListener((e -> cancelProposal()));
         view.getTripAddButton().addActionListener((e -> addItem()));
         view.getTripFinishButton().addActionListener((e -> finishTrip()));
-        view.getReviewBackButton().addActionListener((e -> reviewBack()));
+        view.getReviewBackButton().addActionListener((e -> {
+            try {
+                reviewBack();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }));
         view.getReviewApproveButton().addActionListener((e -> {
             try {
                 reviewApprove();
@@ -103,6 +116,13 @@ public class GUIController {
 
     }
 
+    private void cancelProposal() {
+        view.getEmployeeNoteLabel().setText("Proposal canceled.");
+        view.getEmployeeManagerNote().setText("Manager note: n/a");
+        
+
+    }
+
     private void selectProposal() throws Exception {
         String selected = view.getManagerPendingList().getSelectedValue();
         if(selected.equals("")){ // if nothing selected
@@ -111,7 +131,7 @@ public class GUIController {
 
         view.getManagerScreenFrame().setVisible(false);
         view.getReviewFrame().setVisible(true);
-        view.getReviewFeedbackTextField().setText("n/a");
+        view.getReviewFeedbackTextField().setText("");
         selected = selected.substring(selected.indexOf(' ')+1);
         // fill in the text area with info from selected employee and trip
         int userID = Integer.parseInt(selected.substring(0, selected.indexOf(' ')));
@@ -176,8 +196,8 @@ public class GUIController {
 
     }
 
-    private void reviewBack() {
-        // todo
+    private void reviewBack() throws Exception {
+        showManagerScreen();
         view.getReviewFrame().setVisible(false);
         view.getManagerScreenFrame().setVisible(true);
     }
@@ -327,12 +347,12 @@ public class GUIController {
         String temp = view.getProposalManagerList().getSelectedItem().toString();
         int managerID = Integer.parseInt(temp.substring(temp.indexOf(',')+1));
         model.getCurrTrip().setManager(managerID);
-
         proposalToEmployeeScreen();
     }
 
 
-    private void proposalToEmployeeScreen() {
+    private void proposalToEmployeeScreen() throws Exception {
+        loginEmployee();
         view.getProposalFrame().setVisible(false);
         view.getEmployeeScreenFrame().setVisible(true);
     }
@@ -352,9 +372,15 @@ public class GUIController {
 
     private void gotoProposalScreen() throws Exception {
         view.getProposalManagerList().removeAllItems();
-
         view.getEmployeeScreenFrame().setVisible(false);
         view.getProposalFrame().setVisible(true);
+
+        //reset all textfields
+        view.getProposalLocationTextField().setText("");
+        view.getProposalStartTextField().setText("");
+        view.getProposalEndTextField().setText("");
+        view.getProposalEstimateTextField().setText("");
+        view.getProposalDescriptionTextField().setText("");
 
         // fill in the manager list
         String get_user_query = String.format("SELECT u.First_Name, u.Last_Name, m.Manager_ID FROM Users AS u NATURAL JOIN Manager AS m WHERE isManager = '%d';", 1);
@@ -450,18 +476,15 @@ public class GUIController {
         switch(model.getCurrTrip().getStatus()){
             case 3:
                 view.getEmployeeNoteLabel().setText("Trip approval pending.");
+                view.getEmployeeManagerNote().setText("Manager note: n/a");
                 break;
             case 2:
                 view.getEmployeeNoteLabel().setText("Your trip has been rejected; propose a new trip.");
-                //String get_user_query = String.format("SELECT `Note` FROM `Trip` WHERE `Trip_ID` = '%d';", model.getCurrTrip().getUserID());
-                //ConnectedDBConnection connection = new ConnectedDBConnection();
-                //ResultSet user_results = connection.select(get_user_query);
-                //user_results.next();
-                //String note = user_results.getString("Note");
-                //view.getEmployeeManagerNote().setText("Manager note: " + note);
+                view.getEmployeeManagerNote().setText("Manager note: " + model.getCurrTrip().getNote());
                 break;
             case 1:
                 view.getEmployeeNoteLabel().setText("Your trip has been approved.\nClick the trip tracker to record expenses.");
+                view.getEmployeeManagerNote().setText("Manager note: n/a");
                 break;
             default:
                 break;
@@ -492,9 +515,9 @@ public class GUIController {
     private void showManagerScreen() throws Exception {
         view.getManagerSelectionFrame().setVisible(false);
         view.getManagerScreenFrame().setVisible(true);
-        //TODO fill lists with appropriate names / info
-        // put every employee in EL
-        // all employee with pending and matching manager == USERNAME
+
+        //clear pending list
+        view.getPendingListModel().clear();
 
         // get manager ID using user ID
         String get_user_query = String.format("SELECT `Manager_ID` FROM `Manager` WHERE `User_ID` = '%d';", model.getCurrUser().getUserID());
