@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.regex.Matcher; 
 import java.util.regex.Pattern; 
 
-//Authenticates login with user-entered ID and password--Zachary Sedlacek
+//Authenticates login/registration with user-entered ID and password--Zachary Sedlacek
 public class Authenticator {
 
     String id, password;
@@ -39,6 +39,7 @@ public class Authenticator {
         return valid;
     }
     
+    //Checks that user's desired registration information is valid
     public boolean checkValidInput() {
     	   for (String cha : invalidChars) {
     	   	if (id.contains(cha)){
