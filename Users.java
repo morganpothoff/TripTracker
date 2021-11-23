@@ -87,7 +87,7 @@ public class Users {
 
             System.out.println(pulledID);
 
-            add_user_query = String.format("INSERT INTO `Manager` (User_ID) VALUES (%d);", pulledID);
+            add_user_query = String.format("INSERT INTO `Manager` (User_ID, TotalBudget) VALUES (%d, %f);", pulledID, 0.0);
             connection.insert(add_user_query);
 
             return true;
@@ -126,7 +126,7 @@ public class Users {
         return email;
     }//End of getEmail
     
-    public void setPassword(String newPassword) throws Exception {
+    public void setPassword(String newPassword) {
          password = newPassword;  
     }//End of setPassword
     
