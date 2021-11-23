@@ -348,34 +348,42 @@ public class GUIController {
         String[] splitEDate = eDate.split("/");
         //Checks if sDate and eDate are length 3 (3 date fields) and checks if each field for sDate and eDate are integer or not
         if(!(splitSDate.length == 3 && isInteger(splitSDate[0]) && isInteger(splitSDate[1]) && isInteger(splitSDate[2])))	{
-        	view.getStartDateTextField().setText("Invalid date input");	
+        	view.getProposalStartTextField().setText("Invalid date input");
+        	return;
         }
         //Make sure month is between 1 and 12
         else if(!(Integer.parseInt(splitSDate[0]) >= 1 && Integer.parseInt(splitSDate[0]) <= 12)) {
-        	view.getStartDateTextField().setText("Invalid month input");
+        	view.getProposalStartTextField().setText("Invalid month input");
+            return;
         }
         //Make sure day is between 1 and 31
         else if(!(Integer.parseInt(splitSDate[1]) >= 1 && Integer.parseInt(splitSDate[1]) <= 31)) {
-        	view.getStartDateTextField().setText("Invalid day input");
+        	view.getProposalStartTextField().setText("Invalid day input");
+            return;
         }
         //Make sure year is at least 2021
         else if(!(Integer.parseInt(splitSDate[2]) >= 2021)) {
-        	view.getStartDateTextField().setText("Invalid year input");
+        	view.getProposalStartTextField().setText("Invalid year input");
+            return;
         }
         if(!(splitEDate.length == 3 && isInteger(splitEDate[0]) && isInteger(splitEDate[1]) && isInteger(splitEDate[2]))) {
-        	view.getEndDateTextField().setText("Invalid date input");
+        	view.getProposalEndTextField().setText("Invalid date input");
+            return;
         }
         //Make sure month is between 1 and 12
         else if(!(Integer.parseInt(splitEDate[0]) >= 1 && Integer.parseInt(splitEDate[0]) <= 12)) {
-        	view.getEndDateTextField().setText("Invalid month input");
+        	view.getProposalEndTextField().setText("Invalid month input");
+            return;
         }
         //Make sure day is between 1 and 31
         else if(!(Integer.parseInt(splitEDate[1]) >= 1 && Integer.parseInt(splitEDate[1]) <= 31)) {
-        	view.getEndDateTextField().setText("Invalid day input");
+        	view.getProposalEndTextField().setText("Invalid day input");
+            return;
         }
         //Make sure year is at least 2021
         else if(!(Integer.parseInt(splitEDate[2]) >= 2021)) {
-        	view.getEndDateTextField().setText("Invalid year input");
+        	view.getProposalEndTextField().setText("Invalid year input");
+            return;
         }
         
         
