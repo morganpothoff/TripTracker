@@ -2,6 +2,7 @@
 import javax.swing.*;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class GUIController {
     private GUIModel model;
@@ -414,8 +415,17 @@ public class GUIController {
             return;
         }
 
-        // todo get trip data and add all expenses to the trip list
+        try {
+            ArrayList<Expense> expenses_for_trip = Expense.all_expenses_for_trip(model.getCurrTrip().getTripID());  // Get the list of expenses for a trip
 
+            for(int i = 0; i < expenses_for_trip.size(); i++) {  // Loop through expenses
+                Expense expense = expenses_for_trip.get(i);  // Get expense for current index
+                view.getTripExpenseModel().addElement(expense.getExpenseName() + ' ' + expense.getCost());  // Display expense in GUI
+            }
+        }
+        catch(Exception e) {
+            System.out.println(e.toString());
+        }
 
         view.getEmployeeScreenFrame().setVisible(false);
         view.getTripFrame().setVisible(true);
