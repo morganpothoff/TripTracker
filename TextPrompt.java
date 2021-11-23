@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.*;
 import javax.swing.text.*;
-
+// source: https://tips4java.wordpress.com/2009/11/29/text-prompt/
 /**
  *  The TextPrompt class will display a prompt over top of a text component when
  *  the Document of the text field is empty. The Show property is used to
