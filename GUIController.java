@@ -588,12 +588,35 @@ public class GUIController {
 
         // update budget textarea
         float budget;
+        float totalEst = 0;
+        float totalFinished = 0;
         get_user_query = String.format("SELECT `TotalBudget` FROM `Manager` WHERE `User_ID` = '%d';", model.getCurrUser().getUserID());
         user_results = connection.select(get_user_query);
         user_results.next();
         budget = user_results.getFloat("TotalBudget");
 
-        view.getBudgetTextArea().setText("Total Budget: $" + budget);
+        get_user_query = String.format("SELECT `Set_Budget` FROM `Trip` WHERE `Status` = '%d' AND `Manager_ID` = '%d';", 1, managerID);
+        user_results = connection.select(get_user_query);
+        while(user_results.next() == true){
+            totalEst += user_results.getFloat("Set_Budget");
+        }
+
+        String get_trip_query = String.format("SELECT `Trip_ID` FROM `Trip` WHERE `Completed` = '%d' AND `Manager_ID` = '%d';", 1, managerID);
+        ResultSet trip_results = connection.select(get_trip_query);
+        while(trip_results.next() == true){
+            int tripID = trip_results.getInt("Trip_ID");
+            String get_expense_query = String.format("SELECT `Cost` FROM `Expenses` WHERE `Trip_ID` = '%d';", tripID);
+            ResultSet expense_results = connection.select(get_expense_query);
+            while(expense_results.next() == true){
+                totalFinished += expense_results.getFloat("Cost");
+            }
+        }
+        float sub = budget - totalEst - totalFinished;
+
+        view.getBudgetTextArea().setText(String.format("Total Budget:\t\t%f\nTotal Trip Estimates:\t%f\nFinished Trip Costs:\t%f" +
+                "\nTotal - Est - Costs = \t%f", budget, totalEst, totalFinished, sub));
+
+        // total
 
     }
 
