@@ -206,8 +206,10 @@ public class GUIController {
         Authenticator auth = new Authenticator(UserName, pass);
         try {
             boolean validChecker = auth.checkValidInput();
-            System.out.println(validChecker);      
-              
+                
+            if (!validChecker){
+            	throw new Exception("Invalid information--Refer to ID/Password rules in readMe");
+            }
             if(Users.username_exists(UserName)) {
                 throw new Exception("Invalid ID - already exists");
             }
