@@ -1,4 +1,6 @@
 // Chris Hutcherson
+import org.w3c.dom.Text;
+
 import java.awt.BorderLayout;
 import javax.swing.*;
 
@@ -399,11 +401,16 @@ public class GUIView {
         tripExpensesLabel = new JLabel("Expenses");
         tripItemLabel = new JLabel("Item");
         tripCostLabel = new JLabel("Cost");
-        tripItemTextField = new JTextField("Ex: \"Coffee,Starbucks,Austin\"");
-        tripCostTextField = new JTextField("Ex: \"5.89\"");
+        tripItemTextField = new JTextField("");
+        tripCostTextField = new JTextField("");
         tripAddButton = new JButton("Add");
         tripBackButton = new JButton("Back");
         tripFinishButton = new JButton("Finish");
+
+        TextPrompt infoPrompt = new TextPrompt("Ex: \"Coffee,Starbucks,Austin\"", tripItemTextField);
+        TextPrompt costPrompt = new TextPrompt("Ex: \"5.89\"", tripCostTextField);
+        infoPrompt.changeAlpha(.5f);
+        costPrompt.changeAlpha(.5f);
 
         tripExpenseList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tripExpenseList.setSelectedIndex(0);

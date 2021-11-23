@@ -149,6 +149,11 @@ public class GUIController {
     }
 
     private void cancelProposal() throws Exception {
+        // do not allow cancellation if trip already approved
+        if(model.getCurrTrip().getStatus() == 1){
+            view.getEmployeeManagerNote().setText("Your trip is already approved - cannot cancel proposal.");
+            return;
+        }
         view.getEmployeeNoteLabel().setText("Proposal canceled.");
         view.getEmployeeManagerNote().setText("Manager note: n/a");
         model.getCurrTrip().setStatus(2);
@@ -456,6 +461,12 @@ public class GUIController {
     }
 
     private void gotoProposalScreen() throws Exception {
+
+        // only switch screens if current trip is not approved
+        if(model.getCurrTrip().getStatus() == 1){
+            view.getEmployeeManagerNote().setText("Your trip is already approved - cannot make new proposal.");
+            return;
+        }
         view.getProposalManagerList().removeAllItems();
         view.getEmployeeScreenFrame().setVisible(false);
         view.getProposalFrame().setVisible(true);
