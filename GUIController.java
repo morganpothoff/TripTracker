@@ -208,7 +208,7 @@ public class GUIController {
             boolean validChecker = auth.checkValidInput();
                 
             if (!validChecker){
-            	throw new Exception("Invalid information--Refer to ID/Password rules in readMe");
+            	throw new Exception("Invalid information--Refer to ID/Password rules in README");
             }
             if(Users.username_exists(UserName)) {
                 throw new Exception("Invalid ID - already exists");
@@ -236,7 +236,7 @@ public class GUIController {
             }
         }
         catch(Exception e) {
-            view.getRegisterIdTextField().setText("Invalid ID - already exists");
+            view.getRegisterIdTextField().setText(e.getMessage());
         }
     }
 
