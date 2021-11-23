@@ -81,7 +81,13 @@ public class GUIController {
             }
         }));
         view.getTripBackButton().addActionListener((e -> tripToEmployeeScreen()));
-        view.getEmployeeCancelPropButton().addActionListener((e -> cancelProposal()));
+        view.getEmployeeCancelPropButton().addActionListener((e -> {
+            try {
+                cancelProposal();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }));
         view.getTripAddButton().addActionListener((e -> addItem()));
         view.getTripFinishButton().addActionListener((e -> finishTrip()));
         view.getReviewBackButton().addActionListener((e -> {
@@ -116,10 +122,11 @@ public class GUIController {
 
     }
 
-    private void cancelProposal() {
+    private void cancelProposal() throws Exception {
         view.getEmployeeNoteLabel().setText("Proposal canceled.");
         view.getEmployeeManagerNote().setText("Manager note: n/a");
-        
+        model.getCurrTrip().setStatus(2);
+        model.getCurrTrip().setNote("");
 
     }
 
