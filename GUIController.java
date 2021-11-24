@@ -97,7 +97,13 @@ public class GUIController {
             }
         }));
         view.getTripAddButton().addActionListener((e -> addItem()));
-        view.getTripFinishButton().addActionListener((e -> finishTrip()));
+        view.getTripFinishButton().addActionListener((e -> {
+            try {
+                finishTrip();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }));
         view.getReviewBackButton().addActionListener((e -> {
             try {
                 reviewBack();
@@ -304,8 +310,11 @@ public class GUIController {
         }
     }
 
-    private void finishTrip() {
+    private void finishTrip() throws Exception {
         // todo archive trip details
+        //Set current trip to complete and generate a new blank trip for user. (Both functions return boolean for error checking)
+        model.getCurrTrip().setCompletion(true);
+        model.getCurrTrip().newTrip(model.getCurrUser().getUserID(), 1);
         tripToEmployeeScreen();
     }
 
