@@ -214,15 +214,20 @@ public class GUIController {
         user_results = connection.select(get_user_query);
 
         while(user_results.next() == true){
-            String info = String.format("%s,%d", user_results.getString("End_Time"), user_results.getString("Trip_ID"));
+            String info = String.format("%s,%d", user_results.getString("End_Time"), user_results.getInt("Trip_ID"));
             finishedTrips.add(info);
         }
 
+        for(String e : finishedTrips)
+            System.out.println(e);
+        System.out.println("ugh");
+
+
         // check each element of arraylist, removing dates that are before the sDate
         for(int i = 0; i < finishedTrips.size(); i++){
-            int year = Integer.parseInt(finishedTrips.get(i).substring(6));
-            int month = Integer.parseInt(finishedTrips.get(i).substring(3,5));
-            int day = Integer.parseInt(finishedTrips.get(i).substring(0,2));
+            int year = Integer.parseInt(finishedTrips.get(i).substring(6,10));
+            int month = Integer.parseInt(finishedTrips.get(i).substring(0,2));
+            int day = Integer.parseInt(finishedTrips.get(i).substring(3,5));
 
             // check that date comes AFTER the START date
             if(year < Integer.parseInt(splitSDate[2])){
@@ -231,13 +236,13 @@ public class GUIController {
                 break;
             }
             else if(year == Integer.parseInt(splitSDate[2])){ // same year, must check months
-                if(month < Integer.parseInt(splitSDate[1])){
+                if(month < Integer.parseInt(splitSDate[0])){
                     finishedTrips.remove(i);
                     i--;
                     break;
                 }
-                else if(month == Integer.parseInt(splitSDate[1])){ // same month, must check days
-                    if(day < Integer.parseInt(splitSDate[0])){
+                else if(month == Integer.parseInt(splitSDate[0])){ // same month, must check days
+                    if(day < Integer.parseInt(splitSDate[1])){
                         finishedTrips.remove(i);
                         i--;
                         break;
@@ -253,13 +258,13 @@ public class GUIController {
                 break;
             }
             else if(year == Integer.parseInt(splitEDate[2])){ // same year, must check months
-                if(month > Integer.parseInt(splitEDate[1])){
+                if(month > Integer.parseInt(splitEDate[0])){
                     finishedTrips.remove(i);
                     i--;
                     break;
                 }
-                else if(month == Integer.parseInt(splitEDate[1])){ // same month, must check days
-                    if(day > Integer.parseInt(splitEDate[0])){
+                else if(month == Integer.parseInt(splitEDate[0])){ // same month, must check days
+                    if(day > Integer.parseInt(splitEDate[1])){
                         finishedTrips.remove(i);
                         i--;
                         break;
@@ -272,6 +277,9 @@ public class GUIController {
             finishedTrips.set(i, finishedTrips.get(i).substring(11));
         }
 
+        for(String e : finishedTrips)
+            System.out.println(e);
+        System.out.println("ugh");
 
         // create output file
         File output = new File("Report.txt");
@@ -283,7 +291,7 @@ public class GUIController {
         // for every element of finishedTrips, get the trip info and append to output file
         for(int i = 0; i < finishedTrips.size(); i++){
             int tripID = Integer.parseInt(finishedTrips.get(i));
-            get_user_query = String.format("SELECT `User_ID`, `Set_Budget`, `Start_Date`, `End_Time`, `Location`, `Description`, `TotalExpenses` FROM `Trip` WHERE `Trip_ID` = '%d';", tripID);
+            get_user_query = String.format("SELECT `User_ID`, `Set_Budget`, `Start_Date`, `End_Time`, `Location`, `MyDescription`, `TotalExpenses` FROM `Trip` WHERE `Trip_ID` = '%d';", tripID);
             connection = new ConnectedDBConnection();
             user_results = connection.select(get_user_query);
             user_results.next();
@@ -295,16 +303,16 @@ public class GUIController {
             String name = String.format("%s %s", name_results.getString("First_Name"), name_results.getString("Last_Name"));
 
             String allInfo = String.format("%s\n\tTravel Dates: %s - %s\n\tLocation: %s\n\tCost Estimate: $%.2f\n\tDescription: %s\n\tTotal Expenses: $%.2f\n\n\tExpenses:",
-                    user_results.getString("Start_Date"), user_results.getString("End_Time"),
-                    user_results.getString("Location"), user_results.getString("Set_Budget"),
-                    user_results.getString("Description"), user_results.getString("TotalExpenses"));
+                    name, user_results.getString("Start_Date"), user_results.getString("End_Time"),
+                    user_results.getString("Location"), user_results.getFloat("Set_Budget"),
+                    user_results.getString("MyDescription"), user_results.getFloat("TotalExpenses"));
 
             // get every expense from the trip
-            String expense_query = String.format("SELECT `Purchase`, `Cost` FROM `Expenses` WHERE `Trip_ID` = '%d';", tripID);
+            String expense_query = String.format("SELECT `ExpenseName`, `Cost` FROM `Expenses` WHERE `Trip_ID` = '%d';", tripID);
             ResultSet expense_results = connection.select(expense_query);
 
             while(expense_results.next() == true){
-                String expenseString = String.format("%s, $%.2f", expense_results.getString("Purchase"), user_results.getString("Cost"));
+                String expenseString = String.format("%s, $%.2f", expense_results.getString("ExpenseName"), expense_results.getFloat("Cost"));
                 allInfo = allInfo + "\n\t\t" + expenseString;
             }
 
