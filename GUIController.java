@@ -1,5 +1,7 @@
 // Chris Hutcherson
 import javax.swing.*;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -131,6 +133,13 @@ public class GUIController {
                 exception.printStackTrace();
             }
         }));
+        view.getGenerateReportButton().addActionListener((e -> {
+            try {
+                generateReport();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }));
         view.getManagerSelectProposalButton().addActionListener((e -> {
             try {
                 selectProposal();
@@ -138,6 +147,175 @@ public class GUIController {
                 exception.printStackTrace();
             }
         }));
+
+
+    }
+
+    private void generateReport() throws Exception {
+        // validate date fields
+        String sDate = view.getStartDateTextField().getText();
+        String eDate = view.getEndDateTextField().getText();
+        //Split for sDate and eDate
+        String[] splitSDate = sDate.split("/");             // 0 = mm, 1 = dd, 2 = yyyy
+        String[] splitEDate = eDate.split("/");
+        //Checks if sDate and eDate are length 3 (3 date fields) and checks if each field for sDate and eDate are integer or not
+        if(!(splitSDate.length == 3 && isInteger(splitSDate[0]) && isInteger(splitSDate[1]) && isInteger(splitSDate[2])))	{
+            view.getStartDateTextField().setText("Invalid date input");
+            return;
+        }
+        //Make sure month is between 1 and 12
+        else if(!(Integer.parseInt(splitSDate[0]) >= 1 && Integer.parseInt(splitSDate[0]) <= 12)) {
+            view.getStartDateTextField().setText("Invalid month input");
+            return;
+        }
+        //Make sure day is between 1 and 31
+        else if(!(Integer.parseInt(splitSDate[1]) >= 1 && Integer.parseInt(splitSDate[1]) <= 31)) {
+            view.getStartDateTextField().setText("Invalid day input");
+            return;
+        }
+        //Make sure year is at least 2021
+        else if(!(Integer.parseInt(splitSDate[2]) >= 2021)) {
+            view.getStartDateTextField().setText("Invalid year input");
+            return;
+        }
+        if(!(splitEDate.length == 3 && isInteger(splitEDate[0]) && isInteger(splitEDate[1]) && isInteger(splitEDate[2]))) {
+            view.getEndDateTextField().setText("Invalid date input");
+            return;
+        }
+        //Make sure month is between 1 and 12
+        else if(!(Integer.parseInt(splitEDate[0]) >= 1 && Integer.parseInt(splitEDate[0]) <= 12)) {
+            view.getEndDateTextField().setText("Invalid month input");
+            return;
+        }
+        //Make sure day is between 1 and 31
+        else if(!(Integer.parseInt(splitEDate[1]) >= 1 && Integer.parseInt(splitEDate[1]) <= 31)) {
+            view.getEndDateTextField().setText("Invalid day input");
+            return;
+        }
+        //Make sure year is at least 2021
+        else if(!(Integer.parseInt(splitEDate[2]) >= 2021)) {
+            view.getEndDateTextField().setText("Invalid year input");
+            return;
+        }
+
+        // make 2d array to store strings in
+        ArrayList<String> finishedTrips = new ArrayList<>();
+
+        int managerID = 0;
+        String get_user_query = String.format("SELECT `Manager_ID` FROM `Manager` WHERE `User_ID` = '%d';", model.getCurrUser().getUserID());
+        ConnectedDBConnection connection = new ConnectedDBConnection();
+        ResultSet user_results = connection.select(get_user_query);
+        user_results.next();
+        managerID = user_results.getInt("Manager_ID");
+
+
+        get_user_query = String.format("SELECT `Trip_ID`, `End_Time` FROM `Trip` WHERE `Completed` = '%d' AND `Manager_ID` = '%d';", 1, managerID);
+        connection = new ConnectedDBConnection();
+        user_results = connection.select(get_user_query);
+
+        while(user_results.next() == true){
+            String info = String.format("%s,%d", user_results.getString("End_Time"), user_results.getString("Trip_ID"));
+            finishedTrips.add(info);
+        }
+
+        // check each element of arraylist, removing dates that are before the sDate
+        for(int i = 0; i < finishedTrips.size(); i++){
+            int year = Integer.parseInt(finishedTrips.get(i).substring(6));
+            int month = Integer.parseInt(finishedTrips.get(i).substring(3,5));
+            int day = Integer.parseInt(finishedTrips.get(i).substring(0,2));
+
+            // check that date comes AFTER the START date
+            if(year < Integer.parseInt(splitSDate[2])){
+                finishedTrips.remove(i);
+                i--;
+                break;
+            }
+            else if(year == Integer.parseInt(splitSDate[2])){ // same year, must check months
+                if(month < Integer.parseInt(splitSDate[1])){
+                    finishedTrips.remove(i);
+                    i--;
+                    break;
+                }
+                else if(month == Integer.parseInt(splitSDate[1])){ // same month, must check days
+                    if(day < Integer.parseInt(splitSDate[0])){
+                        finishedTrips.remove(i);
+                        i--;
+                        break;
+                    }
+                    // else the date is either = start or after
+                }
+            }
+
+            // check that date comes BEFORE the END date
+            if(year > Integer.parseInt(splitEDate[2])){
+                finishedTrips.remove(i);
+                i--;
+                break;
+            }
+            else if(year == Integer.parseInt(splitEDate[2])){ // same year, must check months
+                if(month > Integer.parseInt(splitEDate[1])){
+                    finishedTrips.remove(i);
+                    i--;
+                    break;
+                }
+                else if(month == Integer.parseInt(splitEDate[1])){ // same month, must check days
+                    if(day > Integer.parseInt(splitEDate[0])){
+                        finishedTrips.remove(i);
+                        i--;
+                        break;
+                    }
+                    // else the date is either = end or before, good date to keep
+                }
+            }
+
+            // good trip, change element to only contain trip ID
+            finishedTrips.set(i, finishedTrips.get(i).substring(11));
+        }
+
+
+        // create output file
+        File output = new File("Report.txt");
+        output.createNewFile();
+        // create writer
+        FileWriter writer = new FileWriter("Report.txt");
+
+        // finishedTrips now only contains string tripID of good trips
+        // for every element of finishedTrips, get the trip info and append to output file
+        for(int i = 0; i < finishedTrips.size(); i++){
+            int tripID = Integer.parseInt(finishedTrips.get(i));
+            get_user_query = String.format("SELECT `User_ID`, `Set_Budget`, `Start_Date`, `End_Time`, `Location`, `Description`, `TotalExpenses` FROM `Trip` WHERE `Trip_ID` = '%d';", tripID);
+            connection = new ConnectedDBConnection();
+            user_results = connection.select(get_user_query);
+            user_results.next();
+
+            int userID = user_results.getInt("User_ID"); // use this to get the employee's name
+            String name_query = String.format("SELECT `First_Name`, `Last_Name` FROM `Users` WHERE `User_ID` = '%d';", userID);
+            ResultSet name_results = connection.select(name_query);
+            name_results.next();
+            String name = String.format("%s %s", name_results.getString("First_Name"), name_results.getString("Last_Name"));
+
+            String allInfo = String.format("%s\n\tTravel Dates: %s - %s\n\tLocation: %s\n\tCost Estimate: $%.2f\n\tDescription: %s\n\tTotal Expenses: $%.2f\n\n\tExpenses:",
+                    user_results.getString("Start_Date"), user_results.getString("End_Time"),
+                    user_results.getString("Location"), user_results.getString("Set_Budget"),
+                    user_results.getString("Description"), user_results.getString("TotalExpenses"));
+
+            // get every expense from the trip
+            String expense_query = String.format("SELECT `Purchase`, `Cost` FROM `Expenses` WHERE `Trip_ID` = '%d';", tripID);
+            ResultSet expense_results = connection.select(expense_query);
+
+            while(expense_results.next() == true){
+                String expenseString = String.format("%s, $%.2f", expense_results.getString("Purchase"), user_results.getString("Cost"));
+                allInfo = allInfo + "\n\t\t" + expenseString;
+            }
+
+            allInfo = allInfo + "\n\n-------------------------------------------------------\n\n";
+
+            // append allInfo to outputFile
+            writer.write(allInfo);
+
+        }
+
+        writer.close();
 
 
     }
