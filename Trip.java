@@ -44,33 +44,9 @@ public class Trip {
 	
 	//Generating a singular trip tied to user, linked to fake manager
 	Trip(int userID, int managerID) throws Exception {
-	try {
-            String form =   "INSERT INTO `Trip` (User_ID, Manager_ID, Set_Budget, MyDescription, Start_Date, End_Time, Location, Completed, Status, Note)"
-                            + "VALUES ('%d', '%d', '%f', '%s', '%s', '%s', '%s', '%d', '%d', '%s');";
-            String add_trip_query =  String.format(form, userID, managerID, 0.00, "TBD", "00/00/0000", "00/00/0000", "TBD", 0, 2, "TBD");
-
-            ConnectedDBConnection connection = new ConnectedDBConnection();
-            connection.insert(add_trip_query);
-		
-		String get_user_query = String.format("SELECT Trip_ID FROM `Trip` WHERE `User_ID` = %d;", userID);
-    		ResultSet trip_results = connection.select(get_user_query);
-    		trip_results.next();
-    		
-            this.userID = userID;
-            this.managerID = managerID;
-            myDescription = "TBD";
-        	tripID = trip_results.getInt("Trip_ID");
-        	setBudget = (float) 0.00;
-        	start_Date = "00/00/0000";
-        	end_date = "00/00/0000";;
-        	location = "TBD";
-        	completed = false;	
-        	status = 3;
-		note = "TBD";
-        	}
-        catch(Exception error) {
-            System.out.println(error.toString());
-        	}
+		if(!newTrip(userID, managerID))	{
+			throw new Exception("New trip was not created in overloaded constructor");
+		}
 	}
 	
 
@@ -270,4 +246,36 @@ public class Trip {
 		return retVal;
 	}//End of setNote
 
+	public boolean newTrip(int userID, int managerID)	throws Exception{
+		try {
+			String form =   "INSERT INTO `Trip` (User_ID, Manager_ID, Set_Budget, MyDescription, Start_Date, End_Time, Location, Completed, Status, Note)"
+					+ "VALUES ('%d', '%d', '%f', '%s', '%s', '%s', '%s', '%d', '%d', '%s');";
+			String add_trip_query =  String.format(form, userID, managerID, 0.00, "TBD", "00/00/0000", "00/00/0000", "TBD", 0, 2, "TBD");
+
+			ConnectedDBConnection connection = new ConnectedDBConnection();
+			connection.insert(add_trip_query);
+
+			String get_user_query = String.format("SELECT Trip_ID FROM `Trip` WHERE `User_ID` = %d;", userID);
+			ResultSet trip_results = connection.select(get_user_query);
+			if(!trip_results.next())	{
+				return false;
+			}
+
+			this.userID = userID;
+			this.managerID = managerID;
+			myDescription = "TBD";
+			tripID = trip_results.getInt("Trip_ID");
+			setBudget = (float) 0.00;
+			start_Date = "00/00/0000";
+			end_date = "00/00/0000";;
+			location = "TBD";
+			completed = false;
+			status = 3;
+			note = "TBD";
+		}
+		catch(Exception error) {
+			System.out.println(error.toString());
+		}
+		return true;
+	}//End of newTrip
 }//End of Trip
