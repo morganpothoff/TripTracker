@@ -88,7 +88,13 @@ public class GUIController {
                 exception.printStackTrace();
             }
         }));
-        view.getTripBackButton().addActionListener((e -> tripToEmployeeScreen()));
+        view.getTripBackButton().addActionListener((e -> {
+            try {
+                tripToEmployeeScreen();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }));
         view.getEmployeeCancelPropButton().addActionListener((e -> {
             try {
                 cancelProposal();
@@ -311,11 +317,13 @@ public class GUIController {
     }
 
     private void finishTrip() throws Exception {
-        // todo archive trip details
+
         //Set current trip to complete and generate a new blank trip for user. (Both functions return boolean for error checking)
         model.getCurrTrip().setCompletion(true);
         model.getCurrTrip().newTrip(model.getCurrUser().getUserID(), 1);
         tripToEmployeeScreen();
+
+
     }
 
     /**
@@ -362,9 +370,10 @@ public class GUIController {
     /**
      * switch frames from trip manager to employee main menu
      */
-    private void tripToEmployeeScreen() {
+    private void tripToEmployeeScreen() throws Exception {
         view.getTripFrame().setVisible(false);
         view.getEmployeeScreenFrame().setVisible(true);
+        loginEmployee();
     }
 
     /**
