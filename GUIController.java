@@ -844,7 +844,7 @@ public class GUIController {
             totalEst += user_results.getFloat("Set_Budget");
         }
 
-        String get_trip_query = String.format("SELECT `Trip_ID` FROM `Trip` WHERE `Completed` = '%d' AND `Manager_ID` = '%d' AND `Completed` = '%s';", 1, managerID, "false");
+        String get_trip_query = String.format("SELECT `Trip_ID` FROM `Trip` WHERE `Completed` = '%d' AND `Manager_ID` = '%d';", 1, managerID);
         ResultSet trip_results = connection.select(get_trip_query);
         while(trip_results.next() == true){
             int tripID = trip_results.getInt("Trip_ID");
