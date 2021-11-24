@@ -40,7 +40,7 @@ public class Trip {
 		completed = trip_results.getBoolean("Completed");
 		status = trip_results.getInt("Status");
 		note = trip_results.getString("Note");
-		totalExpenses = trip_results.getFloat("TotalExpenses")
+		totalExpenses = trip_results.getFloat("TotalExpenses");
     	
 	}
 	
