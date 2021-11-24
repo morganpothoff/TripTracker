@@ -14,6 +14,7 @@ public class Trip {
 	protected int userID;
 	protected int managerID;
 	protected String note;
+	protected float totalExpenses;
 
 
 
@@ -39,6 +40,7 @@ public class Trip {
 		completed = trip_results.getBoolean("Completed");
 		status = trip_results.getInt("Status");
 		note = trip_results.getString("Note");
+		totalExpenses = trip_results.getFloat("TotalExpenses");
     	
 	}
 	
@@ -97,6 +99,8 @@ public class Trip {
 	public String getNote() {
 		return note;
 	}//End of getNote
+
+	public float getTotalExpenses()	{return totalExpenses;}//End of totalExpenses
 	
 	public boolean setDescription(String newDescription) throws Exception{
 		boolean retVal = false;
@@ -246,11 +250,27 @@ public class Trip {
 		return retVal;
 	}//End of setNote
 
+	public boolean addExpense(float expense) throws Exception{
+		boolean retVal = false;
+		totalExpenses += expense;
+		//Update database
+		String get_user_query = String.format("UPDATE `Trip` SET `TotalExpenses` = '%f' WHERE `Trip_ID` = '%d';", getTotalExpenses(), getTripID());
+		ConnectedDBConnection connection = new ConnectedDBConnection();
+		int user_results = connection.update(get_user_query);
+		if(user_results == 1) {
+			retVal = true;
+		}
+		else {
+			throw new Exception("No changes were made to database.");
+		}
+		return retVal;
+	}//End of addExpense
+
 	public boolean newTrip(int userID, int managerID)	throws Exception{
 		try {
-			String form =   "INSERT INTO `Trip` (User_ID, Manager_ID, Set_Budget, MyDescription, Start_Date, End_Time, Location, Completed, Status, Note)"
+			String form =   "INSERT INTO `Trip` (User_ID, Manager_ID, Set_Budget, MyDescription, Start_Date, End_Time, Location, Completed, Status, Note, TotalExpenses)"
 					+ "VALUES ('%d', '%d', '%f', '%s', '%s', '%s', '%s', '%d', '%d', '%s');";
-			String add_trip_query =  String.format(form, userID, managerID, 0.00, "TBD", "00/00/0000", "00/00/0000", "TBD", 0, 2, "TBD");
+			String add_trip_query =  String.format(form, userID, managerID, 0.00, "TBD", "00/00/0000", "00/00/0000", "TBD", 0, 2, "TBD", 0.0);
 
 			ConnectedDBConnection connection = new ConnectedDBConnection();
 			connection.insert(add_trip_query);
@@ -272,6 +292,7 @@ public class Trip {
 			completed = false;
 			status = 3;
 			note = "TBD";
+			totalExpenses = (float)0.0;
 		}
 		catch(Exception error) {
 			System.out.println(error.toString());
