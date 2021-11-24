@@ -19,7 +19,7 @@ public class Trip {
 
 	//Constructor
 	Trip(int userID) throws Exception {
-		String get_user_query = String.format("SELECT * FROM `Trip` WHERE `User_ID` = %d, AND `Completed` = %d;", userID, 0);
+		String get_user_query = String.format("SELECT * FROM `Trip` WHERE `User_ID` = '%d' AND `Completed` = '%d';", userID, 0);
        	ConnectedDBConnection connection = new ConnectedDBConnection();
 		ResultSet trip_results = connection.select(get_user_query);
 	    
