@@ -269,7 +269,7 @@ public class Trip {
 	public boolean newTrip(int userID, int managerID)	throws Exception{
 		try {
 			String form =   "INSERT INTO `Trip` (User_ID, Manager_ID, Set_Budget, MyDescription, Start_Date, End_Time, Location, Completed, Status, Note, TotalExpenses)"
-					+ "VALUES ('%d', '%d', '%f', '%s', '%s', '%s', '%s', '%d', '%d', '%s');";
+					+ "VALUES ('%d', '%d', '%f', '%s', '%s', '%s', '%s', '%d', '%d', '%s', '%f');";
 			String add_trip_query =  String.format(form, userID, managerID, 0.00, "TBD", "00/00/0000", "00/00/0000", "TBD", 0, 2, "TBD", 0.0);
 
 			ConnectedDBConnection connection = new ConnectedDBConnection();
