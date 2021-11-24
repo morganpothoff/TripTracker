@@ -230,7 +230,7 @@ public class GUIView {
         employeeScreenFrame = new JFrame("Employee Menu");
         employeeScreenFrame.getContentPane().setLayout(new BorderLayout());
         employeeScreenFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        employeeScreenFrame.setSize(500, 350);
+        employeeScreenFrame.setSize(800, 350);
         employeeScreenFrame.setLocationRelativeTo(null);
         employeeScreenFrame.setVisible(false);
 
@@ -290,7 +290,7 @@ public class GUIView {
         basePrompt.changeAlpha(.5f);
         TextPrompt managerStartPrompt = new TextPrompt("StartDate - Ex: mm/dd/yyyy", startDateTextField);
         managerStartPrompt.changeAlpha(.5f);
-        TextPrompt managerEndPrompt = new TextPrompt("New Budget - Ex: mm/dd/yyyy", endDateTextField);
+        TextPrompt managerEndPrompt = new TextPrompt("EndDate - Ex: mm/dd/yyyy", endDateTextField);
         managerEndPrompt.changeAlpha(.5f);
 
 

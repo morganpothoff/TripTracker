@@ -332,7 +332,8 @@ public class GUIController {
 
         float newBudget = 0;
         try {newBudget = Float.parseFloat(view.getManagerBaseTextField().getText());}
-        catch (NumberFormatException e){view.getManagerBaseTextField().setText("Invalid input - float values only");}
+        catch (NumberFormatException e){view.getManagerBaseTextField().setText("Invalid input - float values only");
+        return;}
 
         view.getManagerBaseTextField().setText("");
         String get_user_query = String.format("UPDATE `Manager` SET `TotalBudget` = '%f' WHERE `User_ID` = '%d';",
@@ -507,6 +508,7 @@ public class GUIController {
         //Set current trip to complete and generate a new blank trip for user. (Both functions return boolean for error checking)
         model.getCurrTrip().setCompletion(true);
         model.getCurrTrip().newTrip(model.getCurrUser().getUserID(), 1);
+        model.setCurrTrip(new Trip(model.getCurrUser().getUserID()));
         tripToEmployeeScreen();
 
 
@@ -523,12 +525,16 @@ public class GUIController {
                 cost = Double.parseDouble(view.getTripCostTextField().getText());
             }
             catch(NumberFormatException e){
+                view.getTripCostTextField().setText("Invalid cost - doubles only");
                 return;
             }
             String tempInput = view.getTripItemTextField().getText();       // get text and parse ex: "Item,StarBucks,Austin"
             String[] tokens = tempInput.split(",");
-            if(tokens.length != 3)
+            if(tokens.length != 3){
+                view.getTripItemTextField().setText("Invalid entry - check format");
                 return;
+
+            }
 
             String name = tokens[0];   // following lines parse the input string
             String company = tokens[1];
@@ -761,7 +767,8 @@ public class GUIController {
         view.getRegisterIdTextField().setText("");
         view.getRegisterPasswordTextField().setText("");
         view.getRegisterEmailTextField().setText("");
-
+        view.getRegisterFirstTextField().setText("");
+        view.getRegisterLastTextField().setText("");
         view.getLoginFrame().setVisible(true);
         view.getRegisterFrame().setVisible(false);
 
