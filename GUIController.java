@@ -838,7 +838,7 @@ public class GUIController {
         user_results.next();
         budget = user_results.getFloat("TotalBudget");
 
-        get_user_query = String.format("SELECT `Set_Budget` FROM `Trip` WHERE `Status` = '%d' AND `Manager_ID` = '%d' AND `Completed` = '%s';", 1, managerID, 0);
+        get_user_query = String.format("SELECT `Set_Budget` FROM `Trip` WHERE `Status` = '%d' AND `Manager_ID` = '%d' AND `Completed` = '%d';", 1, managerID, 0);
         user_results = connection.select(get_user_query);
         while(user_results.next() == true){
             totalEst += user_results.getFloat("Set_Budget");
