@@ -658,13 +658,13 @@ public class GUIController {
         user_results.next();
         budget = user_results.getFloat("TotalBudget");
 
-        get_user_query = String.format("SELECT `Set_Budget` FROM `Trip` WHERE `Status` = '%d' AND `Manager_ID` = '%d';", 1, managerID);
+        get_user_query = String.format("SELECT `Set_Budget` FROM `Trip` WHERE `Status` = '%d' AND `Manager_ID` = '%d' AND `Completed` = '%d';", 1, managerID, 0);
         user_results = connection.select(get_user_query);
         while(user_results.next() == true){
             totalEst += user_results.getFloat("Set_Budget");
         }
 
-        String get_trip_query = String.format("SELECT `Trip_ID` FROM `Trip` WHERE `Completed` = '%d' AND `Manager_ID` = '%d';", 1, managerID);
+        String get_trip_query = String.format("SELECT `Trip_ID` FROM `Trip` WHERE `Completed` = '%d' AND `Manager_ID` = '%d' AND `Completed` = '%d';", 1, managerID, 0);
         ResultSet trip_results = connection.select(get_trip_query);
         while(trip_results.next() == true){
             int tripID = trip_results.getInt("Trip_ID");
