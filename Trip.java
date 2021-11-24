@@ -20,7 +20,7 @@ public class Trip {
 
 	//Constructor
 	Trip(int userID) throws Exception {
-		String get_user_query = String.format("SELECT * FROM `Trip` WHERE `User_ID` = %d AND `Completed` = %d;", userID, 0);
+		String get_user_query = String.format("SELECT * FROM `Trip` WHERE `User_ID` = %d AND `Completed` = %s;", userID, "false");
        	ConnectedDBConnection connection = new ConnectedDBConnection();
 		ResultSet trip_results = connection.select(get_user_query);
 	    
@@ -275,7 +275,7 @@ public class Trip {
 			ConnectedDBConnection connection = new ConnectedDBConnection();
 			connection.insert(add_trip_query);
 
-			String get_user_query = String.format("SELECT Trip_ID FROM `Trip` WHERE `User_ID` = %d; AND `Completed` = %d", userID, 0);
+			String get_user_query = String.format("SELECT Trip_ID FROM `Trip` WHERE `User_ID` = %d; AND `Completed` = %s", userID, "false");
 			ResultSet trip_results = connection.select(get_user_query);
 			if(!trip_results.next())	{
 				return false;
