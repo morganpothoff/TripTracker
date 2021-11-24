@@ -20,13 +20,13 @@ public class Trip {
 
 	//Constructor
 	Trip(int userID) throws Exception {
-		String get_user_query = String.format("SELECT * FROM `Trip` WHERE `User_ID` = '%d' AND `Completed` = '%d';", userID, 0);
+		String get_user_query = String.format("SELECT * FROM `Trip` WHERE `User_ID` = %d AND `Completed` = %d;", userID, 0);
        	ConnectedDBConnection connection = new ConnectedDBConnection();
 		ResultSet trip_results = connection.select(get_user_query);
 	    
 	    // Check that atleast 1 row is returned
     	if(!trip_results.next()) {
-    		// throw new Exception("No user results found for trip ID");
+    		throw new Exception("No user results found for trip ID");
     	}
 
 		userID = trip_results.getInt("User_ID");

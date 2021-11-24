@@ -534,6 +534,8 @@ public class GUIController {
                 view.getTripCostTextField().setText("");
                 view.getTripExpenseModel().addElement(name + ' ' + cost);
 
+                model.getCurrTrip().addExpense((float)cost);
+
                 System.out.println("Successfully added Expense");
             }
             else {
