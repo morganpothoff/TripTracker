@@ -334,6 +334,10 @@ public class GUIController {
         try {newBudget = Float.parseFloat(view.getManagerBaseTextField().getText());}
         catch (NumberFormatException e){view.getManagerBaseTextField().setText("Invalid input - float values only");
         return;}
+        if(newBudget <= 0){
+            view.getManagerBaseTextField().setText("Invalid input - enter positive float");
+            return;
+        }
 
         view.getManagerBaseTextField().setText("");
         String get_user_query = String.format("UPDATE `Manager` SET `TotalBudget` = '%f' WHERE `User_ID` = '%d';",
@@ -580,7 +584,12 @@ public class GUIController {
         String eDate = view.getProposalEndTextField().getText();
         float budget = 0;
         try {budget = Float.parseFloat(view.getProposalEstimateTextField().getText());}
-        catch (NumberFormatException e){view.getProposalEstimateTextField().setText("please enter a double value");}
+        catch (NumberFormatException e){view.getProposalEstimateTextField().setText("please enter a double value");
+        return;}
+        if(budget <= 0){
+            view.getProposalEstimateTextField().setText("please enter a positive value");
+            return;
+        }
         String desc = view.getProposalDescriptionTextField().getText();
 
         //Split for sDate and eDate
