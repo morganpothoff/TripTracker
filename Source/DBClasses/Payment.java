@@ -4,9 +4,8 @@
 *   created by: Morgan Pothoff                                                                                         *
 *   on 2021.11.02                                                                                                      *
 *                                                                                                                      *
-*   DESCRIPTION: TEMPLATE                                                                                              *
-*   BUGS:                                                                                                              *
-*   FUTURE:                                                                                                            *
+*   DESCRIPTION: This file allows a user to add, edit, and delete a payment. It is not implemented, so functionality   *
+*    beyond its current state is limited.                                                                              *
 *                                                                                                                      *
 ***********************************************************************************************************************/
 
@@ -22,11 +21,14 @@ public class Payment {
 	private int User_ID;
 
 
+	// TODO: Constructor. Unused function. Will be implemented at a later time. 
 	Payment() {
 
 	}
 
 
+	// Adds a payment to the database using the connection insert method.
+	// Returns T/F depending upon its success.
 	public static Boolean add(int account_number, String payment_method, int Expense_ID, int User_ID) {
 		
 		try {
@@ -46,6 +48,8 @@ public class Payment {
 	}
 
 
+	// Allows the user to edit a payment using the objects.
+	// Returns T/F depending upon its success.
 	public Boolean edit(int account_number, String payment_method) {
 		this.account_number = account_number;
 		this.payment_method = payment_method;
@@ -67,6 +71,8 @@ public class Payment {
 	}
 
 
+	// Allows the user to edit a payment using specified expense.
+	// Returns T/F depending upon its success.
 	public static Boolean edit(int id, int account_number, String payment_method) {
 		try {
 			String form =	"UPDATE `Expenses` "
@@ -85,6 +91,8 @@ public class Payment {
 	}
 
 
+	// Deletes the payment using the primary key ID by calling the connection method update. 
+	// Returns T/F depending upon its success.
 	public static Boolean delete(int id) {
 		try {
 			String form = "DELETE FROM `Expenses` WHERE `Payment_ID` = %d;";

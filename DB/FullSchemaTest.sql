@@ -1,9 +1,9 @@
 
 
-DROP DATABASE `SEProjectTest`;
-CREATE DATABASE `SEProjectTest`;
+DROP DATABASE `UTD_DB`;
+CREATE DATABASE `UTD_DB`;
 
-USE `SEProjectTest`;
+USE `UTD_DB`;
 
 
 DROP TABLE IF EXISTS Users;
@@ -96,11 +96,11 @@ Create Table Messages(
 );
 
 
-INSERT INTO `Users` (`First_Name`, `Last_Name`, `Password`, `Email`) VALUES
-('Morgan', 'Pothoff', 'Guest', 'Morgan.Pothoff@aol.com');z
+INSERT INTO `Users` (`First_Name`, `Last_Name`, `Password`, `Email`, `UserName`) VALUES
+('Morgan', 'Pothoff', 'Guest', 'Morgan.Pothoff@aol.com', 'mep');
 
-INSERT INTO `Users` (`First_Name`, `Last_Name`, `Password`, `Email`) VALUES
-('John', 'Do', '23456', 'John');
+INSERT INTO `Users` (`First_Name`, `Last_Name`, `Password`, `Email`, `UserName`) VALUES
+('John', 'Do', '23456', 'John', 'jud');
 
 
 INSERT INTO `Manager` (`User_ID`) VALUES
